@@ -1,0 +1,35 @@
+.dashboard {
+    width: 100%;
+    height: calc(100vh - 50px);
+    position: relative;
+    top: 50px;
+    overflow-y: auto;
+}
+
+.dashboard select {
+    margin-left: 4%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.dashboard-container {
+    display: flex;
+}
+
+.dashboard-light {
+    width: 44%;
+    height: 1000px;
+    border-radius: 10px;
+    border: 1px solid black;
+    margin-left: 4%;
+    margin-bottom: 50px;
+}
+
+.dashboard-air-conditioner {
+    width: 44%;
+    height: 500px;
+    border-radius: 10px;
+    border: 1px solid black;
+    margin-left: 4%;
+    margin-bottom: 50px;
+}

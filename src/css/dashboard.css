@@ -4,25 +4,75 @@
     position: relative;
     top: 50px;
     overflow-y: auto;
+    user-select: none;
+    background-color: wheat;
 }
 
-.dashboard select {
+.dashboard .dropdown {
+    position: fixed;
+    top: 0;
     margin-left: 4%;
-    margin-top: 10px;
+    margin-top: 7px;
     margin-bottom: 10px;
 }
 
 .dashboard-container {
     display: flex;
+    margin-top: 20px;
 }
 
 .dashboard-light {
     width: 44%;
-    height: 1000px;
+    height: fit-content;
     border-radius: 10px;
     border: 1px solid black;
     margin-left: 4%;
     margin-bottom: 50px;
+    padding: 20px 0;
+}
+
+.dashboard-light h1 {
+    font-size: 1.75rem;
+    margin-left: 5%;
+}
+
+.dashboard-light > div {
+    width: 90%;
+    position: relative;
+    left: 5%;
+    padding: 0 20px 20px 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    border: 1px solid black;
+    box-sizing: border-box;
+}
+
+.dashboard-light > div > div {
+    margin-top: 20px;
+}
+
+.dashboard-light > div > div > span {
+    font-size: 1.5rem;
+}
+
+.dashboard-light > div > div > label {
+    position: absolute;
+    right: 5%;
+    font-size: 1.5rem;
+    width: 50px;
+}
+
+.dashboard-light > div > div > input[type="text"] {
+    position: absolute;
+    right: 5%;
+    font-size: 1.05rem;
+    width: 50px;
+    height: 25px;
+    border: 1px solid #7c7a7a;
+    border-radius: 12px;
+    padding: 0 5px;
+    box-sizing: border-box;
+    text-align: center;
 }
 
 .dashboard-air-conditioner {

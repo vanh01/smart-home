@@ -30,8 +30,7 @@ const ActivityLog = () => {
             </ul>
             <div class="activity__date">
                 <input type="date" class="device__select-box date__select" ></input>
-                <i class="fa-regular fa-arrow-right"></i>
-                <input type="date" class="device__select-box date__select"></input>
+                <i class="fa-regular fa-arrow-right"></i>                <input type="date" class="device__select-box date__select"></input>
             </div>
         </div>
     </div>

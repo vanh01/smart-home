@@ -1,3 +1,49 @@
 .activity-log{
     padding-top: 50px;
 }
+
+.activity__button{
+    display: flex;
+}
+
+.activity__device{
+    
+} 
+
+.device__select-box{
+    max-width: 120px;
+    min-width: 150px;
+    box-shadow: 0 0 3px #aaa;
+    border-radius: 5px;
+}
+
+.device__select{
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid #888;
+}
+
+
+.device__option{
+    display: none;
+    padding: 4px;
+} 
+
+.device__option:hover{
+    color: #fff;
+    background-color: #62baea;
+}
+
+.device__option--show{
+    display: block;
+} 
+
+.activity__date{
+
+}
+
+.date__select{
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid #888;
+}

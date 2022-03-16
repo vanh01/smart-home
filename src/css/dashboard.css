@@ -8,14 +8,6 @@
     background-color: wheat;
 }
 
-.dashboard .dropdown {
-    position: fixed;
-    top: 0;
-    margin-left: 4%;
-    margin-top: 7px;
-    margin-bottom: 10px;
-}
-
 .dashboard-container {
     display: flex;
     margin-top: 20px;

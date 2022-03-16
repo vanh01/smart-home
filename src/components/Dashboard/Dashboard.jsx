@@ -1,51 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const Dashboard = () => {
-    const [apartment, setApartment] = useState("");
-
     document.title = "Điều khiển";
-
-    function show(e) {
-        setApartment(e.target.innerText);
-        let dropdown = document.querySelector(".dropdown");
-        dropdown.classList.toggle("active");
-    }
-
-    useEffect(() => {
-        setApartment(
-            document.querySelector(".option > li:nth-child(1)").innerText
-        );
-    }, []);
 
     console.log("1");
     return (
         <>
             <div className="dashboard">
-                <div
-                    className="dropdown"
-                    // onBlur={() => {
-                    //     let dropdown = document.querySelector(".dropdown");
-                    //     dropdown.classList.toggle("active");
-                    // }}
-                >
-                    <input
-                        type="text"
-                        className="dropdown-text"
-                        value={apartment}
-                        readOnly
-                        onClick={() => {
-                            let dropdown = document.querySelector(".dropdown");
-                            dropdown.classList.toggle("active");
-                        }}
-                    />
-                    <ul className="option">
-                        <li onClick={show}>Căn hộ 1</li>
-                        <li onClick={show}>Căn hộ 2</li>
-                        <li onClick={show}>Căn hộ 3</li>
-                        <li onClick={show}>Căn hộ 4</li>
-                        <li onClick={show}>Căn hộ 5</li>
-                    </ul>
-                </div>
                 <div className="dashboard-container">
                     <div className="dashboard-light">
                         <h1>Hệ thống đèn</h1>

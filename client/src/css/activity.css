@@ -4,29 +4,44 @@
 
 .activity__button{
     display: flex;
+    justify-content: flex-end;
+    margin-top:20px;
+    align-items: center;
+    padding:10px 5%;
 }
 
+
 .activity__device{
-    
 } 
 
 .device__select-box{
     max-width: 120px;
     min-width: 150px;
-    box-shadow: 0 0 3px #aaa;
     border-radius: 5px;
+    list-style: none;
+    margin-right: 100px;
+    position: relative;
+    margin-left: 10px;
+
 }
 
 .device__select{
-    padding: 6px;
+    padding: 7px;
     border-radius: 5px;
-    border: 1px solid #888;
+    border: 1px solid #888; 
 }
 
+.device__option-list{
+    position: absolute;
+    box-shadow: 0 0 3px #aaa;
+    width: 100%;
+}
 
 .device__option{
     display: none;
     padding: 4px;
+    background-color: #fff;
+    
 } 
 
 .device__option:hover{
@@ -42,8 +57,58 @@
 
 }
 
+.device__select-box{
+    max-width: 120px;
+    min-width: 150px;
+    box-shadow: 0 0 3px #aaa;
+    border-radius: 5px;
+    list-style: none;
+}
+
 .date__select{
     padding: 6px;
     border-radius: 5px;
     border: 1px solid #888;
+    outline: none;
+}
+
+.activity__chart{
+    /* padding: 20px; */
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.activity__chart :nth-child(1){
+    max-width:700px;
+    max-height:500px;
+}
+.activity__chart :nth-child(2){
+    max-width:700px;
+    max-height:500px;
+
+}
+
+
+.activity__table{
+    width:98%;
+    border: 1px solid rgb(122, 122, 122);
+    margin-left:1%;
+    margin-top: 20px;
+}
+
+.table__row{
+    /* border: 1px solid #ddd; */
+}
+
+.table_header{
+    padding: 5px 10px;
+    background-color: #E8E6E6;
+    border:none ;
+}
+
+.table_col{
+    padding: 5px 10px;
+    border-top: 1px solid #ddd;
+    text-align:center;
 }

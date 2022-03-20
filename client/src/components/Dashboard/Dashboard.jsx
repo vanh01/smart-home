@@ -31,9 +31,6 @@ const Dashboard = () => {
                                         type="checkbox"
                                         checked={soundActive}
                                         onChange={(e) => {
-                                            if (e.target.checked === true) {
-                                                setLightActive(false);
-                                            }
                                             setSoundActive(e.target.checked);
                                         }}
                                     />
@@ -61,9 +58,6 @@ const Dashboard = () => {
                                         type="checkbox"
                                         checked={lightActive}
                                         onChange={(e) => {
-                                            if (e.target.checked === true) {
-                                                setSoundActive(false);
-                                            }
                                             setLightActive(e.target.checked);
                                         }}
                                     />

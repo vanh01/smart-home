@@ -1,10 +1,7 @@
-html{
-    overflow-x: hidden;
-
-}
-
 .activity-log{
     padding-top: 50px;
+    overflow-y: scroll;
+    height: calc(100vh - 50px)
 }
 
 .activity__button{
@@ -85,11 +82,11 @@ html{
 }
 
 .activity__chart :nth-child(1){
-    max-width:650px;
+    max-width:49%;
     max-height:500px;
 }
 .activity__chart :nth-child(2){
-    max-width:650px;
+    max-width:49%;
     max-height:500px;
 
 }

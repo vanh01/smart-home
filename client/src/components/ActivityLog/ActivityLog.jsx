@@ -27,8 +27,6 @@ const ActivityLog = () => {
     let [yValue2, setYValue2] = useState([0, 1, 0, 1, 0, 1, 0])
 
     let [device, setDevice] = useState(0);
-
-    console.log(device)
     function showDevice(e) {
         let select = document.querySelectorAll('.device__option');
         select.forEach(element => {
@@ -40,25 +38,25 @@ const ActivityLog = () => {
         let show = document.querySelector('.device__select');
         let select = e.target.innerText;
         show.innerText = select;
-        if (select.indexOf('Đèn') != -1) {
+        if (select.indexOf('Đèn') !== -1) {
             setDevice(0)
         }
-        else if (select.indexOf('Loa') != -1) {
+        else if (select.indexOf('Loa') !== -1) {
             setDevice(1)
         }
-        else if (select.indexOf('Điều hòa') != -1) {
+        else if (select.indexOf('Điều hòa') !== -1) {
             setDevice(2)
         }
-        else if (select.indexOf('sáng') != -1) {
+        else if (select.indexOf('sáng') !== -1) {
             setDevice(3)
         }
-        else if (select.indexOf('âm') != -1) {
+        else if (select.indexOf('âm') !== -1) {
             setDevice(4)
         }
-        else if (select.indexOf('gas') != -1) {
+        else if (select.indexOf('gas') !== -1) {
             setDevice(5)
         }
-        else if (select.indexOf('DHT11') != -1) {
+        else if (select.indexOf('DHT11') !== -1) {
             setDevice(6)
         }
         showDevice()
@@ -98,7 +96,7 @@ const ActivityLog = () => {
 export default ActivityLog;
 
 function ShowChart(data) {
-    if (data.device == 6) {
+    if (data.device === 6) {
         return <div className="activity__chart">
             <Line
                 data={{
@@ -169,6 +167,7 @@ function ShowChart(data) {
             case 5:
                 name = "Nồng độ khí gas"
                 break;
+            default:
         }
         return <div className="activity__chart">
             <Line
@@ -196,237 +195,231 @@ function ShowChart(data) {
             />
         </div>
     }
-    return <div>asdads</div>
+
 }
 
 function ShowTable(data) {
-    console.log("asdasddasd: ", data.device);
-    if (data.device == 0) {
+    if (data.device === 0) {
         return <table className="activity__table">
-            <tr className="table__row">
-                <th className="table_header">Stt</th>
-                <th className="table_header">Trạng thái</th>
-                <th className="table_header">Tác nhân</th>
-                <th className="table_header">Thời điểm</th>
-                <th className="table_header">Ngày</th>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">1</td>
-                <td className="table_col">0</td>
-                <td className="table_col">Công tắc</td>
-                <td className="table_col">7:00:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">2</td>
-                <td className="table_col">1</td>
-                <td className="table_col">Công tắc</td>
-                <td className="table_col">7:01:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">3</td>
-                <td className="table_col">0</td>
-                <td className="table_col">Công tắc</td>
-                <td className="table_col">7:02:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
+            <tbody>
+                <tr className="table__row">
+                    <th className="table_header">Stt</th>
+                    <th className="table_header">Trạng thái</th>
+                    <th className="table_header">Tác nhân</th>
+                    <th className="table_header">Thời điểm</th>
+                    <th className="table_header">Ngày</th>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">1</td>
+                    <td className="table_col">0</td>
+                    <td className="table_col">Công tắc</td>
+                    <td className="table_col">7:00:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">2</td>
+                    <td className="table_col">1</td>
+                    <td className="table_col">Công tắc</td>
+                    <td className="table_col">7:01:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">3</td>
+                    <td className="table_col">0</td>
+                    <td className="table_col">Công tắc</td>
+                    <td className="table_col">7:02:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+            </tbody>
         </table>
     }
-    else if (data.device == 1) {
+    else if (data.device === 1) {
         return <table className="activity__table">
-            <tr className="table__row">
-                <th className="table_header">Stt</th>
-                <th className="table_header">Trạng thái</th>
-                <th className="table_header">Thời điểm</th>
-                <th className="table_header">Ngày</th>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">1</td>
-                <td className="table_col">0</td>
-                <td className="table_col">7:00:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">2</td>
-                <td className="table_col">1</td>
-                <td className="table_col">7:01:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">3</td>
-                <td className="table_col">0</td>
-                <td className="table_col">7:02:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
+            <tbody>
+                <tr className="table__row">
+                    <th className="table_header">Stt</th>
+                    <th className="table_header">Trạng thái</th>
+                    <th className="table_header">Thời điểm</th>
+                    <th className="table_header">Ngày</th>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">1</td>
+                    <td className="table_col">0</td>
+                    <td className="table_col">7:00:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">2</td>
+                    <td className="table_col">1</td>
+                    <td className="table_col">7:01:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">3</td>
+                    <td className="table_col">0</td>
+                    <td className="table_col">7:02:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+            </tbody>
         </table>
     }
-    else if (data.device == 2) {
+    else if (data.device === 2) {
         return <table className="activity__table">
-            <tr className="table__row">
-                <th className="table_header">Stt</th>
-                <th className="table_header">Trạng thái</th>
-                <th className="table_header">Tác nhân</th>
-                <th className="table_header">Thời điểm</th>
-                <th className="table_header">Ngày</th>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">1</td>
-                <td className="table_col">0</td>
-                <td className="table_col">Công tắc</td>
-                <td className="table_col">7:00:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">2</td>
-                <td className="table_col">1</td>
-                <td className="table_col">Công tắc</td>
-                <td className="table_col">7:01:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">3</td>
-                <td className="table_col">0</td>
-                <td className="table_col">Công tắc</td>
-                <td className="table_col">7:02:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
+            <tbody>
+                <tr className="table__row">
+                    <th className="table_header">Stt</th>
+                    <th className="table_header">Trạng thái</th>
+                    <th className="table_header">Tác nhân</th>
+                    <th className="table_header">Thời điểm</th>
+                    <th className="table_header">Ngày</th>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">1</td>
+                    <td className="table_col">0</td>
+                    <td className="table_col">Công tắc</td>
+                    <td className="table_col">7:00:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">2</td>
+                    <td className="table_col">1</td>
+                    <td className="table_col">Công tắc</td>
+                    <td className="table_col">7:01:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">3</td>
+                    <td className="table_col">0</td>
+                    <td className="table_col">Công tắc</td>
+                    <td className="table_col">7:02:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+            </tbody>
         </table>
     }
-    else if (data.device == 3) {
+    else if (data.device === 3) {
         return <table className="activity__table">
-            <tr className="table__row">
-                <th className="table_header">Stt</th>
-                <th className="table_header">Cường độ ánh sáng</th>
-                <th className="table_header">Thời điểm</th>
-                <th className="table_header">Ngày</th>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">1</td>
-                <td className="table_col">0</td>
-                <td className="table_col">7:00:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">2</td>
-                <td className="table_col">1</td>
-                <td className="table_col">7:01:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">3</td>
-                <td className="table_col">0</td>
-                <td className="table_col">7:02:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
+            <tbody>
+                <tr className="table__row">
+                    <th className="table_header">Stt</th>
+                    <th className="table_header">Cường độ ánh sáng</th>
+                    <th className="table_header">Thời điểm</th>
+                    <th className="table_header">Ngày</th>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">1</td>
+                    <td className="table_col">0</td>
+                    <td className="table_col">7:00:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">2</td>
+                    <td className="table_col">1</td>
+                    <td className="table_col">7:01:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">3</td>
+                    <td className="table_col">0</td>
+                    <td className="table_col">7:02:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+            </tbody>
         </table>
     }
-    else if (data.device == 4) {
+    else if (data.device === 4) {
         return <table className="activity__table">
-            <tr className="table__row">
-                <th className="table_header">Stt</th>
-                <th className="table_header">Cường độ âm thanh</th>
-                <th className="table_header">Thời điểm</th>
-                <th className="table_header">Ngày</th>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">1</td>
-                <td className="table_col">0</td>
-                <td className="table_col">7:00:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">2</td>
-                <td className="table_col">1</td>
-                <td className="table_col">7:01:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">3</td>
-                <td className="table_col">0</td>
-                <td className="table_col">7:02:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
+            <tbody>
+                <tr className="table__row">
+                    <th className="table_header">Stt</th>
+                    <th className="table_header">Cường độ âm thanh</th>
+                    <th className="table_header">Thời điểm</th>
+                    <th className="table_header">Ngày</th>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">1</td>
+                    <td className="table_col">0</td>
+                    <td className="table_col">7:00:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">2</td>
+                    <td className="table_col">1</td>
+                    <td className="table_col">7:01:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">3</td>
+                    <td className="table_col">0</td>
+                    <td className="table_col">7:02:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+            </tbody>
         </table>
     }
-    else if (data.device == 5) {
+    else if (data.device === 5) {
         return <table className="activity__table">
-            <tr className="table__row">
-                <th className="table_header">Stt</th>
-                <th className="table_header">Nồng độ khí gas</th>
-                <th className="table_header">Thời điểm</th>
-                <th className="table_header">Ngày</th>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">1</td>
-                <td className="table_col">0</td>
-                <td className="table_col">7:00:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">2</td>
-                <td className="table_col">1</td>
-                <td className="table_col">7:01:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">3</td>
-                <td className="table_col">0</td>
-                <td className="table_col">7:02:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
+            <tbody>
+                <tr className="table__row">
+                    <th className="table_header">Stt</th>
+                    <th className="table_header">Nồng độ khí gas</th>
+                    <th className="table_header">Thời điểm</th>
+                    <th className="table_header">Ngày</th>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">1</td>
+                    <td className="table_col">0</td>
+                    <td className="table_col">7:00:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">2</td>
+                    <td className="table_col">1</td>
+                    <td className="table_col">7:01:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">3</td>
+                    <td className="table_col">0</td>
+                    <td className="table_col">7:02:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+            </tbody>
         </table>
     }
     else {
         return <table className="activity__table">
-            <tr className="table__row">
-                <th className="table_header">Stt</th>
-                <th className="table_header">Nhiệt độ</th>
-                <th className="table_header">độ ẩm</th>
-                <th className="table_header">Thời điểm</th>
-                <th className="table_header">Ngày</th>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">1</td>
-                <td className="table_col">0</td>
-                <td className="table_col">0</td>
-                <td className="table_col">7:00:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">2</td>
-                <td className="table_col">1</td>
-                <td className="table_col">1</td>
-                <td className="table_col">7:01:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
-            <tr className="table__row">
-                <td className="table_col">3</td>
-                <td className="table_col">0</td>
-                <td className="table_col">0</td>
-                <td className="table_col">7:02:00</td>
-                <td className="table_col">2022-03-18 </td>
-            </tr>
+            <tbody>
+                <tr className="table__row">
+                    <th className="table_header">Stt</th>
+                    <th className="table_header">Nhiệt độ</th>
+                    <th className="table_header">độ ẩm</th>
+                    <th className="table_header">Thời điểm</th>
+                    <th className="table_header">Ngày</th>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">1</td>
+                    <td className="table_col">0</td>
+                    <td className="table_col">0</td>
+                    <td className="table_col">7:00:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">2</td>
+                    <td className="table_col">1</td>
+                    <td className="table_col">1</td>
+                    <td className="table_col">7:01:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+                <tr className="table__row">
+                    <td className="table_col">3</td>
+                    <td className="table_col">0</td>
+                    <td className="table_col">0</td>
+                    <td className="table_col">7:02:00</td>
+                    <td className="table_col">2022-03-18 </td>
+                </tr>
+            </tbody>
         </table>
     }
-
-
-    // switch (data.divice) {
-    //     case 0:
-
-    //     case 1:
-
-    //         break;
-    //     case 2:
-
-    //     case 3:
-
-    //     case 4:
-
-    //     case 5:
-
-    //     case 6:
-
-    return <div>asdasdasd</div>
 }
 

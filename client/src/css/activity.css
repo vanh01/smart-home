@@ -1,3 +1,8 @@
+html{
+    overflow-x: hidden;
+
+}
+
 .activity-log{
     padding-top: 50px;
 }
@@ -22,7 +27,7 @@
     margin-right: 100px;
     position: relative;
     margin-left: 10px;
-
+    /* z-index: 0; */
 }
 
 .device__select{
@@ -80,11 +85,11 @@
 }
 
 .activity__chart :nth-child(1){
-    max-width:700px;
+    max-width:650px;
     max-height:500px;
 }
 .activity__chart :nth-child(2){
-    max-width:700px;
+    max-width:650px;
     max-height:500px;
 
 }

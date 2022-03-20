@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import ManageApartment from "./ManageApartment";
 
 const ManageAccount = () => {
-  return (
-    <div>ManageAccount</div>
-  )
-}
+    return (
+        <>
+            <ManageApartment />
+        </>
+    );
+};
 
-export default ManageAccount
+export default ManageAccount;

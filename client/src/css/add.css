@@ -1,0 +1,55 @@
+.addPage {
+	background-color: #d3e5ed;
+	height: 370px;
+	width: 600px;
+	position: fixed;
+	top: 20%;
+	left: 40%;
+	border-radius: 20px;
+	box-sizing: border-box;
+}
+
+.addForm {
+	margin: 15px;
+}
+.col1 {
+	float: left;
+	margin: 20px 40px 0px 40px;
+}
+.col2 {
+	float: left;
+	margin: 20px 40px 0px 40px;
+}
+label {
+	font-size: 1.2rem;
+}
+input,
+select {
+	margin-bottom: 15px;
+	height: 30px;
+	width: 200px;
+	font-size: 1rem;
+	box-sizing: border-box;
+	text-align: center;
+	border-radius: 5px;
+}
+
+.button-add {
+	margin-left: 67%;
+	margin-right: 3%;
+	width: 60px;
+	height: 30px;
+	font-size: 1rem;
+}
+.button-cancel {
+	margin: 0px 10px 0px 0px;
+	width: 60px;
+	height: 30px;
+	font-size: 1rem;
+}
+
+.clear {
+	margin-top: -1px;
+	overflow: hidden;
+	clear: both;
+}

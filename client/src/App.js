@@ -3,8 +3,6 @@ import DashboardPage from "./pages/DashboardPage"
 import ActivitylogPage from "./pages/ActivityLogPage"
 import ManageAccountPage from "./pages/ManageAccountPage";
 import ForgotPassword from "./components/Signin/ForgotPassword";
-import AddPage from "./pages/AddPage"
-import ModifyPage from "./pages/ModifyPage"
 import { Route, Routes } from "react-router-dom";
 import './css/activity.css'
 import './css/signin.css'
@@ -24,9 +22,6 @@ function App() {
             <Route path="/dashboard" exact element={<DashboardPage />} />
             <Route path="/activitylog" exact element={<ActivitylogPage />} />
             <Route path="/manageaccount" exact element={<ManageAccountPage />} />
-            <Route path="/add" exact element={<AddPage />} />
-            <Route path="/modify" exact element={<ModifyPage />} />
-            <Route path="/manager" exact element={<ManagerPage />} />
         </Routes>
     );
 }

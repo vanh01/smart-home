@@ -5,7 +5,7 @@ import Dashboard from "../components/Dashboard/Dashboard";
 const DashboardPage = () => {
     return (
         <>
-            <NavbarCustomer />
+            <NavbarCustomer diarySelected={false} />
             <Dashboard />
         </>
     );

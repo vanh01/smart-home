@@ -41,7 +41,7 @@ const Signin = () => {
                             }}
                         />
                     </div>
-                    <input type="button" value="quên?" />
+                    <input type="button" value="Quên?" />
                     <input type="submit" value="Đăng nhập" />
                 </form>
             </div>

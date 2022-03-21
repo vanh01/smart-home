@@ -26,6 +26,7 @@ function App() {
             <Route path="/manageaccount" exact element={<ManageAccountPage />} />
             <Route path="/add" exact element={<AddPage />} />
             <Route path="/modify" exact element={<ModifyPage />} />
+            <Route path="/manager" exact element={<ManagerPage />} />
         </Routes>
     );
 }

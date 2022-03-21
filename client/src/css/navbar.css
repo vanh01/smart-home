@@ -24,3 +24,47 @@
     cursor: pointer;
     font-size: 1rem;
 }
+
+.navbar__select{
+    background-color:#fff;
+    border-radius: 5px;
+    position: relative;
+}
+
+.navbar__select input{
+    border-radius: 5px;
+}
+
+.navbar__select-curve{
+    position: absolute;
+    top: 92%;
+    left: -10%;
+    width: 120%;
+    height: 20%;
+    background-color: #fff;
+}
+
+.navbar__select-curve:before{
+    position: absolute;
+    left: -2%;
+    height:100%;
+    background-color: #BBFFF3;
+    content: "";
+    width:10%;
+    bottom:0;
+    border-radius: 0 0 10px 0;
+    border-bottom: 1px solid wheat;
+}
+
+.navbar__select-curve:after{
+    position: absolute;
+    right: -2%;
+    height:100%;
+    background-color: #BBFFF3;
+    content: "";
+    width:10%;
+    bottom:0;
+    border-radius: 0 0 0 10px;
+    border-bottom: 1px solid wheat;
+
+}

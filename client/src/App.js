@@ -12,7 +12,8 @@ import './css/dashboard.css'
 import './css/custom.css'
 import './css/forgot.css'
 import './css/apartment.css'
-
+import './css/add.css'
+import './css/modify.css'
 function App() {
     return (
         <Routes>

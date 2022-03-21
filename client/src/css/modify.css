@@ -1,59 +1,59 @@
 .modifyPage {
-	background-color: #d3e5ed;
-	height: 370px;
-	width: 600px;
-	position: fixed;
-	top: 20%;
-	left: 40%;
-	border-radius: 20px;
-	box-sizing: border-box;
+    background-color: #d3e5ed;
+    height: 370px;
+    width: 600px;
+    position: fixed;
+    top: 20%;
+    left: 40%;
+    border-radius: 20px;
+    box-sizing: border-box;
 }
 
 .modifyForm {
-	margin: 15px;
+    margin: 15px;
 }
-.col1 {
-	float: left;
-	margin: 20px 40px 0px 40px;
+.modifyForm .col1 {
+    float: left;
+    margin: 20px 40px 0px 40px;
 }
-.col2 {
-	float: left;
-	margin: 20px 40px 0px 40px;
+.modifyForm .col2 {
+    float: left;
+    margin: 20px 40px 0px 40px;
 }
-label {
-	font-size: 1.2rem;
+.modifyForm label {
+    font-size: 1.2rem;
 }
-input,
-select {
-	margin-bottom: 15px;
-	height: 30px;
-	width: 200px;
-	font-size: 1rem;
-	box-sizing: border-box;
-	text-align: center;
-	border-radius: 5px;
-}
-
-.button-manage {
-	margin-left: 46%;
-	width: 120px;
-	height: 30px;
-}
-.button-save {
-	margin-left: 10px;
-	width: 60px;
-	height: 30px;
-	font-size: 1rem;
-}
-.button-delete {
-	margin-left: 10px;
-	width: 60px;
-	height: 30px;
-	font-size: 1rem;
+.modifyForm input,
+.modifyForm select {
+    margin-bottom: 15px;
+    height: 30px;
+    width: 200px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 5px;
 }
 
-.clear {
-	margin-top: -1px;
-	overflow: hidden;
-	clear: both;
+.modifyForm .button-manage {
+    margin-left: 46%;
+    width: 120px;
+    height: 30px;
+}
+.modifyForm .button-save {
+    margin-left: 10px;
+    width: 60px;
+    height: 30px;
+    font-size: 1rem;
+}
+.modifyForm .button-delete {
+    margin-left: 10px;
+    width: 60px;
+    height: 30px;
+    font-size: 1rem;
+}
+
+.modifyForm .clear {
+    margin-top: -1px;
+    overflow: hidden;
+    clear: both;
 }

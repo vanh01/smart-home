@@ -1,10 +1,10 @@
-html{
-    overflow-x: hidden;
-
+.test{
+    background-color: #aaa;
 }
-
 .activity-log{
     padding-top: 50px;
+    overflow-y: scroll;
+    height: calc(100vh - 50px)
 }
 
 .activity__button{
@@ -62,6 +62,12 @@ html{
 
 }
 
+.date__icon{
+    padding:0 5px;
+    font-size: 15px;
+    
+}
+
 .device__select-box{
     max-width: 120px;
     min-width: 150px;
@@ -85,11 +91,11 @@ html{
 }
 
 .activity__chart :nth-child(1){
-    max-width:650px;
+    max-width:49%;
     max-height:500px;
 }
 .activity__chart :nth-child(2){
-    max-width:650px;
+    max-width:49%;
     max-height:500px;
 
 }

@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Dashboard = () => {
     document.title = "Điều khiển";
 
-    console.log("1");
+    const [lightOn, setLightOn] = useState(false);
+    const [airConditionedOn, setAirConditionedOn] = useState(false);
+    const [soundLimit, setSoundLimit] = useState(0);
+    const [lightLimit, setLightLimit] = useState(0);
+    const [tempLimit, setTempLimit] = useState(0);
+
+    const [soundActive, setSoundActive] = useState(false);
+    const [lightActive, setLightActive] = useState(false);
+    const [tempActive, setTempActive] = useState(false);
+    // console.log(lightOn);
+
+    useEffect(() => {}, []);
     return (
         <>
             <div className="dashboard">
@@ -18,13 +29,23 @@ const Dashboard = () => {
                                         className="toggle__input"
                                         name=""
                                         type="checkbox"
+                                        checked={soundActive}
+                                        onChange={(e) => {
+                                            setSoundActive(e.target.checked);
+                                        }}
                                     />
                                     <div className="toggle__fill"></div>
                                 </label>
                             </div>
                             <div>
                                 <span>Ngưỡng cường độ âm thanh</span>
-                                <input type="text" />
+                                <input
+                                    type="text"
+                                    defaultValue={soundLimit}
+                                    onChange={(e) => {
+                                        setSoundLimit(e.target.value);
+                                    }}
+                                />
                             </div>
                         </div>
                         <div>
@@ -35,13 +56,23 @@ const Dashboard = () => {
                                         className="toggle__input"
                                         name=""
                                         type="checkbox"
+                                        checked={lightActive}
+                                        onChange={(e) => {
+                                            setLightActive(e.target.checked);
+                                        }}
                                     />
                                     <div className="toggle__fill"></div>
                                 </label>
                             </div>
                             <div>
                                 <span>Ngưỡng cường độ sáng</span>
-                                <input type="text" />
+                                <input
+                                    type="text"
+                                    defaultValue={lightLimit}
+                                    onChange={(e) => {
+                                        setLightLimit(e.target.value);
+                                    }}
+                                />
                             </div>
                         </div>
                         <div>
@@ -52,6 +83,11 @@ const Dashboard = () => {
                                         className="toggle__input"
                                         name=""
                                         type="checkbox"
+                                        checked={lightOn}
+                                        onChange={(e) => {
+                                            setLightActive(false);
+                                            setLightOn(e.target.checked);
+                                        }}
                                     />
                                     <div className="toggle__fill"></div>
                                 </label>
@@ -68,13 +104,23 @@ const Dashboard = () => {
                                         className="toggle__input"
                                         name=""
                                         type="checkbox"
+                                        checked={tempActive}
+                                        onChange={(e) => {
+                                            setTempActive(e.target.checked);
+                                        }}
                                     />
                                     <div className="toggle__fill"></div>
                                 </label>
                             </div>
                             <div>
                                 <span>Ngưỡng nhiệt độ</span>
-                                <input type="text" />
+                                <input
+                                    type="text"
+                                    defaultValue={tempLimit}
+                                    onChange={(e) => {
+                                        setTempLimit(e.target.value);
+                                    }}
+                                />
                             </div>
                         </div>
                         <div>
@@ -85,6 +131,12 @@ const Dashboard = () => {
                                         className="toggle__input"
                                         name=""
                                         type="checkbox"
+                                        checked={airConditionedOn}
+                                        onChange={(e) => {
+                                            setAirConditionedOn(
+                                                e.target.checked
+                                            );
+                                        }}
                                     />
                                     <div className="toggle__fill"></div>
                                 </label>

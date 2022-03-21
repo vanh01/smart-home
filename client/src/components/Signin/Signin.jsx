@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 const Signin = () => {
     const [username, setUsername] = useState("");
@@ -41,7 +42,7 @@ const Signin = () => {
                             }}
                         />
                     </div>
-                    <input type="button" value="quên?" />
+                    <Link to="/forgot">Quên mật khẩu?</Link>
                     <input type="submit" value="Đăng nhập" />
                 </form>
             </div>

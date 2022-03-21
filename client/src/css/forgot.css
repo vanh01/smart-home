@@ -1,4 +1,4 @@
-.signin {
+.forgot {
     background-color: pink;
     background: no-repeat center center url("../assets/smart-home-security.jpg");
     background-size: cover;
@@ -7,9 +7,9 @@
     user-select: none;
 }
 
-.signin-form {
+.forgot-form {
     width: 420px;
-    height: 480px;
+    height: 370px;
     position: fixed;
     left: 50%;
     top: 50%;
@@ -22,13 +22,13 @@
     font-size: 1.1rem;
 }
 
-.signin-form div span {
+.forgot-form div span {
     margin-left: 15%;
     margin-bottom: 10px;
     display: block;
 }
 
-.signin-header {
+.forgot-header {
     position: absolute;
     font-size: 1.85rem;
     left: 50%;
@@ -37,18 +37,13 @@
     color: #ffffff;
 }
 
-.signin-username {
+.forgot-username {
     margin-top: 130px;
     box-sizing: border-box;
+    margin-bottom: 8%;
 }
 
-.signin-password {
-    margin-top: 50px;
-    box-sizing: border-box;
-    margin-bottom: 10%;
-}
-
-.signin-form input[type="text"] {
+.forgot-form input[type="text"] {
     margin-left: 15%;
     width: 70%;
     height: 30px;
@@ -60,7 +55,7 @@
     border: none;
 }
 
-.signin-form input[type="password"] {
+.forgot-form input[type="password"] {
     margin-left: 15%;
     width: 70%;
     height: 30px;
@@ -72,20 +67,23 @@
     border: none;
 }
 
-.signin-form a {
-    display: inline-block;
+.forgot-form a {
+    display: block;
     margin-top: 4px;
     margin-left: 15%;
-    max-width: 45%;
+    max-width: 40%;
+    width: fit-content;
     height: 30px;
+    margin: auto;
 }
 
-.signin-form input[type="submit"] {
-    float: right;
-    margin-right: 15%;
-    width: 25%;
+.forgot-form input[type="submit"] {
+    display: block;
+    margin: auto;
+    width: 35%;
     height: 30px;
     font-size: 1rem;
     border: none;
     border-radius: 5px;
+    margin-bottom: 10px;
 }

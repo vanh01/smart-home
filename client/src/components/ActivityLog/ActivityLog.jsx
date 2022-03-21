@@ -1,6 +1,8 @@
 import React from "react";
 import { useState } from 'react';
 import { Line } from "react-chartjs-2";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import {
     CategoryScale, Chart,
     LinearScale,
@@ -79,7 +81,8 @@ const ActivityLog = () => {
             </ul>
             <div className="activity__date">
                 <input type="date" className="date__select-box date__select" defaultValue="2022-03-14"></input>
-                <i className="fa-regular fa-arrow-right"></i>
+                <FontAwesomeIcon icon={faArrowRight} className = "date__icon"/>
+
                 <input type="date" className="date__select-box date__select" defaultValue="2022-03-14"></input>
             </div>
         </div>

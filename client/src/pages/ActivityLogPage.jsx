@@ -5,7 +5,7 @@ import ActivityLog from "../components/ActivityLog/ActivityLog";
 const ActivityLogPage = () => {
     return (
         <>
-            <NavbarCustomer />
+            <NavbarCustomer diarySelected = {true}/>
             <ActivityLog />
         </>
     );

@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 
-namespace testapi
+namespace server
 {
     public class CallApiAdafruit
     {

@@ -3,17 +3,28 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
 const Signin = () => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [formData, setFormData] = useState({
+        username: "",
+        password: "",
+    });
     let navigate = useNavigate();
     console.log("1");
     const SignIn = (e) => {
         e.preventDefault();
-        if (username === "admin" && password === "admin")
+
+        if (formData.username.length < 6 || formData.password.length < 6) {
+            alert("nhap dung thong tin tai khoan");
+            return;
+        }
+
+        if (formData.username === "admin" && formData.password === "admin")
             navigate("/manageaccount");
         else navigate("/dashboard");
         console.log("test");
     };
+
+    const onChange = (e) =>
+        setFormData({ ...formData, [e.target.name]: e.target.value });
 
     return (
         <>
@@ -24,22 +35,18 @@ const Signin = () => {
                         <span>Số điện thoại</span>
                         <input
                             type="text"
+                            name="username"
                             required
-                            onChange={(e) => {
-                                setUsername(e.target.value);
-                            }}
+                            onChange={onChange}
                         />
                     </div>
                     <div className="signin-password">
                         <span>Mật khẩu</span>
                         <input
                             type="password"
-                            name=""
-                            id=""
+                            name="password"
                             required
-                            onChange={(e) => {
-                                setPassword(e.target.value);
-                            }}
+                            onChange={onChange}
                         />
                     </div>
                     <Link to="/forgot">Quên mật khẩu?</Link>

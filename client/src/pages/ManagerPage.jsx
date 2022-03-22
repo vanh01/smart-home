@@ -1,6 +1,6 @@
 import React from "react";
 import NavbarAdmin from "../components/Navbar/NavbarAdmin";
-import Manager from "../components/Manager/Manager";
+import Manager from "../components/ManageAccount/Manager";
 
 const ManagerPage = () => {
     return (

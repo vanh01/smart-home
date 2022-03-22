@@ -7,7 +7,7 @@ import Manager from "./Manager";
 const ManageAccount = () => {
     return (
         <>
-            {/* <Manager /> */}
+            <Manager />
             {/* <ManageApartment /> */}
             {/* <Add /> */}
             {/* <Modify /> */}

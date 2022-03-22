@@ -1,14 +1,24 @@
-.space {
+.manager-container{
+    margin: 0 5%;
+}
+
+
+.space-60 {
     padding-top: 60px;
     
 }
 
-button.add {
+button.add-account {
     border: 0;
     background-color: #fff;
+    float: left;
 }
 
-button.add i {
+button.add-account:hover {
+    cursor: pointer;
+} 
+
+button.add-account i {
     font-size: 32px;
 }
 
@@ -16,31 +26,83 @@ button.add i {
     display: flow-root;
     padding: 20px;
 }
+.activity__date.float-end{
+    float: right;
+}
 
-.fa-arrow-right {
+.activity__date.float-end .fa-arrow-right {
     padding: 0 5px;
+}
+
+.float-none{
+    float: none;
 }
 
 /* TABLE */
-.table th {
+.manager-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.25rem;
+}
+
+.manager-card-body {
+    flex: 1 1 auto;
+    padding: 1rem 1rem;
+}
+
+table.manager-table,
+.manager-table th,
+.manager-table td {
+    border: 1px solid #dee2e6;
+    border-collapse: collapse;
+  }
+
+.manager-table th,
+.manager-table td {
+    padding: 5px;
+}
+.manager-table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    vertical-align: top;
+    border-color: #dee2e6;
+    border-collapse: collapse;
+}
+
+.manager-table  {
     text-align: center;
 }
 
-.icon {
+.manager-icon {
     text-align: center;
 }
 
-.icon i {
+.manager-icon i {
     padding: 0 5px;
 }
 
-.icon i:hover {
+.manager-icon i:hover {
     cursor: pointer;
 }
-/* .add-account {
-    float: left;
+
+
+.manager-bg {
+    position: absolute;
+    top: 0;
+    background-color: #C4C4C4;
+    width: 100%;
+    height: 100vh;
+    /* z-index: 9; */
+    opacity: 0.7;
+}
+.display-none {
+    display: none;
 }
 
-.activity__date {
-    float: right;
-} */

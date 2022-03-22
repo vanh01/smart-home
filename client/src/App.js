@@ -14,6 +14,7 @@ import './css/forgot.css'
 import './css/apartment.css'
 import './css/add.css'
 import './css/modify.css'
+import './css/manager.css'
 function App() {
     return (
         <Routes>

@@ -18,26 +18,19 @@ namespace server.Controllers
 
             DataTable dt = new DataTable();
 
-            String connString = "Server=127.0.0.1; Database=test; port=3306; User Id=root; password=vietanh;";
+            string query = "SELECT * FROM test.account";
 
-            MySqlConnection conn = new MySqlConnection(connString);
-            string sql = "select * from test.account";
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
-            conn.Open();
+            dt = SqlExecutes.Instance.ExcuteQuery(query);
 
-            using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
-            {
-                da.Fill(dt);
-            }
-            foreach (DataRow dr in dt.Rows)
-            {
-                string phonnenumber = dr["phonenumber"].ToString();
-                string password = dr["password"].ToString();
-                int rules = Convert.ToInt32(dr["rules"].ToString());
-                result.Add(new Account() { phonnenumber = phonnenumber, password = password, rules = rules });
-            }
-            conn.Close();
-                
+            // foreach (DataRow dr in dt.Rows)
+            // {
+            //     string phonenumber = dr["phonenumber"].ToString();
+            //     string password = dr["password"].ToString();
+            //     int rules = Convert.ToInt32(dr["rules"].ToString());
+            //     result.Add(new Account() { phonenumber = phonenumber, password = password, rules = rules });
+            // }
+
+            result = dt.ToList<Account>();
 
             return result;
         }

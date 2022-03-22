@@ -1,0 +1,46 @@
+.space {
+    padding-top: 60px;
+    
+}
+
+button.add {
+    border: 0;
+    background-color: #fff;
+}
+
+button.add i {
+    font-size: 32px;
+}
+
+.head-manager {
+    display: flow-root;
+    padding: 20px;
+}
+
+.fa-arrow-right {
+    padding: 0 5px;
+}
+
+/* TABLE */
+.table th {
+    text-align: center;
+}
+
+.icon {
+    text-align: center;
+}
+
+.icon i {
+    padding: 0 5px;
+}
+
+.icon i:hover {
+    cursor: pointer;
+}
+/* .add-account {
+    float: left;
+}
+
+.activity__date {
+    float: right;
+} */

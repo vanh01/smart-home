@@ -2,10 +2,10 @@ import React, { useState } from "react";
 
 const ManageApartment = () => {
     const [apartments, setApartments] = useState([
-        { name: "canho1" },
-        { name: "2" },
-        { name: "3" },
-        { name: "4" },
+        { name: "Căn hộ 1" },
+        { name: "Căn hộ 2" },
+        { name: "Căn hộ 3" },
+        { name: "Căn hộ 4" },
     ]);
     console.log(apartments);
 
@@ -25,8 +25,9 @@ const ManageApartment = () => {
     ]);
 
     return (
-        <>
+        <div className="manage-apartment__container">
             <div className="manage-apartment">
+                <button className="manage-apartment__exit">x</button>
                 <div className="manage-apartment-header">
                     <select
                         onChange={(e) => {
@@ -70,12 +71,12 @@ const ManageApartment = () => {
                             +
                         </button>
                     </div>
-                    <button>x</button>
+
                 </div>
                 <div className="manage-apartment-body">
                     <label>
-                        Tên căn hộ
-                        <input type="text" readOnly value={apartmentCur} />
+                        <span>TÊN CĂN HỘ</span>
+                        <input type="text"  defaultValue={apartmentCur} />
                     </label>
                     <div className="manage-apartment-system">
                         {systems.map((system, index) => (
@@ -93,10 +94,12 @@ const ManageApartment = () => {
                         ))}
                     </div>
                 </div>
-                <button className="delete">Xóa</button>
-                <button className="save">Lưu</button>
+                <div className="manage-apartment__button">
+                    <button className="delete">Xóa</button>
+                    <button className="save">Lưu</button>
+                </div>
             </div>
-        </>
+        </div>
     );
 };
 

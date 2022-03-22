@@ -3,15 +3,16 @@ import ManageApartment from "./ManageApartment";
 import Add from "./Add";
 import Modify from "./Modify";
 import Manager from "./Manager";
+import '../../css/manager.css'
 
 const ManageAccount = () => {
     return (
-        <>
-            {/* <Manager /> */}
-            {/* <ManageApartment /> */}
+        <div style = {{position: 'relative'}}>
+            <Manager />
+            <ManageApartment />
             {/* <Add /> */}
             {/* <Modify /> */}
-        </>
+        </div>
     );
 };
 

@@ -27,12 +27,13 @@
 
 .navbar__select{
     background-color:#fff;
-    border-radius: 5px;
+    border-radius: 10px 10px 0 0;
     position: relative;
+    padding: 0 6px;
 }
 
 .navbar__select input{
-    border-radius: 5px;
+    border-radius: 10px 10px 0 0;
 }
 
 .navbar__select-curve{

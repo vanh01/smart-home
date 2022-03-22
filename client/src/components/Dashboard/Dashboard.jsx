@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const Dashboard = () => {
     document.title = "Điều khiển";
 
-    const [lightOn, setLightOn] = useState(false);
+    const [ledOn, setLedOn] = useState(false);
     const [airConditionedOn, setAirConditionedOn] = useState(false);
     const [soundLimit, setSoundLimit] = useState(0);
     const [lightLimit, setLightLimit] = useState(0);
@@ -14,7 +14,63 @@ const Dashboard = () => {
     const [tempActive, setTempActive] = useState(false);
     // console.log(lightOn);
 
-    useEffect(() => {}, []);
+    const switchLed = async (ledOn) => {
+        var myHeaders = new Headers();
+        myHeaders.append("X-AIO-Key", "aio_RDff323WxKWkxGi6BqCaEKQxHWur");
+        myHeaders.append("Content-Type", "application/json");
+
+        let value = ledOn ? "led-on" : "led-off";
+
+        var raw = JSON.stringify({
+            value: value,
+        });
+
+        var requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow",
+        };
+
+        await fetch(
+            "https://io.adafruit.com/api/v2/vanh01/feeds/bk-iot-led/data",
+            requestOptions
+        )
+            .then((response) => response.text())
+            .then((result) => console.log(result))
+            .catch((error) => console.log("error", error));
+    };
+    const getLed = async () => {
+        var myHeaders = new Headers();
+        myHeaders.append("X-AIO-Key", "aio_RDff323WxKWkxGi6BqCaEKQxHWur");
+
+        var requestOptions = {
+            method: "GET",
+            headers: myHeaders,
+            redirect: "follow",
+        };
+        let ledOn = false;
+
+        await fetch(
+            "https://io.adafruit.com/api/v2/vanh01/feeds/bk-iot-led/data/last",
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result.value);
+                if (result.value === "led-on") ledOn = true;
+                else ledOn = false;
+            })
+            .catch((error) => {
+                console.log("error", error);
+            });
+        console.log(ledOn);
+        return ledOn;
+    };
+    useEffect(() => {
+        setLedOn(getLed());
+    }, []);
+
     return (
         <>
             <div className="dashboard">
@@ -89,10 +145,11 @@ const Dashboard = () => {
                                         className="toggle__input"
                                         name=""
                                         type="checkbox"
-                                        checked={lightOn}
+                                        checked={ledOn}
                                         onChange={(e) => {
                                             setLightActive(false);
-                                            setLightOn(e.target.checked);
+                                            setLedOn(e.target.checked);
+                                            switchLed(e.target.checked);
                                         }}
                                     />
                                     <div className="toggle__fill"></div>

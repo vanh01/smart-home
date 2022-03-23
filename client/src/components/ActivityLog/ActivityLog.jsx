@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Line } from "react-chartjs-2";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
@@ -24,11 +24,24 @@ Chart.register(Legend)
 
 const ActivityLog = () => {
 
-    let [xValue, setXValue] = useState(["2022-03-18 7:00:00", "2022-03-18 7:01:00", "2022-03-18 7:02:00", "2022-03-18 7:03:00", "2022-03-18 7:04:00", "2022-03-18 7:05:00", "2022-03-18 7:06:00"])
-    let [yValue1, setYValue1] = useState([0, 1, 0, 1, 0, 1, 0])
-    let [yValue2, setYValue2] = useState([0, 1, 0, 1, 0, 1, 0])
-
+    let [allLabel, setAllLabel] = useState(["2022-03-14 7:00:00", "2022-03-14 7:01:00", "2022-03-15 7:02:00", "2022-03-15 7:03:00", "2022-03-16 7:04:00", "2022-03-17 7:05:00", "2022-03-18 7:06:00"])
+    let [allData1, setAllData1] = useState([0, 1, 0, 1, 0, 1, 0])
+    let [allData2, setAllData2] = useState([0, 1, 0, 1, 0, 1, 0])
     let [device, setDevice] = useState(0);
+
+    let [xValue, setXValue] = useState([])
+    let [yValue1, setYValue1] = useState([])
+    let [yValue2, setYValue2] = useState([])
+
+    let [startDate, setStartDate] = useState(new Date("2022-03-14"))
+    let [endDate, setEndDate] = useState(new Date("2022-03-15"))
+    // let endDate = new Date("2022-03-14")
+
+    useEffect(() => {
+        fillData(device, startDate, endDate, allLabel, allData1, allData2, setXValue, setYValue1, setYValue2)
+    }, [startDate, endDate, device])
+
+    console.log(1)
     function showDevice(e) {
         let select = document.querySelectorAll('.device__option');
         select.forEach(element => {
@@ -80,16 +93,16 @@ const ActivityLog = () => {
                 </div>
             </ul>
             <div className="activity__date">
-                <input type="date" className="date__select-box date__select" defaultValue="2022-03-14"></input>
-                <FontAwesomeIcon icon={faArrowRight} className = "date__icon"/>
+                <input type="date" className="date__select-box date__select" defaultValue="2022-03-14" onChange={(e) => { setStartDate(new Date(e.target.value)) }}></input>
+                <FontAwesomeIcon icon={faArrowRight} className="date__icon" />
 
-                <input type="date" className="date__select-box date__select" defaultValue="2022-03-14"></input>
+                <input type="date" className="date__select-box date__select" defaultValue="2022-03-14" onChange={(e) => { let date = new Date(e.target.value); date.setDate(date.getDate() + 1); setEndDate(date) }}></input>
             </div>
         </div>
 
         <ShowChart device={device} xValue={xValue} yValue1={yValue1} yValue2={yValue2} />
 
-        <ShowTable device={device} />
+        <ShowTable device={device} xValue={xValue} yValue1={yValue1} yValue2={yValue2} />
 
     </div>
 
@@ -97,6 +110,7 @@ const ActivityLog = () => {
 };
 
 export default ActivityLog;
+
 
 function ShowChart(data) {
     if (data.device === 6) {
@@ -202,6 +216,7 @@ function ShowChart(data) {
 }
 
 function ShowTable(data) {
+    let stt = 1
     if (data.device === 0) {
         return <table className="activity__table">
             <tbody>
@@ -212,27 +227,15 @@ function ShowTable(data) {
                     <th className="table_header">Thời điểm</th>
                     <th className="table_header">Ngày</th>
                 </tr>
-                <tr className="table__row">
-                    <td className="table_col">1</td>
-                    <td className="table_col">0</td>
-                    <td className="table_col">Công tắc</td>
-                    <td className="table_col">7:00:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
-                <tr className="table__row">
-                    <td className="table_col">2</td>
-                    <td className="table_col">1</td>
-                    <td className="table_col">Công tắc</td>
-                    <td className="table_col">7:01:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
-                <tr className="table__row">
-                    <td className="table_col">3</td>
-                    <td className="table_col">0</td>
-                    <td className="table_col">Công tắc</td>
-                    <td className="table_col">7:02:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
+                {data.xValue.map((x, index) => {
+                    return <tr key={x} className="table__row">
+                        <td className="table_col">{stt++}</td>
+                        <td className="table_col">{data.yValue1[index]}</td>
+                        <td className="table_col">{data.yValue2[index]}</td>
+                        <td className="table_col">{getTimeFromString(x)}</td>
+                        <td className="table_col">{getDateFromString(x)} </td>
+                    </tr>
+                })}
             </tbody>
         </table>
     }
@@ -245,24 +248,14 @@ function ShowTable(data) {
                     <th className="table_header">Thời điểm</th>
                     <th className="table_header">Ngày</th>
                 </tr>
-                <tr className="table__row">
-                    <td className="table_col">1</td>
-                    <td className="table_col">0</td>
-                    <td className="table_col">7:00:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
-                <tr className="table__row">
-                    <td className="table_col">2</td>
-                    <td className="table_col">1</td>
-                    <td className="table_col">7:01:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
-                <tr className="table__row">
-                    <td className="table_col">3</td>
-                    <td className="table_col">0</td>
-                    <td className="table_col">7:02:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
+                {data.xValue.map((x, index) => {
+                    return <tr key={x} className="table__row">
+                        <td className="table_col">{stt++}</td>
+                        <td className="table_col">{data.yValue1[index]}</td>
+                        <td className="table_col">{getTimeFromString(x)}</td>
+                        <td className="table_col">{getDateFromString(x)} </td>
+                    </tr>
+                })}
             </tbody>
         </table>
     }
@@ -276,27 +269,15 @@ function ShowTable(data) {
                     <th className="table_header">Thời điểm</th>
                     <th className="table_header">Ngày</th>
                 </tr>
-                <tr className="table__row">
-                    <td className="table_col">1</td>
-                    <td className="table_col">0</td>
-                    <td className="table_col">Công tắc</td>
-                    <td className="table_col">7:00:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
-                <tr className="table__row">
-                    <td className="table_col">2</td>
-                    <td className="table_col">1</td>
-                    <td className="table_col">Công tắc</td>
-                    <td className="table_col">7:01:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
-                <tr className="table__row">
-                    <td className="table_col">3</td>
-                    <td className="table_col">0</td>
-                    <td className="table_col">Công tắc</td>
-                    <td className="table_col">7:02:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
+                {data.xValue.map((x, index) => {
+                    return <tr key={x} className="table__row">
+                        <td className="table_col">{stt++}</td>
+                        <td className="table_col">{data.yValue1[index]}</td>
+                        <td className="table_col">{data.yValue2[index]}</td>
+                        <td className="table_col">{getTimeFromString(x)}</td>
+                        <td className="table_col">{getDateFromString(x)} </td>
+                    </tr>
+                })}
             </tbody>
         </table>
     }
@@ -309,24 +290,14 @@ function ShowTable(data) {
                     <th className="table_header">Thời điểm</th>
                     <th className="table_header">Ngày</th>
                 </tr>
-                <tr className="table__row">
-                    <td className="table_col">1</td>
-                    <td className="table_col">0</td>
-                    <td className="table_col">7:00:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
-                <tr className="table__row">
-                    <td className="table_col">2</td>
-                    <td className="table_col">1</td>
-                    <td className="table_col">7:01:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
-                <tr className="table__row">
-                    <td className="table_col">3</td>
-                    <td className="table_col">0</td>
-                    <td className="table_col">7:02:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
+                {data.xValue.map((x, index) => {
+                    return <tr key={x} className="table__row">
+                        <td className="table_col">{stt++}</td>
+                        <td className="table_col">{data.yValue1[index]}</td>
+                        <td className="table_col">{getTimeFromString(x)}</td>
+                        <td className="table_col">{getDateFromString(x)} </td>
+                    </tr>
+                })}
             </tbody>
         </table>
     }
@@ -339,24 +310,14 @@ function ShowTable(data) {
                     <th className="table_header">Thời điểm</th>
                     <th className="table_header">Ngày</th>
                 </tr>
-                <tr className="table__row">
-                    <td className="table_col">1</td>
-                    <td className="table_col">0</td>
-                    <td className="table_col">7:00:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
-                <tr className="table__row">
-                    <td className="table_col">2</td>
-                    <td className="table_col">1</td>
-                    <td className="table_col">7:01:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
-                <tr className="table__row">
-                    <td className="table_col">3</td>
-                    <td className="table_col">0</td>
-                    <td className="table_col">7:02:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
+                {data.xValue.map((x, index) => {
+                    return <tr key={x} className="table__row">
+                        <td className="table_col">{stt++}</td>
+                        <td className="table_col">{data.yValue1[index]}</td>
+                        <td className="table_col">{getTimeFromString(x)}</td>
+                        <td className="table_col">{getDateFromString(x)} </td>
+                    </tr>
+                })}
             </tbody>
         </table>
     }
@@ -369,24 +330,14 @@ function ShowTable(data) {
                     <th className="table_header">Thời điểm</th>
                     <th className="table_header">Ngày</th>
                 </tr>
-                <tr className="table__row">
-                    <td className="table_col">1</td>
-                    <td className="table_col">0</td>
-                    <td className="table_col">7:00:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
-                <tr className="table__row">
-                    <td className="table_col">2</td>
-                    <td className="table_col">1</td>
-                    <td className="table_col">7:01:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
-                <tr className="table__row">
-                    <td className="table_col">3</td>
-                    <td className="table_col">0</td>
-                    <td className="table_col">7:02:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
+                {data.xValue.map((x, index) => {
+                    return <tr key={x} className="table__row">
+                        <td className="table_col">{stt++}</td>
+                        <td className="table_col">{data.yValue1[index]}</td>
+                        <td className="table_col">{getTimeFromString(x)}</td>
+                        <td className="table_col">{getDateFromString(x)} </td>
+                    </tr>
+                })}
             </tbody>
         </table>
     }
@@ -400,29 +351,89 @@ function ShowTable(data) {
                     <th className="table_header">Thời điểm</th>
                     <th className="table_header">Ngày</th>
                 </tr>
-                <tr className="table__row">
-                    <td className="table_col">1</td>
-                    <td className="table_col">0</td>
-                    <td className="table_col">0</td>
-                    <td className="table_col">7:00:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
-                <tr className="table__row">
-                    <td className="table_col">2</td>
-                    <td className="table_col">1</td>
-                    <td className="table_col">1</td>
-                    <td className="table_col">7:01:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
-                <tr className="table__row">
-                    <td className="table_col">3</td>
-                    <td className="table_col">0</td>
-                    <td className="table_col">0</td>
-                    <td className="table_col">7:02:00</td>
-                    <td className="table_col">2022-03-18 </td>
-                </tr>
+                {data.xValue.map((x, index) => {
+                    return <tr key={x} className="table__row">
+                        <td className="table_col">{stt++}</td>
+                        <td className="table_col">{data.yValue1[index]}</td>
+                        <td className="table_col">{data.yValue2[index]}</td>
+                        <td className="table_col">{getTimeFromString(x)}</td>
+                        <td className="table_col">{getDateFromString(x)} </td>
+                    </tr>
+                })}
             </tbody>
         </table>
     }
 }
 
+function fillData(device, startDate, endDate, allLabel, allData1, allData2, setXValue, setYValue1, setYValue2) {
+    let indexList = []
+    let x = []
+    let y1 = []
+    let y2 = []
+
+    for (let i = 0; i < allLabel.length; i++) {
+        if (startDate <= new Date(allLabel[i]) && endDate >= new Date(allLabel[i])) {
+            indexList = [...indexList, i]
+            x = [...x, allLabel[i]]
+        }
+    }
+    if (device === 0) {
+        // đèn
+        y1 = allData1.filter((data, index) => (indexList.includes(index)))
+        // y2 = allData2.filter((data, index) => (indexList.includes(index)))
+        // test
+        for (let i = 0; i < allData2.length; i++) {
+            if (indexList.includes(i)) {
+                y2 = [...y2, "Công tắc"]
+            }
+        }
+    }
+    if (device === 1) {
+        // loa
+        y1 = allData1.filter((data, index) => (indexList.includes(index)))
+    }
+    if (device === 2) {
+        // điều hòa
+        y1 = allData1.filter((data, index) => (indexList.includes(index)))
+        // y2 = allData2.filter((data, index) => (indexList.includes(index)))
+        for (let i = 0; i < allData2.length; i++) {
+            if (indexList.includes(i)) {
+                y2 = [...y2, "Công tắc"]
+            }
+        }
+    }
+    if (device === 3) {
+        // ánh sáng
+        y1 = allData1.filter((data, index) => (indexList.includes(index)))
+    }
+    if (device === 4) {
+        // âm thanh
+        y1 = allData1.filter((data, index) => (indexList.includes(index)))
+    }
+    if (device === 5) {
+        // gass
+        y1 = allData1.filter((data, index) => (indexList.includes(index)))
+    }
+    if (device === 6) {
+        // DHT
+        y1 = allData1.filter((data, index) => (indexList.includes(index)))
+        y2 = allData2.filter((data, index) => (indexList.includes(index)))
+    }
+
+    setYValue1(y1)
+    setYValue2(y2)
+    setXValue(x)
+}
+
+
+function dateToString(date) {
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate())
+}
+
+function getDateFromString(date) {
+    return date.split(' ')[0]
+}
+
+function getTimeFromString(date) {
+    return date.split(' ')[1]
+}

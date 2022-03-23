@@ -4,18 +4,40 @@ import time
 import sys
 from Adafruit_IO import MQTTClient
 
-AIO_FEED_IDS = ["bk-iot-gas", "bk-iot-humid",
-                "bk-iot-led", "bk-iot-light", "bk-iot-sound", "bk-iot-speaker", "bk-iot-temp"]
+AIO_FEED_IDS = ["bk-iot-led", "bk-iot-air-condition",
+                "bk-iot-sound-active", "bk-iot-light-active", "bk-iot-temp-active", "bk-iot-temp-limit", "bk-iot-light-limit", "bk-iot-sound-limit"]
 
 
 AIO_USERNAME = "vanh01"
 AIO_KEY = "aio_RDff323WxKWkxGi6BqCaEKQxHWur"
+
+lightLimit = 0
+soundLimit = 0
+tempLimit = 0
+gasLimit = 50
+
+led = "led-off"
+airCondition = "air-off"  # off: 2, on: 3
+speaker = "speaker-off"  # off: 4, on: 5
+
+lightActive = True
+soundActive = True
+tempActive = True
 
 
 def connected(client):
     print("Ket noi thanh cong...")
     for feed in AIO_FEED_IDS:
         client.subscribe(feed)
+
+    client.receive("bk-iot-led")
+    client.receive("bk-iot-air-condition")
+    client.receive("bk-iot-sound-active")
+    client.receive("bk-iot-light-active")
+    client.receive("bk-iot-temp-active")
+    client.receive("bk-iot-temp-limit")
+    client.receive("bk-iot-light-limit")
+    client.receive("bk-iot-sound-limit")
 
 
 def subscribe(client, userdata, mid, granted_qos):
@@ -29,49 +51,29 @@ def disconnected(client):
 
 def message(client, feed_id, payload):
     print("Nhan du lieu: " + payload)
-    if isMicrobitConnected:  # gui du lieu cho server
-        if feed_id == "bk-iot-sound":
-            pass  # gui du lieu cho server
-        elif feed_id == "bk-iot-light":
-            pass  # gui du lieu cho server
-        elif feed_id == "bk-iot-temp":
-            pass  # gui du lieu cho server
-        elif feed_id == "bk-iot-humi":
-            pass  # gui du lieu cho server
-        elif feed_id == "bk-iot-gas":
-            pass  # gui du lieu cho server
-        elif feed_id == "bk-iot-switch":
-            pass  # gui du lieu cho server
-        elif feed_id == "bk-iot-led":
-            # gui du lieu cho server
-            # gui du lieu cho microbit
+    if isMicrobitConnected:
+        if feed_id == "bk-iot-led":
             ser.write((str(payload) + "#").encode())
         elif feed_id == "bk-iot-air-condition":
-            # gui du lieu cho server
-            # gui du lieu cho microbit
-            ser.write((str(payload) + "#").encode())
-        elif feed_id == "bk-iot-speaker":
-            # gui du lieu cho server
-            # gui du lieu cho microbit
             ser.write((str(payload) + "#").encode())
         elif feed_id == "bk-iot-light-limit":
             global lightLimit
-            lightLimit = payload
+            lightLimit = int(payload)
         elif feed_id == "bk-iot-sound-limit":
             global soundLimit
-            soundLimit = payload
+            soundLimit = int(payload)
         elif feed_id == "bk-iot-temp-limit":
             global tempLimit
-            tempLimit = payload
+            tempLimit = int(payload)
         elif feed_id == "bk-iot-light-active":
             global lightActive
-            lightActive = payload
+            lightActive = True if payload == "true" else False
         elif feed_id == "bk-iot-sound-active":
             global soundActive
-            soundActive = payload
+            soundActive = True if payload == "true" else False
         elif feed_id == "bk-iot-temp-active":
             global tempActive
-            tempActive = payload
+            tempActive = True if payload == "true" else False
 
 
 client = MQTTClient(AIO_USERNAME, AIO_KEY)
@@ -88,19 +90,6 @@ isMicrobitConnected = False
 ser = serial.Serial(port="COM4", baudrate=115200)
 isMicrobitConnected = True
 
-lightLimit = 30
-soundLimit = 50
-tempLimit = 30
-gasLimit = 50
-
-led = "led-off"
-airCondition = 2  # off: 2, on: 3
-speaker = 4  # off: 4, on: 5
-
-lightActive = True
-soundActive = True
-tempActive = True
-
 
 def processData(data):
     #  format: !ID:KEY:VALUE#
@@ -111,23 +100,27 @@ def processData(data):
     global speaker
     global led
     global airCondition
+    global soundLimit
+    global lightLimit
+    global tempLimit
     try:
         key = splitData[1]
         value = int(splitData[2])
         if key == "TEMP":
-            client.publish("bk-iot-temp", value)  # gui du lieu cho adafruit
+            # client.publish("bk-iot-temp", value)  # gui du lieu cho adafruit
             if tempActive:
                 oldAirCondition = airCondition
                 if value > tempLimit:
-                    airCondition = 3
+                    airCondition = "air-on"
                 else:
-                    airCondition = 2
+                    airCondition = "air-off"
                 if airCondition != oldAirCondition:
                     client.publish("bk-iot-air-condition", airCondition)
         if key == "HUMID":
-            client.publish("bk-iot-humid", value)
+            # client.publish("bk-iot-humid", value)
+            pass
         elif key == "SOUND":
-            client.publish("bk-iot-sound", value)
+            # client.publish("bk-iot-sound", value)
             if soundActive:
                 if value > soundLimit:
                     if led == "led-off":
@@ -136,7 +129,7 @@ def processData(data):
                         led = "led-off"
                     client.publish("bk-iot-led", led)
         elif key == "LIGHT":
-            client.publish("bk-iot-light", value)
+            # client.publish("bk-iot-light", value)
             if lightActive:
                 oldLed = led
                 if value > lightLimit:
@@ -146,14 +139,16 @@ def processData(data):
                 if led != oldLed:
                     client.publish("bk-iot-led", led)
         elif key == "GAS":
-            client.publish("bk-iot-gas", value)
+            # client.publish("bk-iot-gas", value)
             oldSpeaker = speaker
             if value > gasLimit:
-                speaker = 5
+                speaker = "speaker-on"
             if speaker != oldSpeaker:
-                client.publish("bk-iot-speaker", speaker)
+                # client.publish("bk-iot-speaker", speaker)
+                pass
         elif key == "SWITCH":
-            ser.write()
+            pass
+            # ser.write()
     except:
         pass
 
@@ -179,5 +174,4 @@ def readSerial():
 while True:
     if isMicrobitConnected:
         readSerial()
-
     time.sleep(1)

@@ -1,16 +1,17 @@
 .addPage {
-    background-color: #d3e5ed;
-    height: 370px;
-    width: 600px;
-    position: fixed;
-    top: 20%;
-    left: 40%;
-    border-radius: 20px;
+    background-color: #fff;
+    width: 480px;
+    max-width:90%;
+    border-radius: 10px;
     box-sizing: border-box;
+    position: relative;
+    padding:10px;
 }
 
 .addForm {
     margin: 15px;
+    display: flex;
+    justify-content: space-between;
 }
 .addForm .col1 {
     float: left;
@@ -28,28 +29,36 @@
     margin-bottom: 15px;
     height: 30px;
     width: 200px;
+    padding: 0 5px;
     font-size: 1rem;
-    box-sizing: border-box;
-    text-align: center;
+    box-sizing: border-box;  border-radius: 5px;
+    border: 1px solid #aaa;
+    outline: none;
+}
+
+.add__button{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.add__button button {
+    width: 100px;
+    height: 30px;
     border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
 }
 
-.addForm .button-add {
-    margin-left: 67%;
-    margin-right: 3%;
-    width: 60px;
-    height: 30px;
-    font-size: 1rem;
-}
-.addForm .button-cancel {
-    margin: 0px 10px 0px 0px;
-    width: 60px;
-    height: 30px;
-    font-size: 1rem;
+.add__button button:hover {
+    opacity: 0.8;
 }
 
-.addForm .clear {
-    margin-top: -1px;
-    overflow: hidden;
-    clear: both;
+.add__button .button-add {
+    background-color:#BBFFF3;
 }
+
+.add__button .button-cancel {
+    margin-right: 5%;
+}
+

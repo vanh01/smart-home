@@ -1,59 +1,13 @@
 .modifyPage {
-    background-color: #d3e5ed;
-    height: 370px;
-    width: 600px;
-    position: fixed;
-    top: 20%;
-    left: 40%;
-    border-radius: 20px;
+    background-color: #fff;
+    width: 480px;
+    max-width:90%;
+    border-radius: 10px;
     box-sizing: border-box;
+    position: relative;
+    padding:10px;
 }
 
-.modifyForm {
-    margin: 15px;
-}
-.modifyForm .col1 {
-    float: left;
-    margin: 20px 40px 0px 40px;
-}
-.modifyForm .col2 {
-    float: left;
-    margin: 20px 40px 0px 40px;
-}
-.modifyForm label {
-    font-size: 1.2rem;
-}
-.modifyForm input,
-.modifyForm select {
-    margin-bottom: 15px;
-    height: 30px;
-    width: 200px;
-    font-size: 1rem;
-    box-sizing: border-box;
-    text-align: center;
-    border-radius: 5px;
-}
-
-.modifyForm .button-manage {
-    margin-left: 46%;
-    width: 120px;
-    height: 30px;
-}
-.modifyForm .button-save {
-    margin-left: 10px;
-    width: 60px;
-    height: 30px;
-    font-size: 1rem;
-}
-.modifyForm .button-delete {
-    margin-left: 10px;
-    width: 60px;
-    height: 30px;
-    font-size: 1rem;
-}
-
-.modifyForm .clear {
-    margin-top: -1px;
-    overflow: hidden;
-    clear: both;
+.add__button .button-manage{
+    margin-right: 25%;
 }

@@ -1,19 +1,28 @@
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import "bootstrap/dist/js/bootstrap.bundle.min";
-// import "font-awesome/css/font-awesome.min.css";
+import "font-awesome/css/font-awesome.min.css";
 import React from "react";
+import ManageApartment from "./ManageApartment";
+import Add from "./Add";
+import Modify from "./Modify";
 import { useState } from "react";
 
 const Manager = () => {
+    let [showApartment, setShowApartment] = useState(false)
+    let [showAdd, setShowAdd] = useState(false)
+    let [showModify, setShowModify] = useState(false)
     return (
         <>
-            <div className="container">
-                <div className="space"></div>
+            <div className="manager-container">
+                <div className="space-60"></div>
                 <div className="head-manager prefix">
-                    {/* <button className="btn btn-primary add-account float-start" type="button">
-                    Thêm mới +
-                </button> */}
-                    <button type="button" className="add">
+                    <button
+                        onClick={
+                            () => {
+                                setShowAdd(!showAdd);
+                            }
+                        }
+                        title="Thêm tài khoản" type="button" className="add-account">
                         <i className="fa fa-plus-circle" aria-hidden="true"></i>
                     </button>
 
@@ -33,34 +42,48 @@ const Manager = () => {
                     </div>
                     <div className="float-none"></div>
                 </div>
-
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-12">
-                            {/* /.card */}
-                            <div className="card">
-                                {/* /.card-header */}
-                                <div className="card-body">
-                                    <ShowTable />
-                                </div>
-                                {/* /.card-body */}
-                            </div>
-                            {/* /.card */}
-                        </div>
-                        {/* /.col */}
+                <div className="manager-card">
+                    <div className="manager-card-body">
+                        <ShowTable showApartment={showApartment} setShowApartment={setShowApartment} showModify={showModify} setShowModify={setShowModify} />
                     </div>
-                    {/* /.row */}
                 </div>
-                {/* /.container-fluid */}
             </div>
+            {showAdd ?
+                <div className="manager-bg" onClick={
+                    (e) => {
+                        if (e.target === document.querySelector('.manager-bg'))
+                            setShowAdd(false);
+
+                    }}>
+                    <Add setShowAdd={setShowAdd}/>
+                </div>
+                : ''}
+            {showModify ?
+                <div className="manager-bg" onClick={
+                    (e) => {
+                        if (e.target === document.querySelector('.manager-bg')) {
+                            setShowModify(false);
+                        }
+                    }}>
+                    <Modify setShowModify = {setShowModify} setShowApartment = {setShowApartment}/>
+                </div> : ''}
+            {showApartment ?
+                <div className="manager-bg" onClick={
+                    (e) => {
+                        if (e.target === document.querySelector('.manager-bg'))
+                            setShowApartment(false);
+                    }}>
+                    <ManageApartment setShowApartment = {setShowApartment}/>
+                </div> : ""}
         </>
     );
 };
 export default Manager;
 
-function ShowTable() {
+function ShowTable({ showApartment, setShowApartment, showModify, setShowModify }) {
+
     return (
-        <table id="example1" className="table table-bordered table-striped">
+        <table id="example1" className="manager-table">
             <thead>
                 <tr>
                     <th>Tên</th>
@@ -82,12 +105,12 @@ function ShowTable() {
                     <td>Quản trị viên</td>
                     <td>2022-03-09</td>
                     <td>2022-03-14</td>
-                    <td className="icon">
-                        <i
+                    <td className="manager-icon">
+                        <i onClick={() => setShowModify(!showModify)}
                             className="fa fa-pencil-square"
                             aria-hidden="true"
                         ></i>
-                        <i className="fa fa-home" aria-hidden="true"></i>
+                        <i onClick={() => setShowApartment(!showApartment)} className="fa fa-home" aria-hidden="true"></i>
                     </td>
                 </tr>
                 <tr>
@@ -98,12 +121,12 @@ function ShowTable() {
                     <td>Người dùng</td>
                     <td>2022-03-09</td>
                     <td>2022-03-14</td>
-                    <td className="icon">
-                        <i
+                    <td className="manager-icon">
+                        <i onClick={() => setShowModify(!showModify)}
                             className="fa fa-pencil-square"
                             aria-hidden="true"
                         ></i>
-                        <i className="fa fa-home" aria-hidden="true"></i>
+                        <i onClick={() => setShowApartment(!showApartment)} className="fa fa-home" aria-hidden="true"></i>
                     </td>
                 </tr>
                 <tr>
@@ -114,12 +137,12 @@ function ShowTable() {
                     <td>Người dùng</td>
                     <td>2022-03-09</td>
                     <td>2022-03-14</td>
-                    <td className="icon">
-                        <i
+                    <td className="manager-icon">
+                        <i onClick={() => setShowModify(!showModify)}
                             className="fa fa-pencil-square"
                             aria-hidden="true"
                         ></i>
-                        <i className="fa fa-home" aria-hidden="true"></i>
+                        <i onClick={() => setShowApartment(!showApartment)} className="fa fa-home" aria-hidden="true"></i>
                     </td>
                 </tr>
             </tbody>

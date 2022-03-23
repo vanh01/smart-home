@@ -8,8 +8,9 @@ const NavbarAdmin = () => {
                 <Link to="/signin">
                     <input type="button" value="Đăng xuất" />
                 </Link>
-                <Link to="/manageaccount">
+                <Link to="/manageaccount" className="navbar__select">
                     <input type="button" value="Quản lý tài khoản" />
+                    <div className="navbar__select-curve"></div>
                 </Link>
             </div>
         </>

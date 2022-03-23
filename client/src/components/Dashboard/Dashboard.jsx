@@ -1,20 +1,45 @@
 import React, { useEffect, useState } from "react";
+import myAdafruitApi from "../../AdafruitApi";
 
 const Dashboard = () => {
     document.title = "Điều khiển";
-
-    const [lightOn, setLightOn] = useState(false);
+    console.log("dieu khien");
+    const [ledOn, setLedOn] = useState(false);
     const [airConditionedOn, setAirConditionedOn] = useState(false);
-    const [soundLimit, setSoundLimit] = useState(0);
-    const [lightLimit, setLightLimit] = useState(0);
-    const [tempLimit, setTempLimit] = useState(0);
+    const [soundLimit, setSoundLimit] = useState("");
+    const [lightLimit, setLightLimit] = useState("");
+    const [tempLimit, setTempLimit] = useState("");
 
     const [soundActive, setSoundActive] = useState(false);
     const [lightActive, setLightActive] = useState(false);
     const [tempActive, setTempActive] = useState(false);
-    // console.log(lightOn);
 
-    useEffect(() => {}, []);
+    const getData = async () => {
+        setLedOn(await myAdafruitApi.getInstance().getLed());
+        setAirConditionedOn(await myAdafruitApi.getInstance().getAir());
+        setSoundActive(
+            await myAdafruitApi.getInstance().getActive("bk-iot-sound-active")
+        );
+        setLightActive(
+            await myAdafruitApi.getInstance().getActive("bk-iot-light-active")
+        );
+        setTempActive(
+            await myAdafruitApi.getInstance().getActive("bk-iot-temp-active")
+        );
+
+        setSoundLimit(
+            await myAdafruitApi.getInstance().getData("bk-iot-sound-limit")
+        );
+        setLightLimit(
+            await myAdafruitApi.getInstance().getData("bk-iot-light-limit")
+        );
+        setTempLimit(
+            await myAdafruitApi.getInstance().getData("bk-iot-temp-limit")
+        );
+    };
+
+    useEffect(() => getData(), []);
+
     return (
         <>
             <div className="dashboard">
@@ -31,10 +56,25 @@ const Dashboard = () => {
                                         type="checkbox"
                                         checked={soundActive}
                                         onChange={(e) => {
-                                            if (e.target.checked === true) {
+                                            if (
+                                                e.target.checked === true &&
+                                                lightActive === true
+                                            ) {
                                                 setLightActive(false);
+                                                myAdafruitApi
+                                                    .getInstance()
+                                                    .postData(
+                                                        "false",
+                                                        "bk-iot-light-active"
+                                                    );
                                             }
                                             setSoundActive(e.target.checked);
+                                            myAdafruitApi
+                                                .getInstance()
+                                                .postData(
+                                                    e.target.checked.toString(),
+                                                    "bk-iot-sound-active"
+                                                );
                                         }}
                                     />
                                     <div className="toggle__fill"></div>
@@ -45,8 +85,14 @@ const Dashboard = () => {
                                 <input
                                     type="text"
                                     defaultValue={soundLimit}
-                                    onChange={(e) => {
+                                    onBlur={(e) => {
                                         setSoundLimit(e.target.value);
+                                        myAdafruitApi
+                                            .getInstance()
+                                            .postData(
+                                                e.target.value.toString(),
+                                                "bk-iot-sound-limit"
+                                            );
                                     }}
                                 />
                             </div>
@@ -61,10 +107,25 @@ const Dashboard = () => {
                                         type="checkbox"
                                         checked={lightActive}
                                         onChange={(e) => {
-                                            if (e.target.checked === true) {
+                                            if (
+                                                e.target.checked === true &&
+                                                soundActive === true
+                                            ) {
                                                 setSoundActive(false);
+                                                myAdafruitApi
+                                                    .getInstance()
+                                                    .postData(
+                                                        "false",
+                                                        "bk-iot-sound-active"
+                                                    );
                                             }
                                             setLightActive(e.target.checked);
+                                            myAdafruitApi
+                                                .getInstance()
+                                                .postData(
+                                                    e.target.checked.toString(),
+                                                    "bk-iot-light-active"
+                                                );
                                         }}
                                     />
                                     <div className="toggle__fill"></div>
@@ -75,8 +136,14 @@ const Dashboard = () => {
                                 <input
                                     type="text"
                                     defaultValue={lightLimit}
-                                    onChange={(e) => {
+                                    onBlur={(e) => {
                                         setLightLimit(e.target.value);
+                                        myAdafruitApi
+                                            .getInstance()
+                                            .postData(
+                                                e.target.value.toString(),
+                                                "bk-iot-light-limit"
+                                            );
                                     }}
                                 />
                             </div>
@@ -89,10 +156,21 @@ const Dashboard = () => {
                                         className="toggle__input"
                                         name=""
                                         type="checkbox"
-                                        checked={lightOn}
+                                        checked={ledOn}
                                         onChange={(e) => {
-                                            setLightActive(false);
-                                            setLightOn(e.target.checked);
+                                            if (lightActive === true) {
+                                                setLightActive(false);
+                                                myAdafruitApi
+                                                    .getInstance()
+                                                    .postData(
+                                                        "false",
+                                                        "bk-iot-light-active"
+                                                    );
+                                            }
+                                            setLedOn(e.target.checked);
+                                            myAdafruitApi
+                                                .getInstance()
+                                                .switchLed(e.target.checked);
                                         }}
                                     />
                                     <div className="toggle__fill"></div>
@@ -108,11 +186,16 @@ const Dashboard = () => {
                                 <label className="toggle">
                                     <input
                                         className="toggle__input"
-                                        name=""
                                         type="checkbox"
                                         checked={tempActive}
                                         onChange={(e) => {
                                             setTempActive(e.target.checked);
+                                            myAdafruitApi
+                                                .getInstance()
+                                                .postData(
+                                                    e.target.checked.toString(),
+                                                    "bk-iot-temp-active"
+                                                );
                                         }}
                                     />
                                     <div className="toggle__fill"></div>
@@ -123,8 +206,14 @@ const Dashboard = () => {
                                 <input
                                     type="text"
                                     defaultValue={tempLimit}
-                                    onChange={(e) => {
+                                    onBlur={(e) => {
                                         setTempLimit(e.target.value);
+                                        myAdafruitApi
+                                            .getInstance()
+                                            .postData(
+                                                e.target.value.toString(),
+                                                "bk-iot-temp-limit"
+                                            );
                                     }}
                                 />
                             </div>
@@ -142,6 +231,9 @@ const Dashboard = () => {
                                             setAirConditionedOn(
                                                 e.target.checked
                                             );
+                                            myAdafruitApi
+                                                .getInstance()
+                                                .switchAir(e.target.checked);
                                         }}
                                     />
                                     <div className="toggle__fill"></div>

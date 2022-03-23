@@ -7,7 +7,13 @@ import Add from "./Add";
 import Modify from "./Modify";
 import { useState } from "react";
 
+
 const Manager = () => {
+    let [accounts, setAccount] = useState([
+        { name: "Trần Văn A", phone: "0987123456", password: "abc123456", email: "abc@gmail.com", access: "Quản trị viên", createDate: "2022-3-09", updateDate: "2022-3-14" },
+        { name: "Trần Văn B", phone: "0987123123", password: "abc123456", email: "acb@gmail.com", access: "Người dùng", createDate: "2022-3-10", updateDate: "2022-3-14" },
+        { name: "Trần Văn C", phone: "0987123111", password: "abc123456", email: "cab@gmail.com", access: "Người dùng", createDate: "2022-3-11", updateDate: "2022-3-14" },
+    ])
     let [showApartment, setShowApartment] = useState(false)
     let [showAdd, setShowAdd] = useState(false)
     let [showModify, setShowModify] = useState(false)
@@ -44,7 +50,7 @@ const Manager = () => {
                 </div>
                 <div className="manager-card">
                     <div className="manager-card-body">
-                        <ShowTable showApartment={showApartment} setShowApartment={setShowApartment} showModify={showModify} setShowModify={setShowModify} />
+                        <ShowTable showApartment={showApartment} setShowApartment={setShowApartment} showModify={showModify} setShowModify={setShowModify} accounts={accounts} setAccount={setAccount} />
                     </div>
                 </div>
             </div>
@@ -55,7 +61,7 @@ const Manager = () => {
                             setShowAdd(false);
 
                     }}>
-                    <Add setShowAdd={setShowAdd}/>
+                    <Add setShowAdd={setShowAdd} accounts={accounts} setAccount={setAccount} />
                 </div>
                 : ''}
             {showModify ?
@@ -65,7 +71,7 @@ const Manager = () => {
                             setShowModify(false);
                         }
                     }}>
-                    <Modify setShowModify = {setShowModify} setShowApartment = {setShowApartment}/>
+                    <Modify setShowModify={setShowModify} setShowApartment={setShowApartment} />
                 </div> : ''}
             {showApartment ?
                 <div className="manager-bg" onClick={
@@ -73,15 +79,19 @@ const Manager = () => {
                         if (e.target === document.querySelector('.manager-bg'))
                             setShowApartment(false);
                     }}>
-                    <ManageApartment setShowApartment = {setShowApartment}/>
+                    <ManageApartment setShowApartment={setShowApartment} />
                 </div> : ""}
         </>
     );
 };
 export default Manager;
 
-function ShowTable({ showApartment, setShowApartment, showModify, setShowModify }) {
-
+function ShowTable({ showApartment, setShowApartment, showModify, setShowModify, accounts, setAccount }) {
+    // let [accounts, setAccount] = useState([
+    //     { name: "Trần Văn A", phone: "0987123456", password: "abc123456", email: "abc@gmail.com", access: "Quản trị viên", createDate: "2022-03-09", updateDate: "2022-03-14" },
+    //     { name: "Trần Văn B", phone: "0987123123", password: "abc123456", email: "acb@gmail.com", access: "Người dùng", createDate: "2022-03-10", updateDate: "2022-03-14" },
+    //     { name: "Trần Văn C", phone: "0987123111", password: "abc123456", email: "cab@gmail.com", access: "Người dùng", createDate: "2022-03-11", updateDate: "2022-03-14" },
+    // ])
     return (
         <table id="example1" className="manager-table">
             <thead>
@@ -97,54 +107,28 @@ function ShowTable({ showApartment, setShowApartment, showModify, setShowModify 
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Trần Văn A</td>
-                    <td>0987123456 </td>
-                    <td>abc123456</td>
-                    <td>abc@gmail.com</td>
-                    <td>Quản trị viên</td>
-                    <td>2022-03-09</td>
-                    <td>2022-03-14</td>
-                    <td className="manager-icon">
-                        <i onClick={() => setShowModify(!showModify)}
-                            className="fa fa-pencil-square"
-                            aria-hidden="true"
-                        ></i>
-                        <i onClick={() => setShowApartment(!showApartment)} className="fa fa-home" aria-hidden="true"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Trần Văn B</td>
-                    <td>0987123123 </td>
-                    <td>abc123456</td>
-                    <td>acb@gmail.com</td>
-                    <td>Người dùng</td>
-                    <td>2022-03-09</td>
-                    <td>2022-03-14</td>
-                    <td className="manager-icon">
-                        <i onClick={() => setShowModify(!showModify)}
-                            className="fa fa-pencil-square"
-                            aria-hidden="true"
-                        ></i>
-                        <i onClick={() => setShowApartment(!showApartment)} className="fa fa-home" aria-hidden="true"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Trần Văn C</td>
-                    <td>0987456123 </td>
-                    <td>abc123456</td>
-                    <td>bac@gmail.com</td>
-                    <td>Người dùng</td>
-                    <td>2022-03-09</td>
-                    <td>2022-03-14</td>
-                    <td className="manager-icon">
-                        <i onClick={() => setShowModify(!showModify)}
-                            className="fa fa-pencil-square"
-                            aria-hidden="true"
-                        ></i>
-                        <i onClick={() => setShowApartment(!showApartment)} className="fa fa-home" aria-hidden="true"></i>
-                    </td>
-                </tr>
+                
+                {
+                    accounts.map((account) => (
+                        <tr>
+                            <td>{account.name}</td>
+                            <td>{account.phone}</td>
+                            <td>{account.password}</td>
+                            <td>{account.email}</td>
+                            <td>{account.access}</td>
+                            <td>{account.createDate}</td>
+                            <td>{account.updateDate}</td>
+                            <td className="manager-icon">
+                                <i onClick={() => setShowModify(!showModify)}
+                                    className="fa fa-pencil-square"
+                                    aria-hidden="true"
+                                ></i>
+                                <i onClick={() => setShowApartment(!showApartment)} className="fa fa-home" aria-hidden="true"></i>
+                            </td>
+                        </tr>
+                    ))
+                }
+                
             </tbody>
         </table>
     );

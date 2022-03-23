@@ -7,12 +7,12 @@ import '../../css/manager.css'
 
 const ManageAccount = () => {
     return (
-        <div style = {{position: 'relative'}}>
+        <>
             <Manager />
-            <ManageApartment />
+            {/* <ManageApartment /> */}
             {/* <Add /> */}
             {/* <Modify /> */}
-        </div>
+        </>
     );
 };
 

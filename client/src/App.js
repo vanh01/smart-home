@@ -3,6 +3,7 @@ import DashboardPage from "./pages/DashboardPage"
 import ActivitylogPage from "./pages/ActivityLogPage"
 import ManageAccountPage from "./pages/ManageAccountPage";
 import ForgotPassword from "./components/Signin/ForgotPassword";
+import ManagerPage from "./pages/ManagerPage"
 import { Route, Routes } from "react-router-dom";
 import './css/activity.css'
 import './css/signin.css'

@@ -35,7 +35,7 @@ const Add = ({ setShowAdd, accounts, setAccount }) => {
 							var email = document.querySelector('.email').value;
 							var password = document.querySelector('.password').value;
 							var passwordAgain = document.querySelector('.passwordAgain').value;
-							if (!phone){
+							if (!phone) {
 								alert('Vui lòng nhập đúng số điện thoại');
 							}
 							else if (!name) {
@@ -47,7 +47,7 @@ const Add = ({ setShowAdd, accounts, setAccount }) => {
 							else if (password !== passwordAgain) {
 								alert('Nhập lại mật khẩu không chính xác, vui lòng nhập lại');
 							}
-							else if (!email){
+							else if (!email) {
 								alert('Vui lòng nhập email');
 							}
 							else {
@@ -63,6 +63,7 @@ const Add = ({ setShowAdd, accounts, setAccount }) => {
 								}
 								console.log(newData);
 								setAccount([...accounts, newData]);
+								setShowAdd(false)
 							}
 
 						}}

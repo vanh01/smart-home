@@ -6,3 +6,39 @@
 body {
     overflow-y: hidden;
 }
+
+.home video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+}
+
+.home button {
+    position: absolute;
+    /* right: 10px;
+    bottom: 10px; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100px;
+    width: 300px;
+    border: none;
+    border-radius: 10px;
+    font-size: 40px;
+    opacity: 0.7;
+    color: #fff;
+    background-color: #62baea;
+    cursor: pointer;
+    font-family: "sans-serif";
+    user-select: none;
+}
+
+.home button:hover {
+    border: 1px solid #62baea;
+    background-color: #fff;
+    opacity: 0.9;
+    color: black;
+}

@@ -9,7 +9,7 @@ AIO_FEED_IDS = ["bk-iot-led", "bk-iot-air-condition",
 
 
 AIO_USERNAME = "vanh01"
-AIO_KEY = "aio_RDff323WxKWkxGi6BqCaEKQxHWur"
+AIO_KEY = "aio_nlle75SnyUL2NO8OdkLwqJoqH6pF"
 
 lightLimit = 0
 soundLimit = 0
@@ -29,15 +29,7 @@ def connected(client):
     print("Ket noi thanh cong...")
     for feed in AIO_FEED_IDS:
         client.subscribe(feed)
-
-    client.receive("bk-iot-led")
-    client.receive("bk-iot-air-condition")
-    client.receive("bk-iot-sound-active")
-    client.receive("bk-iot-light-active")
-    client.receive("bk-iot-temp-active")
-    client.receive("bk-iot-temp-limit")
-    client.receive("bk-iot-light-limit")
-    client.receive("bk-iot-sound-limit")
+        client.receive(feed)
 
 
 def subscribe(client, userdata, mid, granted_qos):

@@ -31,12 +31,27 @@ button.add-account i:hover {
     display: flow-root;
     padding: 20px;
 }
-.activity__date.float-end{
+.float-end{
     float: right;
 }
 
-.activity__date.float-end .fa-arrow-right {
+
+.search-account-input {
+    /* margin-bottom: 15px; */
+    height: 30px;
+    width: 200px;
     padding: 0 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    outline: none;
+}
+
+.search-account-btn {
+    padding: 0 5px;
+    margin: 0 5px;
+    height: 20px
 }
 
 .float-none{

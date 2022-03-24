@@ -14,9 +14,12 @@ const Manager = () => {
         { name: "Trần Văn B", phone: "0987123123", password: "abc123456", email: "acb@gmail.com", access: "Người dùng", createDate: "2022-3-10", updateDate: "2022-3-14" },
         { name: "Trần Văn C", phone: "0987123111", password: "abc123456", email: "cab@gmail.com", access: "Người dùng", createDate: "2022-3-11", updateDate: "2022-3-14" },
     ])
+    let [curIndex, setCurIndex] = useState(0)
     let [showApartment, setShowApartment] = useState(false)
     let [showAdd, setShowAdd] = useState(false)
     let [showModify, setShowModify] = useState(false)
+
+    console.log(curIndex)
     return (
         <>
             <div className="manager-container">
@@ -50,7 +53,7 @@ const Manager = () => {
                 </div>
                 <div className="manager-card">
                     <div className="manager-card-body">
-                        <ShowTable showApartment={showApartment} setShowApartment={setShowApartment} showModify={showModify} setShowModify={setShowModify} accounts={accounts} setAccount={setAccount} />
+                        <ShowTable showApartment={showApartment} setShowApartment={setShowApartment} showModify={showModify} setShowModify={setShowModify} accounts={accounts} setCurIndex={setCurIndex} />
                     </div>
                 </div>
             </div>
@@ -71,7 +74,7 @@ const Manager = () => {
                             setShowModify(false);
                         }
                     }}>
-                    <Modify setShowModify={setShowModify} setShowApartment={setShowApartment} />
+                    <Modify setShowModify={setShowModify} setShowApartment={setShowApartment} curIndex={curIndex} accounts={accounts} setAccount={setAccount} />
                 </div> : ''}
             {showApartment ?
                 <div className="manager-bg" onClick={
@@ -86,12 +89,7 @@ const Manager = () => {
 };
 export default Manager;
 
-function ShowTable({ showApartment, setShowApartment, showModify, setShowModify, accounts, setAccount }) {
-    // let [accounts, setAccount] = useState([
-    //     { name: "Trần Văn A", phone: "0987123456", password: "abc123456", email: "abc@gmail.com", access: "Quản trị viên", createDate: "2022-03-09", updateDate: "2022-03-14" },
-    //     { name: "Trần Văn B", phone: "0987123123", password: "abc123456", email: "acb@gmail.com", access: "Người dùng", createDate: "2022-03-10", updateDate: "2022-03-14" },
-    //     { name: "Trần Văn C", phone: "0987123111", password: "abc123456", email: "cab@gmail.com", access: "Người dùng", createDate: "2022-03-11", updateDate: "2022-03-14" },
-    // ])
+function ShowTable({ showApartment, setShowApartment, showModify, setShowModify, accounts, setCurIndex }) {
     return (
         <table id="example1" className="manager-table">
             <thead>
@@ -107,10 +105,10 @@ function ShowTable({ showApartment, setShowApartment, showModify, setShowModify,
                 </tr>
             </thead>
             <tbody>
-                
+
                 {
                     accounts.map((account) => (
-                        <tr>
+                        <tr key={account.phone}>
                             <td>{account.name}</td>
                             <td>{account.phone}</td>
                             <td>{account.password}</td>
@@ -119,7 +117,12 @@ function ShowTable({ showApartment, setShowApartment, showModify, setShowModify,
                             <td>{account.createDate}</td>
                             <td>{account.updateDate}</td>
                             <td className="manager-icon">
-                                <i onClick={() => setShowModify(!showModify)}
+                                <i onClick={(e) => {
+                                    let curPhone = e.target.parentNode.parentNode.querySelectorAll('td')[1].innerText
+                                    setCurIndex(accounts.findIndex((account) => { return account.phone.indexOf(curPhone) !== -1 }))
+                                    setShowModify(!showModify)
+
+                                }}
                                     className="fa fa-pencil-square"
                                     aria-hidden="true"
                                 ></i>
@@ -128,8 +131,9 @@ function ShowTable({ showApartment, setShowApartment, showModify, setShowModify,
                         </tr>
                     ))
                 }
-                
+
             </tbody>
         </table>
     );
 }
+

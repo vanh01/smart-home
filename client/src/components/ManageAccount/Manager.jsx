@@ -35,19 +35,17 @@ const Manager = () => {
                         <i className="fa fa-plus-circle" aria-hidden="true"></i>
                     </button>
 
-                    <div className="activity__date float-end">
+                    <div className="search-account float-end">
                         <input
-                            type="date"
-                            className="date__select-box date__select"
-                            defaultValue="2022-03-14"
+                            type="text"
+                            className="search-account-input"
                         ></input>
                         {/* <i className="fa-regular fa-arrow-right"></i> */}
-                        <i className="fa fa-arrow-right" aria-hidden="true"></i>
-                        <input
-                            type="date"
-                            className="date__select-box date__select"
-                            defaultValue="2022-03-14"
-                        ></input>
+                        {/* <i className="fa fa-arrow-right" aria-hidden="true"></i> */}
+                        <button 
+                            className="search-account-btn"
+                            type="button"
+                        >Tìm kiếm</button>
                     </div>
                     <div className="float-none"></div>
                 </div>

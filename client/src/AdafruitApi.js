@@ -1,7 +1,7 @@
 var myAdafruitApi = (function () {
     var instance;
     var userName = "vanh01"; // username
-    var xAioKey = "aio_RDff323WxKWkxGi6BqCaEKQxHWur"; // active key
+    var xAioKey = "aio_nlle75SnyUL2NO8OdkLwqJoqH6pF"; // active key
 
     const get = async (feedKey) => {
         var myHeaders = new Headers();

@@ -19,6 +19,7 @@ gasLimit = 50
 led = "led-off"
 airCondition = "air-off"  # off: 2, on: 3
 speaker = "speaker-off"  # off: 4, on: 5
+oldAirCondition = airCondition
 
 lightActive = True
 soundActive = True
@@ -47,6 +48,7 @@ def message(client, feed_id, payload):
         if feed_id == "bk-iot-led":
             ser.write((str(payload) + "#").encode())
         elif feed_id == "bk-iot-air-condition":
+            print("aaaaaa")
             ser.write((str(payload) + "#").encode())
         elif feed_id == "bk-iot-light-limit":
             global lightLimit
@@ -77,10 +79,26 @@ client.connect()
 client.loop_background()
 
 
+def getPort():
+    ports = serial.tools.list_ports.comports()
+    N = len(ports)
+    commPort = "None"
+    for i in range(0, N):
+        port = ports[i]
+        strPort = str(port)
+        if "USB Serial Device" in strPort:
+            splitPort = strPort.split(" ")
+            commPort = (splitPort[0])
+    return commPort
+
+
 isMicrobitConnected = False
 
-ser = serial.Serial(port="COM4", baudrate=115200)
-isMicrobitConnected = True
+# ser = serial.Serial(port="COM4", baudrate=115200)
+# isMicrobitConnected = True
+if getPort() != " None ":
+    ser = serial . Serial(port=getPort(), baudrate=115200)
+    isMicrobitConnected = True
 
 
 def processData(data):
@@ -95,12 +113,14 @@ def processData(data):
     global soundLimit
     global lightLimit
     global tempLimit
+    global oldAirCondition
     try:
         key = splitData[1]
         value = int(splitData[2])
         if key == "TEMP":
             # client.publish("bk-iot-temp", value)  # gui du lieu cho adafruit
             if tempActive:
+                print("air <----")
                 oldAirCondition = airCondition
                 if value > tempLimit:
                     airCondition = "air-on"
@@ -124,7 +144,7 @@ def processData(data):
             # client.publish("bk-iot-light", value)
             if lightActive:
                 oldLed = led
-                if value > lightLimit:
+                if value < lightLimit:
                     led = "led-on"
                 else:
                     led = "led-off"
@@ -139,6 +159,13 @@ def processData(data):
                 # client.publish("bk-iot-speaker", speaker)
                 pass
         elif key == "SWITCH":
+
+            if value == 1:
+                if led == 'led-on':
+                    led = 'led-off'
+                else:
+                    led = 'led-on'
+                client.publish("bk-iot-led", led)
             pass
             # ser.write()
     except:

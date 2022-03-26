@@ -28,7 +28,7 @@ body {
     border: none;
     border-radius: 10px;
     font-size: 40px;
-    opacity: 0.7;
+    opacity: 0.9;
     color: #fff;
     background-color: #62baea;
     cursor: pointer;
@@ -38,7 +38,7 @@ body {
 
 .home button:hover {
     border: 1px solid #62baea;
-    background-color: #fff;
+    background-color: green;
     opacity: 0.9;
     color: black;
 }

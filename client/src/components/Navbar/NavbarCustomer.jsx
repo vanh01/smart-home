@@ -39,7 +39,7 @@ const NavbarCustomer = ({diarySelected = false}) => {
                 </ul>
             </div>
             <div className="navbar">
-                <Link to="/signin">
+                <Link to="/">
                     <input type="button" value="Đăng xuất" />
                 </Link>
                 <Link to="/activitylog" id="navbar__activity-log" className={diarySelected ? "navbar__select" : ""}>

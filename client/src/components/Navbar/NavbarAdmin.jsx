@@ -7,7 +7,7 @@ const NavbarAdmin = () => {
     return (
         <>
             <div className="navbar">
-                <Link to="/signin">
+                <Link to="/">
                     <input type="button" value="Đăng xuất" />
                 </Link>
                 <Link to="/manageaccount" className="navbar__select">

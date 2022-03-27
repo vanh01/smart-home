@@ -2,6 +2,7 @@ using System.Data;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using server.Models;
 
 namespace server
 {

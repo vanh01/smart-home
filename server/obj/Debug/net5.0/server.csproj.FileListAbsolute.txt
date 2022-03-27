@@ -38,6 +38,10 @@ D:\212\dadn\smart-home\server\bin\Debug\net5.0\System.Configuration.Configuratio
 D:\212\dadn\smart-home\server\bin\Debug\net5.0\System.Security.Cryptography.ProtectedData.dll
 D:\212\dadn\smart-home\server\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 <<<<<<< HEAD
+D:\212\dadn\smart-home\server\bin\Debug\net5.0\Newtonsoft.Json.dll
+D:\212\dadn\smart-home\server\bin\Debug\net5.0\System.Net.WebSockets.WebSocketProtocol.dll
+=======
+<<<<<<< HEAD
 D:\Project Web\SmartHome\server\bin\Debug\net5.0\appsettings.Development.json
 D:\Project Web\SmartHome\server\bin\Debug\net5.0\appsettings.json
 D:\Project Web\SmartHome\server\bin\Debug\net5.0\server.exe
@@ -119,4 +123,5 @@ D:\CS-HCMUT\IoT\Git\smart-home\server\obj\Debug\net5.0\server.dll
 D:\CS-HCMUT\IoT\Git\smart-home\server\obj\Debug\net5.0\ref\server.dll
 D:\CS-HCMUT\IoT\Git\smart-home\server\obj\Debug\net5.0\server.pdb
 D:\CS-HCMUT\IoT\Git\smart-home\server\obj\Debug\net5.0\server.genruntimeconfig.cache
+>>>>>>> master
 >>>>>>> master

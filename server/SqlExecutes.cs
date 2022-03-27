@@ -11,7 +11,8 @@ namespace server
 
         public static SqlExecutes Instance => _instance;
 
-        private readonly string connString = "Server=127.0.0.1; Database=test; port=3306; User Id=root; password=vietanh;";
+        // private readonly string connString = "Server=127.0.0.1; Database=test; port=3306; User Id=root; password=vietanh;";
+        private readonly string connString = "Server=127.0.0.1;port=3306;User Id=root;password=;Database=dadn;";
 
         public DataTable ExcuteQuery(string query)
         {
@@ -19,14 +20,21 @@ namespace server
 
             using (MySqlConnection conn = new MySqlConnection(connString))
             {
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                try
                 {
-                    conn.Open();
-                    MySqlDataReader reader = cmd.ExecuteReader();
-                    dataTable.Load(reader);
-                    reader.Close();
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        conn.Open();
+                        MySqlDataReader reader = cmd.ExecuteReader();
+                        dataTable.Load(reader);
+                        reader.Close();
+                    }
+                    conn.Close();
                 }
-                conn.Close();
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
             return dataTable;
         }
@@ -35,12 +43,18 @@ namespace server
             int numberOfRow = 0;
             using (MySqlConnection conn = new MySqlConnection(connString))
             {
+                 try
+                {
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     conn.Open();
                     numberOfRow = cmd.ExecuteNonQuery();
                 }
                 conn.Close();
+                }
+                catch (Exception e){
+                    Console.WriteLine(e);
+                }
             }
             return numberOfRow;
         }

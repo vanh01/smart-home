@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import myAdafruitApi from "../../AdafruitApi";
+import * as signalR from "@microsoft/signalr";
 
 const Dashboard = () => {
     document.title = "Điều khiển";
@@ -37,8 +38,23 @@ const Dashboard = () => {
             await myAdafruitApi.getInstance().getData("bk-iot-temp-limit")
         );
     };
+    useEffect(() => {
+        const hubConnection = new signalR.HubConnectionBuilder()
+            .withUrl("https://localhost:5001/hubs/account")
+            .withAutomaticReconnect()
+            .build();
+        // getData();
+        hubConnection
+            .start()
+            .then((result) => {
+                console.log("Connected!");
 
-    useEffect(() => getData(), []);
+                hubConnection.on("account", (message) => {
+                    console.log(message);
+                });
+            })
+            .catch((e) => console.log("Connection failed: ", e));
+    }, []);
 
     return (
         <>

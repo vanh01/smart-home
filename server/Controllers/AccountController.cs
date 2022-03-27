@@ -2,7 +2,6 @@ using System.Data;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using MySql.Data.MySqlClient;
 
 namespace server.Controllers
 {
@@ -10,29 +9,49 @@ namespace server.Controllers
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
-
-        [HttpGet]
-        public IEnumerable<Account> GetAccounts()
+        [HttpPost]
+        public int GetAccounts([FromBody] Account account)
         {
-            List<Account> result = new List<Account>();
+            int dt;
+            {
+                string query = $"insert into account() value(\"{account.phonenumber}\", \"{account.password}\", {account.rules}, \"{account.privatekey}\");";
 
-            DataTable dt = new DataTable();
-
-            string query = "SELECT * FROM test.account";
-
-            dt = SqlExecutes.Instance.ExcuteQuery(query);
-
-            // foreach (DataRow dr in dt.Rows)
-            // {
-            //     string phonenumber = dr["phonenumber"].ToString();
-            //     string password = dr["password"].ToString();
-            //     int rules = Convert.ToInt32(dr["rules"].ToString());
-            //     result.Add(new Account() { phonenumber = phonenumber, password = password, rules = rules });
-            // }
-
-            result = dt.ToList<Account>();
-
-            return result;
+                dt = SqlExecutes.Instance.ExcuteNonQuery(query);
+            }
+            return dt;
         }
+        [HttpGet]
+        public List<Account> GetAccount()
+        {
+            string query = $"select * from account;";
+            var temp = SqlExecutes.Instance.ExcuteQuery(query); 
+            return temp.ToList<Account>();
+        }
+
+        
+        [HttpGet]
+        [Route("key")]
+
+        public string GetKey([FromQuery] string username, string password)
+        {
+            string query = $"SELECT * FROM account WHERE phonenumber='{username}' AND password='{password}';";
+            var temp = SqlExecutes.Instance.ExcuteQuery(query); 
+            // Console.WriteLine(temp.GetType());
+            // Console.WriteLine(temp.ToList<Account>());
+            List<Account> accounts = temp.ToList<Account>();
+            Account account = accounts[0];
+            string result = account.privatekey;
+            return result;
+
+        }
+        // public string GetKey([FromQuery] string username, string password)
+        // {
+        //     string query = $"SELECT privatekey FROM account WHERE phonenumber='{username}' AND password='{password}';";
+        //     var temp = SqlExecutes.Instance.ExcuteQuery(query); 
+        //     Console.WriteLine(temp.GetType());
+        //     // Console.WriteLine(temp.ToList<Account>());
+        //     return temp.ToString();
+        // }
+                
     }
 }

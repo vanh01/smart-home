@@ -228,6 +228,9 @@ const Dashboard = () => {
                                         type="checkbox"
                                         checked={airConditionedOn}
                                         onChange={(e) => {
+                                            if (tempActive === true) {
+                                                setTempActive(false);
+                                            }
                                             setAirConditionedOn(
                                                 e.target.checked
                                             );

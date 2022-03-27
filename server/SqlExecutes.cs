@@ -13,6 +13,7 @@ namespace server
 
         // private readonly string connString = "Server=127.0.0.1; Database=test; port=3306; User Id=root; password=vietanh;";
         private readonly string connString = "Server=127.0.0.1;port=3306;User Id=root;password=;Database=dadn;";
+        // private readonly string connString = "Server=127.0.0.1; Database=test; port=3306; User Id=root; password=kudo2311;";
 
         public DataTable ExcuteQuery(string query)
         {

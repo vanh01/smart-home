@@ -85,10 +85,8 @@ G:\data\212\DATH\Code\web\smart-home\server\bin\Debug\net5.0\Newtonsoft.Json.dll
 G:\data\212\DATH\Code\web\smart-home\server\bin\Debug\net5.0\Remote.Linq.dll
 G:\data\212\DATH\Code\web\smart-home\server\bin\Debug\net5.0\Remote.Linq.Newtonsoft.Json.dll
 =======
-<<<<<<< HEAD
 D:\212\dadn\smart-home\server\bin\Debug\net5.0\Newtonsoft.Json.dll
 D:\212\dadn\smart-home\server\bin\Debug\net5.0\System.Net.WebSockets.WebSocketProtocol.dll
-=======
 D:\Project Web\SmartHome\server\bin\Debug\net5.0\appsettings.Development.json
 D:\Project Web\SmartHome\server\bin\Debug\net5.0\appsettings.json
 D:\Project Web\SmartHome\server\bin\Debug\net5.0\server.exe
@@ -171,4 +169,4 @@ D:\CS-HCMUT\IoT\Git\smart-home\server\obj\Debug\net5.0\server.pdb
 D:\CS-HCMUT\IoT\Git\smart-home\server\obj\Debug\net5.0\server.genruntimeconfig.cache
 >>>>>>> master
 D:\212\dadn\smart-home\server\bin\Debug\net5.0\server.StaticWebAssets.xml
->>>>>>> master
+G:\data\212\DATH\Code\web\smart-home\server\bin\Debug\net5.0\System.Net.WebSockets.WebSocketProtocol.dll

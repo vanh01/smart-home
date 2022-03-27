@@ -41,7 +41,6 @@ D:\212\dadn\smart-home\server\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\S
 D:\212\dadn\smart-home\server\bin\Debug\net5.0\Newtonsoft.Json.dll
 D:\212\dadn\smart-home\server\bin\Debug\net5.0\System.Net.WebSockets.WebSocketProtocol.dll
 =======
-<<<<<<< HEAD
 D:\Project Web\SmartHome\server\bin\Debug\net5.0\appsettings.Development.json
 D:\Project Web\SmartHome\server\bin\Debug\net5.0\appsettings.json
 D:\Project Web\SmartHome\server\bin\Debug\net5.0\server.exe
@@ -82,7 +81,6 @@ D:\Project Web\SmartHome\server\obj\Debug\net5.0\server.dll
 D:\Project Web\SmartHome\server\obj\Debug\net5.0\ref\server.dll
 D:\Project Web\SmartHome\server\obj\Debug\net5.0\server.pdb
 D:\Project Web\SmartHome\server\obj\Debug\net5.0\server.genruntimeconfig.cache
-=======
 D:\CS-HCMUT\IoT\Git\smart-home\server\bin\Debug\net5.0\appsettings.Development.json
 D:\CS-HCMUT\IoT\Git\smart-home\server\bin\Debug\net5.0\appsettings.json
 D:\CS-HCMUT\IoT\Git\smart-home\server\bin\Debug\net5.0\server.exe
@@ -124,4 +122,4 @@ D:\CS-HCMUT\IoT\Git\smart-home\server\obj\Debug\net5.0\ref\server.dll
 D:\CS-HCMUT\IoT\Git\smart-home\server\obj\Debug\net5.0\server.pdb
 D:\CS-HCMUT\IoT\Git\smart-home\server\obj\Debug\net5.0\server.genruntimeconfig.cache
 >>>>>>> master
->>>>>>> master
+D:\212\dadn\smart-home\server\bin\Debug\net5.0\server.StaticWebAssets.xml

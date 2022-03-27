@@ -67,6 +67,7 @@ namespace server
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<AccountHub>("/hubs/account");
+                endpoints.MapHub<LogHub>("/hubs/activity");
             });
         }
     }

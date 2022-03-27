@@ -1,43 +1,27 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
-    "D:\\Project Web\\SmartHome\\server\\server.csproj": {}
+    "D:\\212\\dadn\\smart-home\\server\\server.csproj": {}
   },
   "projects": {
-    "D:\\Project Web\\SmartHome\\server\\server.csproj": {
+    "D:\\212\\dadn\\smart-home\\server\\server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Project Web\\SmartHome\\server\\server.csproj",
+        "projectUniqueName": "D:\\212\\dadn\\smart-home\\server\\server.csproj",
         "projectName": "server",
-        "projectPath": "D:\\Project Web\\SmartHome\\server\\server.csproj",
-        "packagesPath": "C:\\Users\\nguye\\.nuget\\packages\\",
-        "outputPath": "D:\\Project Web\\SmartHome\\server\\obj\\",
+        "projectPath": "D:\\212\\dadn\\smart-home\\server\\server.csproj",
+        "packagesPath": "C:\\Users\\Viet Anh\\.nuget\\packages\\",
+        "outputPath": "D:\\212\\dadn\\smart-home\\server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nguye\\AppData\\Roaming\\NuGet\\NuGet.Config"
-=======
-    "D:\\CS-HCMUT\\IoT\\Git\\smart-home\\server\\server.csproj": {}
-  },
-  "projects": {
-    "D:\\CS-HCMUT\\IoT\\Git\\smart-home\\server\\server.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "D:\\CS-HCMUT\\IoT\\Git\\smart-home\\server\\server.csproj",
-        "projectName": "server",
-        "projectPath": "D:\\CS-HCMUT\\IoT\\Git\\smart-home\\server\\server.csproj",
-        "packagesPath": "C:\\Users\\TUAN PHONG\\.nuget\\packages\\",
-        "outputPath": "D:\\CS-HCMUT\\IoT\\Git\\smart-home\\server\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\TUAN PHONG\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Viet Anh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
->>>>>>> master
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -87,11 +71,7 @@
               "privateAssets": "all"
             }
           },
-<<<<<<< HEAD
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
-=======
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
->>>>>>> master
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,16 +1,28 @@
+using System.Security.AccessControl;
 using System.Data;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using server.Models;
+using server.Hubs;
+using Microsoft.AspNetCore.SignalR;
+using System.Threading.Tasks;
 
-namespace server
+namespace server.Controllers
 {
-    
+
     [ApiController]
     [Route("api/[controller]")]
     public class LogController : ControllerBase
     {
+
+        private readonly IHubContext<LogHub> _logHub;
+
+        public LogController(IHubContext<LogHub> logHub)
+        {
+            _logHub = logHub;
+        }
+
         [HttpGet]
         [Route("/{key}/last")]
         public List<Log> getLastLog([FromRoute] string key, [FromQuery] string apartmentName, [FromQuery] string id)
@@ -41,15 +53,18 @@ namespace server
         */
         [HttpPost]
         [Route("insertLog")]
-        public bool insertLog([FromBody] Log log)
+        public async Task<bool> insertLog([FromBody] Log log)
         {
-            int dt;
-            string now_date = DateTime.Now.ToString("MM/dd/yyyy");
-            {
-                string query = $"insert into log() value('{log.phonenumber}', '{log.apartmentname}', '{log.id}', '{now_date}', '{log.type}', '{log.value}', '{log.humidity}', '{log.agent}');";
+            int dt = 1;
+            // string now_date = DateTime.Now.ToString("MM/dd/yyyy");
+            // {
+            //     string query = $"insert into log() value('{log.phonenumber}', '{log.apartmentname}', '{log.id}', '{now_date}', '{log.type}', '{log.value}', '{log.humidity}', '{log.agent}');";
 
-                dt = SqlExecutes.Instance.ExcuteNonQuery(query);
-            }
+            //     dt = SqlExecutes.Instance.ExcuteNonQuery(query);
+            // }
+
+            await _logHub.Clients.All.SendAsync("getlastlog", log);
+
             return (dt > 0) ? true : false;
         }
 

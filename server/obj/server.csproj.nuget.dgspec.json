@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "D:\\Project Web\\SmartHome\\server\\server.csproj": {}
   },
   "projects": {
@@ -15,6 +16,23 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nguye\\AppData\\Roaming\\NuGet\\NuGet.Config"
+=======
+    "D:\\CS-HCMUT\\IoT\\Git\\smart-home\\server\\server.csproj": {}
+  },
+  "projects": {
+    "D:\\CS-HCMUT\\IoT\\Git\\smart-home\\server\\server.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\CS-HCMUT\\IoT\\Git\\smart-home\\server\\server.csproj",
+        "projectName": "server",
+        "projectPath": "D:\\CS-HCMUT\\IoT\\Git\\smart-home\\server\\server.csproj",
+        "packagesPath": "C:\\Users\\TUAN PHONG\\.nuget\\packages\\",
+        "outputPath": "D:\\CS-HCMUT\\IoT\\Git\\smart-home\\server\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\TUAN PHONG\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+>>>>>>> master
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -65,7 +83,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
+>>>>>>> master
         }
       }
     }

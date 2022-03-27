@@ -20,5 +20,38 @@ namespace server.Controllers
             }
             return dt;
         }
+        [HttpGet]
+        public List<Account> GetAccount()
+        {
+            string query = $"select * from account;";
+            var temp = SqlExecutes.Instance.ExcuteQuery(query); 
+            return temp.ToList<Account>();
+        }
+
+        
+        [HttpGet]
+        [Route("key")]
+
+        public string GetKey([FromQuery] string username, string password)
+        {
+            string query = $"SELECT * FROM account WHERE phonenumber='{username}' AND password='{password}';";
+            var temp = SqlExecutes.Instance.ExcuteQuery(query); 
+            // Console.WriteLine(temp.GetType());
+            // Console.WriteLine(temp.ToList<Account>());
+            List<Account> accounts = temp.ToList<Account>();
+            Account account = accounts[0];
+            string result = account.privatekey;
+            return result;
+
+        }
+        // public string GetKey([FromQuery] string username, string password)
+        // {
+        //     string query = $"SELECT privatekey FROM account WHERE phonenumber='{username}' AND password='{password}';";
+        //     var temp = SqlExecutes.Instance.ExcuteQuery(query); 
+        //     Console.WriteLine(temp.GetType());
+        //     // Console.WriteLine(temp.ToList<Account>());
+        //     return temp.ToString();
+        // }
+                
     }
 }

@@ -11,7 +11,8 @@ namespace server
 
         public static SqlExecutes Instance => _instance;
 
-        private readonly string connString = "Server=127.0.0.1; Database=test; port=3306; User Id=root; password=vietanh;";
+        // private readonly string connString = "Server=127.0.0.1; Database=test; port=3306; User Id=root; password=vietanh;";
+        private readonly string connString = "Server=127.0.0.1; Database=test; port=3306; User Id=root; password=kudo2311;";
 
         public DataTable ExcuteQuery(string query)
         {

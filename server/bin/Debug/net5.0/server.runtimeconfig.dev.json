@@ -1,8 +1,13 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\Viet Anh\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\Viet Anh\\.nuget\\packages"
+<<<<<<< HEAD
+      "C:\\Users\\nguye\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\nguye\\.nuget\\packages"
+=======
+      "C:\\Users\\TUAN PHONG\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\TUAN PHONG\\.nuget\\packages"
+>>>>>>> master
     ]
   }
 }

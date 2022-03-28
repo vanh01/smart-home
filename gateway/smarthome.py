@@ -3,6 +3,7 @@ import random
 import time
 import sys
 from Adafruit_IO import MQTTClient
+from apiserver import apiserver as myApi
 
 AIO_FEED_IDS = ["bk-iot-led", "bk-iot-air-condition",
                 "bk-iot-sound-active", "bk-iot-light-active", "bk-iot-temp-active", "bk-iot-temp-limit", "bk-iot-light-limit", "bk-iot-sound-limit"]
@@ -26,6 +27,10 @@ soundActive = True
 tempActive = True
 
 
+phoneNumber = "1"
+apartmentName = "1"
+
+
 def connected(client):
     print("Ket noi thanh cong...")
     for feed in AIO_FEED_IDS:
@@ -41,32 +46,74 @@ def disconnected(client):
     print("Ngat ket noi...")
     sys.exit(1)
 
-# khi mà nhận được dữ liệu từ server adafruit 
+# khi mà nhận được dữ liệu từ server adafruit
+
+
 def message(client, feed_id, payload):
     print("Nhan du lieu: " + payload)
     if isMicrobitConnected:
+        global lightLimit
+        global lightActive
+        global soundActive
+        global soundLimit
+        global tempActive
+        global tempLimit
         if feed_id == "bk-iot-led":
+            myApi().insertLog("1", {
+                "phonenumber": phoneNumber,
+                "apartmentname": apartmentName,
+                "id": "1",
+                "value": str(payload),
+                "humidity": "",
+                "agent": ""
+            })
             ser.write((str(payload) + "#").encode())
         elif feed_id == "bk-iot-air-condition":
+            myApi().insertLog("1", {
+                "phonenumber": phoneNumber,
+                "apartmentname": apartmentName,
+                "id": "2",
+                "value": str(payload),
+                "humidity": "",
+                "agent": ""
+            })
             ser.write((str(payload) + "#").encode())
         elif feed_id == "bk-iot-light-limit":
-            global lightLimit
             lightLimit = int(payload)
+            myApi().updateDevice({
+                "active": lightActive,
+                "limited": lightLimit
+            }, "abcd", "1", "5")
         elif feed_id == "bk-iot-sound-limit":
-            global soundLimit
             soundLimit = int(payload)
+            myApi().updateDevice({
+                "active": soundActive,
+                "limited": soundLimit
+            }, "abcd", "1", "4")
         elif feed_id == "bk-iot-temp-limit":
-            global tempLimit
             tempLimit = int(payload)
+            myApi().updateDevice({
+                "active": tempActive,
+                "limited": tempLimit
+            }, "abcd", "1", "6")
         elif feed_id == "bk-iot-light-active":
-            global lightActive
             lightActive = True if payload == "true" else False
+            myApi().updateDevice({
+                "active": lightActive,
+                "limited": lightLimit
+            }, "abcd", "1", "5")
         elif feed_id == "bk-iot-sound-active":
-            global soundActive
             soundActive = True if payload == "true" else False
+            myApi().updateDevice({
+                "active": soundActive,
+                "limited": soundLimit
+            }, "abcd", "1", "4")
         elif feed_id == "bk-iot-temp-active":
-            global tempActive
             tempActive = True if payload == "true" else False
+            myApi().updateDevice({
+                "active": tempActive,
+                "limited": tempLimit
+            }, "abcd", "1", "6")
 
 
 client = MQTTClient(AIO_USERNAME, AIO_KEY)
@@ -93,13 +140,15 @@ def getPort():
 
 isMicrobitConnected = False
 
-# ser = serial.Serial(port="COM4", baudrate=115200)
-# isMicrobitConnected = True
-if getPort() != " None ":
-    ser = serial . Serial(port=getPort(), baudrate=115200)
-    isMicrobitConnected = True
+ser = serial.Serial(port="COM4", baudrate=115200)
+isMicrobitConnected = True
+# if getPort() != " None ":
+#     ser = serial . Serial(port=getPort(), baudrate=115200)
+#     isMicrobitConnected = True
 
 # khi mà thiết bị input gửi dữ liệu thì gọi api lên server
+
+
 def processData(data):
     #  format: !ID:KEY:VALUE#
     data = data.replace("!", "")
@@ -117,9 +166,15 @@ def processData(data):
         key = splitData[1]
         value = int(splitData[2])
         if key == "TEMP":
-            # client.publish("bk-iot-temp", value)  # gui du lieu cho adafruit
+            myApi().insertLog("1", {
+                "phonenumber": phoneNumber,
+                "apartmentname": apartmentName,
+                "id": "6",
+                "value": str(value),
+                "humidity": "",
+                "agent": ""
+            })
             if tempActive:
-                print("air <----")
                 oldAirCondition = airCondition
                 if value > tempLimit:
                     airCondition = "air-on"
@@ -128,10 +183,23 @@ def processData(data):
                 if airCondition != oldAirCondition:
                     client.publish("bk-iot-air-condition", airCondition)
         if key == "HUMID":
-            # client.publish("bk-iot-humid", value)
-            pass
+            myApi().insertLog("1", {
+                "phonenumber": phoneNumber,
+                "apartmentname": apartmentName,
+                "id": "6",
+                "value": "",
+                "humidity": str(value),
+                "agent": ""
+            })
         elif key == "SOUND":
-            # client.publish("bk-iot-sound", value)
+            myApi().insertLog("1", {
+                "phonenumber": phoneNumber,
+                "apartmentname": apartmentName,
+                "id": "4",
+                "value": str(value),
+                "humidity": "",
+                "agent": ""
+            })
             if soundActive:
                 if value > soundLimit:
                     if led == "led-off":
@@ -140,7 +208,14 @@ def processData(data):
                         led = "led-off"
                     client.publish("bk-iot-led", led)
         elif key == "LIGHT":
-            # client.publish("bk-iot-light", value)
+            myApi().insertLog("1", {
+                "phonenumber": phoneNumber,
+                "apartmentname": apartmentName,
+                "id": "5",
+                "value": str(value),
+                "humidity": "",
+                "agent": ""
+            })
             if lightActive:
                 oldLed = led
                 if value < lightLimit:
@@ -150,23 +225,44 @@ def processData(data):
                 if led != oldLed:
                     client.publish("bk-iot-led", led)
         elif key == "GAS":
-            # client.publish("bk-iot-gas", value)
+            myApi().insertLog("1", {
+                "phonenumber": phoneNumber,
+                "apartmentname": apartmentName,
+                "id": "7",
+                "value": str(value),
+                "humidity": "",
+                "agent": ""
+            })
             oldSpeaker = speaker
             if value > gasLimit:
                 speaker = "speaker-on"
+            else:
+                speaker = "speaker-off"
             if speaker != oldSpeaker:
-                # client.publish("bk-iot-speaker", speaker)
-                pass
+                myApi().insertLog("1", {
+                    "phonenumber": phoneNumber,
+                    "apartmentname": apartmentName,
+                    "id": "3",
+                    "value": speaker,
+                    "humidity": "",
+                    "agent": ""
+                })
+                se.write(str(speaker + "#").encode())
         elif key == "SWITCH":
-
+            myApi().insertLog("1", {
+                "phonenumber": phoneNumber,
+                "apartmentname": apartmentName,
+                "id": "8",
+                "value": str(value),
+                "humidity": "",
+                "agent": ""
+            })
             if value == 1:
                 if led == 'led-on':
                     led = 'led-off'
                 else:
                     led = 'led-on'
                 client.publish("bk-iot-led", led)
-            pass
-            # ser.write()
     except:
         pass
 

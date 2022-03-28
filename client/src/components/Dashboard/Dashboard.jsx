@@ -16,33 +16,13 @@ const Dashboard = () => {
     const [tempActive, setTempActive] = useState(false);
 
     const getData = async () => {
-        // setLedOn(await myAdafruitApi.getInstance().getLed());
-        // setAirConditionedOn(await myAdafruitApi.getInstance().getAir());
-        // setSoundActive(
-        //     await myAdafruitApi.getInstance().getActive("bk-iot-sound-active")
-        // );
-        // setLightActive(
-        //     await myAdafruitApi.getInstance().getActive("bk-iot-light-active")
-        // );
-        // setTempActive(
-        //     await myAdafruitApi.getInstance().getActive("bk-iot-temp-active")
-        // );
-        // setSoundLimit(
-        //     await myAdafruitApi.getInstance().getData("bk-iot-sound-limit")
-        // );
-        // setLightLimit(
-        //     await myAdafruitApi.getInstance().getData("bk-iot-light-limit")
-        // );
-        // setTempLimit(
-        //     await myAdafruitApi.getInstance().getData("bk-iot-temp-limit")
-        // );
     };
     useEffect(() => {
+        getData();
         const hubConnection = new signalR.HubConnectionBuilder()
             .withUrl("https://localhost:5001/hubs/activity")
             .withAutomaticReconnect()
             .build();
-        // getData();
         hubConnection
             .start()
             .then((result) => {

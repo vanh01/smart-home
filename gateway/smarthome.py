@@ -41,14 +41,13 @@ def disconnected(client):
     print("Ngat ket noi...")
     sys.exit(1)
 
-
+# khi mà nhận được dữ liệu từ server adafruit 
 def message(client, feed_id, payload):
     print("Nhan du lieu: " + payload)
     if isMicrobitConnected:
         if feed_id == "bk-iot-led":
             ser.write((str(payload) + "#").encode())
         elif feed_id == "bk-iot-air-condition":
-            print("aaaaaa")
             ser.write((str(payload) + "#").encode())
         elif feed_id == "bk-iot-light-limit":
             global lightLimit
@@ -100,7 +99,7 @@ if getPort() != " None ":
     ser = serial . Serial(port=getPort(), baudrate=115200)
     isMicrobitConnected = True
 
-
+# khi mà thiết bị input gửi dữ liệu thì gọi api lên server
 def processData(data):
     #  format: !ID:KEY:VALUE#
     data = data.replace("!", "")

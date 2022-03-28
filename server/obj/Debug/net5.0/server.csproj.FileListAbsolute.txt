@@ -177,3 +177,8 @@ D:\Project Web\SmartHome\server\bin\Debug\net5.0\Newtonsoft.Json.dll
 D:\Project Web\SmartHome\server\bin\Debug\net5.0\Remote.Linq.dll
 D:\Project Web\SmartHome\server\bin\Debug\net5.0\Remote.Linq.Newtonsoft.Json.dll
 D:\Project Web\SmartHome\server\bin\Debug\net5.0\System.Net.WebSockets.WebSocketProtocol.dll
+D:\212\dadn\smart-home\server\bin\Debug\net5.0\Aqua.dll
+D:\212\dadn\smart-home\server\bin\Debug\net5.0\Aqua.Newtonsoft.Json.dll
+D:\212\dadn\smart-home\server\bin\Debug\net5.0\Json.Net.dll
+D:\212\dadn\smart-home\server\bin\Debug\net5.0\Remote.Linq.dll
+D:\212\dadn\smart-home\server\bin\Debug\net5.0\Remote.Linq.Newtonsoft.Json.dll

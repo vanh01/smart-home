@@ -24,7 +24,7 @@ namespace server.Controllers
         }
 
         [HttpGet]
-        [Route("/{key}/last")]
+        [Route("{key}/last")]
         public List<Log> getLastLog([FromRoute] string key, [FromQuery] string apartmentName, [FromQuery] string id)
         {
             string query = $"call get_last_data('{apartmentName}', '{id}');";
@@ -56,12 +56,12 @@ namespace server.Controllers
         public async Task<bool> insertLog([FromBody] Log log)
         {
             int dt = 1;
-            // string now_date = DateTime.Now.ToString("MM/dd/yyyy");
-            // {
-            //     string query = $"insert into log() value('{log.phonenumber}', '{log.apartmentname}', '{log.id}', '{now_date}', '{log.type}', '{log.value}', '{log.humidity}', '{log.agent}');";
+            string now_date = DateTime.Now.ToString("MM/dd/yyyy");
+            {
+                string query = $"insert into log() value('{log.phonenumber}', '{log.apartmentname}', '{log.id}', '{now_date}', '{log.value}', '{log.humidity}', '{log.agent}');";
 
-            //     dt = SqlExecutes.Instance.ExcuteNonQuery(query);
-            // }
+                dt = SqlExecutes.Instance.ExcuteNonQuery(query);
+            }
 
             await _logHub.Clients.All.SendAsync("getlastlog", log);
 

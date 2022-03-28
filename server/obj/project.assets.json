@@ -2791,7 +2791,7 @@
       "code": "Undefined",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Problem reading the cache file D:\\212\\dadn\\smart-home\\server\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+      "message": "Problem reading the cache file D:\\212\\dadn\\smart-home\\server\\obj\\project.nuget.cache : Value cannot be null. (Parameter 'value')"
     }
   ]
 }

@@ -20,7 +20,7 @@ function App() {
     return (
         <Routes>
             <Route path="/signin" exact element={<SigninPage />} />
-            <Route path="/" exact element={<Home/>} />
+            <Route path="/" exact element={<Home />} />
             <Route path="/forgot" exact element={<ForgotPassword />} />
             <Route path="/dashboard" exact element={<DashboardPage />} />
             <Route path="/activitylog" exact element={<ActivitylogPage />} />

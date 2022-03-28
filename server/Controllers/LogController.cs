@@ -69,7 +69,7 @@ namespace server.Controllers
         }
 
         // - Lấy được nhật ký của tất cả thiết bị: key, tên căn hộ -> list hoạt động (get)
-        // Ex: https://localhost:5001/api/log/getAllLogs?key=1&name=nct
+        // Ex: https://localhost:5001/api/log/getAllLogs?key=asaxkioiowe123as&name=nct
         [HttpGet]
         [Route("getAllLogs")]
         public IEnumerable<Log> GetAllLogs([FromQuery] string key, [FromQuery] string name)
@@ -77,7 +77,10 @@ namespace server.Controllers
             List<Log> result = new List<Log>();
             DataTable dt = new DataTable();
             {
-                string query = $"SELECT * FROM test.log WHERE phonenumber = '{key}' AND apartmentname = '{name}'";
+                string query = $@"SELECT log.phonenumber, log.apartmentname, log.id, log.time, log.type, log.value, log.humidity, log.agent 
+                                FROM test.log, test.account
+                                WHERE account.privatekey = '{key}' AND log.apartmentname = '{name}'";
+
 
                 dt = SqlExecutes.Instance.ExcuteQuery(query);
                 result = dt.ToList<Log>();

@@ -24,7 +24,7 @@ namespace server.Controllers
         }
 
         [HttpGet]
-        [Route("/{key}/last")]
+        [Route("{key}/last")]
         public List<Log> getLastLog([FromRoute] string key, [FromQuery] string apartmentName, [FromQuery] string id)
         {
             string query = $"call get_last_data('{apartmentName}', '{id}');";

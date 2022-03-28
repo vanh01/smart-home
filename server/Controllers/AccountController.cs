@@ -48,9 +48,9 @@ namespace server.Controllers
         [HttpGet]
         [Route("key")]
 
-        public string GetKey([FromQuery] string username, string password)
+        public string GetKey([FromQuery] string phonenumber, string password)
         {
-            string query = $"SELECT * FROM account WHERE phonenumber='{username}' AND password='{password}';";
+            string query = $"SELECT * FROM account WHERE phonenumber='{phonenumber}' AND password='{password}';";
             var temp = SqlExecutes.Instance.ExcuteQuery(query); 
             // Console.WriteLine(temp.GetType());
             // Console.WriteLine(temp.ToList<Account>());

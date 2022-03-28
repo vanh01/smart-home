@@ -16,7 +16,6 @@ const Dashboard = () => {
     const [tempActive, setTempActive] = useState(false);
 
     const getData = async () => {
-
     };
     useEffect(() => {
         getData();

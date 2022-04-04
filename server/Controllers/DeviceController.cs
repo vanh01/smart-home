@@ -27,7 +27,7 @@ namespace server
         [HttpPut]
         [Route("update/{key}")]
         public int updateDevice([FromRoute] string key, [FromQuery] string apartmentName, [FromQuery] string id, [FromBody] dynamic obj)
-        {   
+        {
             int temp = -10;
             dynamic data = JObject.Parse(obj.ToString());
             string query = $@"update device
@@ -39,6 +39,16 @@ namespace server
                                 WHERE (device.phonenumber = account.phonenumber) and account.privatekey = '{key}'
                                 )
                             and apartmentname = '{apartmentName}' and id = '{id}';";
+
+            //             @$"select @phoneNum := account.phonenumber
+            //     from device,account
+            //     WHERE device.phonenumber = account.phonenumber and account.privatekey = 'asaxkioiowe123as'
+            // ;
+
+            // update device
+            // set active = 100,
+            // 	limited = 50
+            // WHERE phonenumber = @phoneNum and apartmentname = '1' and id = '1';"
 
             temp = SqlExecutes.Instance.ExcuteNonQuery(query);
             return temp;

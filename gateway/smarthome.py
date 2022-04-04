@@ -29,6 +29,7 @@ tempActive = True
 
 phoneNumber = "1"
 apartmentName = "1"
+key = "asaxkioiowe123as"
 
 
 def connected(client):
@@ -83,37 +84,37 @@ def message(client, feed_id, payload):
             myApi().updateDevice({
                 "active": lightActive,
                 "limited": lightLimit
-            }, "abcd", "1", "5")
+            }, key, "1", "5")
         elif feed_id == "bk-iot-sound-limit":
             soundLimit = int(payload)
             myApi().updateDevice({
                 "active": soundActive,
                 "limited": soundLimit
-            }, "abcd", "1", "4")
+            }, key, "1", "4")
         elif feed_id == "bk-iot-temp-limit":
             tempLimit = int(payload)
             myApi().updateDevice({
                 "active": tempActive,
                 "limited": tempLimit
-            }, "abcd", "1", "6")
+            }, key, "1", "6")
         elif feed_id == "bk-iot-light-active":
             lightActive = True if payload == "true" else False
             myApi().updateDevice({
                 "active": lightActive,
                 "limited": lightLimit
-            }, "abcd", "1", "5")
+            }, key, "1", "5")
         elif feed_id == "bk-iot-sound-active":
             soundActive = True if payload == "true" else False
             myApi().updateDevice({
                 "active": soundActive,
                 "limited": soundLimit
-            }, "abcd", "1", "4")
+            }, key, "1", "4")
         elif feed_id == "bk-iot-temp-active":
             tempActive = True if payload == "true" else False
             myApi().updateDevice({
                 "active": tempActive,
                 "limited": tempLimit
-            }, "abcd", "1", "6")
+            }, key, "1", "6")
 
 
 client = MQTTClient(AIO_USERNAME, AIO_KEY)

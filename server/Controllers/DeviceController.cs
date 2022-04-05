@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using server.Models;
-
+using Microsoft.AspNetCore.SignalR;
+using System.Threading.Tasks;
+using server.Hubs;
 
 namespace server
 {
@@ -11,6 +13,13 @@ namespace server
     [Route("api/[controller]")]
     public class DeviceController : ControllerBase
     {
+        private readonly IHubContext<DeviceHub> _logDevice;
+
+        public DeviceController(IHubContext<DeviceHub> logDevice)
+        {
+            _logDevice = logDevice;
+        }
+
         [HttpGet]
         [Route("{key}")]
         public List<Device> getDevice([FromRoute] string key, [FromQuery] string apartmentName)
@@ -25,7 +34,7 @@ namespace server
 
         [HttpPut]
         [Route("update/{key}")]
-        public int updateDevice([FromRoute] string key, [FromQuery] string apartmentName, [FromQuery] string id, [FromBody] dynamic obj)
+        public async Task<int> updateDevice([FromRoute] string key, [FromQuery] string apartmentName, [FromQuery] string id, [FromBody] dynamic obj)
         {
             int temp = -10;
             dynamic data = JObject.Parse(obj.ToString());
@@ -42,6 +51,7 @@ namespace server
             //                 WHERE phonenumber = @phoneNum and apartmentname = '{apartmentName}' and id = '{id}';";
 
             temp = SqlExecutes.Instance.ExcuteNonQuery(query);
+            await _logDevice.Clients.All.SendAsync("asaxkioiowe123as", new { id = id, active = data.active, limited = data.limited });
             return temp;
         }
     }

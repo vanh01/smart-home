@@ -64,14 +64,14 @@ export async function getAllLogs(key, name) {
 
 //- Lấy nhật ký mới nhất của thiết bị: key, tên căn hộ, id -> object (get)
 // Ex:
-export async function getLastLog(key, apartmentName, id) {
+export async function getLastLog(key, apartmentName) {
 	let lastLog;
 	var requestOptions = {
 		method: 'GET',
 		redirect: 'follow'
 	};
 
-	await fetch(`https://localhost:5001/api/log/${key}/last?apartmentName=${apartmentName}&id=${id}`, requestOptions)
+	await fetch(`https://localhost:5001/api/log/${key}/last?apartmentName=${apartmentName}`, requestOptions)
 		.then(response => response.json())
 		.then(result => { lastLog = result; })
 		.catch(error => console.log('error', error));

@@ -29,6 +29,7 @@ tempActive = True
 
 phoneNumber = "1"
 apartmentName = "1"
+key = "asaxkioiowe123as"
 
 
 def connected(client):
@@ -59,7 +60,7 @@ def message(client, feed_id, payload):
         global tempActive
         global tempLimit
         if feed_id == "bk-iot-led":
-            myApi().insertLog("1", {
+            myApi().insertLog(key, {
                 "phonenumber": phoneNumber,
                 "apartmentname": apartmentName,
                 "id": "1",
@@ -69,7 +70,7 @@ def message(client, feed_id, payload):
             })
             ser.write((str(payload) + "#").encode())
         elif feed_id == "bk-iot-air-condition":
-            myApi().insertLog("1", {
+            myApi().insertLog(key, {
                 "phonenumber": phoneNumber,
                 "apartmentname": apartmentName,
                 "id": "2",
@@ -83,37 +84,37 @@ def message(client, feed_id, payload):
             myApi().updateDevice({
                 "active": lightActive,
                 "limited": lightLimit
-            }, "abcd", "1", "5")
+            }, key, "1", "5")
         elif feed_id == "bk-iot-sound-limit":
             soundLimit = int(payload)
             myApi().updateDevice({
                 "active": soundActive,
                 "limited": soundLimit
-            }, "abcd", "1", "4")
+            }, key, "1", "4")
         elif feed_id == "bk-iot-temp-limit":
             tempLimit = int(payload)
             myApi().updateDevice({
                 "active": tempActive,
                 "limited": tempLimit
-            }, "abcd", "1", "6")
+            }, key, "1", "6")
         elif feed_id == "bk-iot-light-active":
             lightActive = True if payload == "true" else False
             myApi().updateDevice({
                 "active": lightActive,
                 "limited": lightLimit
-            }, "abcd", "1", "5")
+            }, key, "1", "5")
         elif feed_id == "bk-iot-sound-active":
             soundActive = True if payload == "true" else False
             myApi().updateDevice({
                 "active": soundActive,
                 "limited": soundLimit
-            }, "abcd", "1", "4")
+            }, key, "1", "4")
         elif feed_id == "bk-iot-temp-active":
             tempActive = True if payload == "true" else False
             myApi().updateDevice({
                 "active": tempActive,
                 "limited": tempLimit
-            }, "abcd", "1", "6")
+            }, key, "1", "6")
 
 
 client = MQTTClient(AIO_USERNAME, AIO_KEY)
@@ -166,7 +167,7 @@ def processData(data):
         key = splitData[1]
         value = int(splitData[2])
         if key == "TEMP":
-            myApi().insertLog("1", {
+            myApi().insertLog(key, {
                 "phonenumber": phoneNumber,
                 "apartmentname": apartmentName,
                 "id": "6",
@@ -183,7 +184,7 @@ def processData(data):
                 if airCondition != oldAirCondition:
                     client.publish("bk-iot-air-condition", airCondition)
         if key == "HUMID":
-            myApi().insertLog("1", {
+            myApi().insertLog(key, {
                 "phonenumber": phoneNumber,
                 "apartmentname": apartmentName,
                 "id": "6",
@@ -192,7 +193,7 @@ def processData(data):
                 "agent": ""
             })
         elif key == "SOUND":
-            myApi().insertLog("1", {
+            myApi().insertLog(key, {
                 "phonenumber": phoneNumber,
                 "apartmentname": apartmentName,
                 "id": "4",
@@ -208,7 +209,7 @@ def processData(data):
                         led = "led-off"
                     client.publish("bk-iot-led", led)
         elif key == "LIGHT":
-            myApi().insertLog("1", {
+            myApi().insertLog(key, {
                 "phonenumber": phoneNumber,
                 "apartmentname": apartmentName,
                 "id": "5",
@@ -225,7 +226,7 @@ def processData(data):
                 if led != oldLed:
                     client.publish("bk-iot-led", led)
         elif key == "GAS":
-            myApi().insertLog("1", {
+            myApi().insertLog(key, {
                 "phonenumber": phoneNumber,
                 "apartmentname": apartmentName,
                 "id": "7",
@@ -239,7 +240,7 @@ def processData(data):
             else:
                 speaker = "speaker-off"
             if speaker != oldSpeaker:
-                myApi().insertLog("1", {
+                myApi().insertLog(key, {
                     "phonenumber": phoneNumber,
                     "apartmentname": apartmentName,
                     "id": "3",
@@ -249,7 +250,7 @@ def processData(data):
                 })
                 se.write(str(speaker + "#").encode())
         elif key == "SWITCH":
-            myApi().insertLog("1", {
+            myApi().insertLog(key, {
                 "phonenumber": phoneNumber,
                 "apartmentname": apartmentName,
                 "id": "8",

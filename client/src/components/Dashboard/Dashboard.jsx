@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import myAdafruitApi from "../../AdafruitApi";
 import * as signalR from "@microsoft/signalr";
+import * as serverApi from "../../ServerApi";
 
 const Dashboard = () => {
     document.title = "Điều khiển";
@@ -16,6 +17,20 @@ const Dashboard = () => {
     const [tempActive, setTempActive] = useState(false);
 
     const getData = async () => {
+        let device = await serverApi.getListDevice("asaxkioiowe123as", "1");
+        let led = await serverApi.getLastLog("asaxkioiowe123as", "1", "1");
+        let air = await serverApi.getLastLog("asaxkioiowe123as", "1", "2");
+        let sound = device[3];
+        let light = device[4];
+        let temp = device[5];
+        setSoundActive(sound.active);
+        setSoundLimit(sound.limited);
+        setLightActive(light.active);
+        setLightLimit(light.limited);
+        setTempActive(temp.active);
+        setTempLimit(temp.limited);
+        setLedOn(led[0].value === "led-on" ? true : false);
+        setAirConditionedOn(air[0].value === "air-on" ? true : false);
     };
     useEffect(() => {
         getData();
@@ -28,11 +43,37 @@ const Dashboard = () => {
             .then((result) => {
                 console.log("Connected!");
 
-                hubConnection.on("getlastlog", (message) => {
+                hubConnection.on("asaxkioiowe123as", (message) => {
                     console.log(message);
+                    if (message.id === "1") {
+                        setLedOn(message.value === "led-on" ? true : false);
+                    } else
+                        setAirConditionedOn(
+                            message.value === "air-on" ? true : false
+                        );
                 });
             })
             .catch((e) => console.log("Connection failed: ", e));
+        // const hubConnection1 = new signalR.HubConnectionBuilder()
+        //     .withUrl("https://localhost:5001/hubs/device")
+        //     .withAutomaticReconnect()
+        //     .build();
+        // hubConnection1
+        //     .start()
+        //     .then((result) => {
+        //         console.log("Connected!");
+
+        //         hubConnection.on("asaxkioiowe123as", (message) => {
+        //             console.log(message);
+        //             if (message.id === "1") {
+        //                 setLedOn(message.value === "led-on" ? true : false);
+        //             } else
+        //                 setAirConditionedOn(
+        //                     message.value === "air-on" ? true : false
+        //                 );
+        //         });
+        //     })
+        //     .catch((e) => console.log("Connection failed: ", e));
     }, []);
 
     return (
@@ -225,6 +266,12 @@ const Dashboard = () => {
                                         onChange={(e) => {
                                             if (tempActive === true) {
                                                 setTempActive(false);
+                                                myAdafruitApi
+                                                    .getInstance()
+                                                    .postData(
+                                                        "false",
+                                                        "bk-iot-temp-active"
+                                                    );
                                             }
                                             setAirConditionedOn(
                                                 e.target.checked

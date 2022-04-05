@@ -1,4 +1,3 @@
-using System.Security.AccessControl;
 using System.Data;
 using System;
 using System.Collections.Generic;
@@ -62,8 +61,8 @@ namespace server.Controllers
 
                 dt = SqlExecutes.Instance.ExcuteNonQuery(query);
             }
-
-            await _logHub.Clients.All.SendAsync("getlastlog", log);
+            if (log.id == "1" || log.id == "2")
+                await _logHub.Clients.All.SendAsync("asaxkioiowe123as", new { id = log.id, value = log.value });
 
             return (dt > 0) ? true : false;
         }

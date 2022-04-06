@@ -5,7 +5,7 @@ import * as serverApi from "../../ServerApi";
 
 const Dashboard = () => {
     document.title = "Điều khiển";
-    console.log("dieu khien");
+    // console.log("dieu khien");
     const [ledOn, setLedOn] = useState(false);
     const [airConditionedOn, setAirConditionedOn] = useState(false);
     const [soundLimit, setSoundLimit] = useState("");

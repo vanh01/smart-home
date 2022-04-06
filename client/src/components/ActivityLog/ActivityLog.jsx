@@ -24,10 +24,11 @@ Chart.register(Legend)
 
 const ActivityLog = () => {
 
-    let [allLabel, setAllLabel] = useState(["2022-03-14 7:00:00", "2022-03-14 7:01:00", "2022-03-15 7:02:00", "2022-03-15 7:03:00", "2022-03-16 7:04:00", "2022-03-17 7:05:00", "2022-03-18 7:06:00"])
-    let [allData1, setAllData1] = useState([0, 1, 0, 1, 0, 1, 0])
-    let [allData2, setAllData2] = useState([0, 1, 0, 1, 0, 1, 0])
+    let [allLabel, setAllLabel] = useState([]) //useState(["2022-03-14 7:00:00", "2022-03-14 7:01:00", "2022-03-15 7:02:00", "2022-03-15 7:03:00", "2022-03-16 7:04:00", "2022-03-17 7:05:00", "2022-03-18 7:06:00"])
+    let [allData1, setAllData1] = useState([])  //useState([0, 1, 0, 1, 0, 1, 0])
+    let [allData2, setAllData2] = useState([])  //useState([0, 1, 0, 1, 0, 1, 0])
     let [device, setDevice] = useState(0);
+    let [allData, setAlllData] = useState([])
 
     let [xValue, setXValue] = useState([])
     let [yValue1, setYValue1] = useState([])
@@ -37,11 +38,111 @@ const ActivityLog = () => {
     let [endDate, setEndDate] = useState(new Date("2022-03-15"))
     // let endDate = new Date("2022-03-14")
 
+    const getData = async (typeDevice) => {
+        fetch("https://localhost:5001/api/log/asaxkioiowe123as/getAllLogs?name=1")
+            .then((res) => res.json())
+            .then((json) => {
+                // console.log(json)
+                setAlllData(json)
+            })
+        takeData(typeDevice)
+    }
+
+    let tempLog = []
+    let label = []
+    let data1 = []
+    let data2 = []
+    let tempDevice = 0
+    const takeData = (typeDevice) => {
+        console.log("type:", typeDevice)
+        switch (typeDevice) {
+            case 0:
+                tempLog = allData.filter(data => data.id === '1')
+                tempDevice = 0
+                label = tempLog.map(data => {
+                    return formatDate(data.time)
+                })
+                data1 = tempLog.map(data => {
+                    if (data.value === 'led-on')
+                        return 1
+                    else return 0
+                })
+                data2 = tempLog.map(data => data.agent)
+                break
+            case 1:
+                tempLog = allData.filter(data => data.id === '3')
+                tempDevice = 1
+                label = tempLog.map(data => {
+                    return formatDate(data.time)
+                })
+                data1 = tempLog.map(data => {
+                    if (data.value === 'gas-on')
+                        return 1
+                    else return 0
+                })
+                data2 = tempLog.map(data => data.agent)
+                break
+            case 2:
+                tempLog = allData.filter(data => data.id === '2')
+                tempDevice = 2
+                label = tempLog.map(data => {
+                    return formatDate(data.time)
+                })
+                data1 = tempLog.map(data => {
+                    if (data.value === 'air-on')
+                        return 1
+                    else return 0
+                })
+                data2 = tempLog.map(data => data.agent)
+                break
+            case 3:
+                tempLog = allData.filter(data => data.id === '4')
+                tempDevice = 3
+                label = tempLog.map(data => {
+                    return formatDate(data.time)
+                })
+                data1 = tempLog.map(data => data.value)
+                break
+            case 4:
+                tempLog = allData.filter(data => data.id === '5')
+                tempDevice = 4
+                label = tempLog.map(data => {
+                    return formatDate(data.time)
+                })
+                data1 = tempLog.map(data => data.value)
+                break
+            case 5:
+                tempLog = allData.filter(data => data.id === '6')
+                tempDevice = 5
+                label = tempLog.map(data => {
+                    return formatDate(data.time)
+                })
+                data1 = tempLog.map(data => data.value)
+                break
+            default:
+                tempLog = allData.filter(data => data.id === '7')
+                tempDevice = 6
+                label = tempLog.map(data => {
+                    return formatDate(data.time)
+                })
+                data1 = tempLog.map(data => data.value)
+                data2 = tempLog.map(data => data.humidity)
+                break
+        }
+
+    }
+
     useEffect(() => {
+        getData(device)
+        setDevice(tempDevice)
+        setAllLabel(label)
+        setAllData1(data1)
+        setAllData2(data2)
+        console.log(allLabel)
         fillData(device, startDate, endDate, allLabel, allData1, allData2, setXValue, setYValue1, setYValue2)
     }, [startDate, endDate, device])
 
-    console.log(1)
+    // console.log(1)
     function showDevice(e) {
         let select = document.querySelectorAll('.device__option');
         select.forEach(element => {
@@ -428,6 +529,14 @@ function fillData(device, startDate, endDate, allLabel, allData1, allData2, setX
 
 function dateToString(date) {
     return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate())
+}
+
+function formatDate(date) {
+    let fulldate = date.split(' ')
+    let day = fulldate[0].split('-')[0]
+    let month = fulldate[0].split('-')[1]
+    let year = fulldate[0].split('-')[2]
+    return year + '-' + month + '-' + day + ' ' + fulldate[1]
 }
 
 function getDateFromString(date) {

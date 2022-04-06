@@ -86,8 +86,9 @@ namespace server.Controllers
             DataTable dt = new DataTable();
             {
                 string query = $@"SELECT log.phonenumber, log.apartmentname, log.id, log.time, log.value, log.humidity, log.agent 
-                                FROM test.log, test.account
-                                WHERE account.privatekey = '{key}' AND log.apartmentname = '{name}'";
+                                FROM log, account
+                                WHERE (log.phonenumber = account.phonenumber) 
+                                    and account.privatekey = '{key}' AND log.apartmentname = '{name}'";
 
 
                 dt = SqlExecutes.Instance.ExcuteQuery(query);

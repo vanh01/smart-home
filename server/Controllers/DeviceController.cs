@@ -50,6 +50,16 @@ namespace server
             //                     limited = {data.limited}
             //                 WHERE phonenumber = @phoneNum and apartmentname = '{apartmentName}' and id = '{id}';";
 
+            //             @$"select @phoneNum := account.phonenumber
+            //     from device,account
+            //     WHERE device.phonenumber = account.phonenumber and account.privatekey = 'asaxkioiowe123as'
+            // ;
+
+            // update device
+            // set active = 100,
+            // 	limited = 50
+            // WHERE phonenumber = @phoneNum and apartmentname = '1' and id = '1';"
+
             temp = SqlExecutes.Instance.ExcuteNonQuery(query);
             await _logDevice.Clients.All.SendAsync("asaxkioiowe123as", new { id = id, active = data.active, limited = data.limited });
             return temp;

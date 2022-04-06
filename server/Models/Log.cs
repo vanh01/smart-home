@@ -7,7 +7,6 @@ namespace server.Models
         public string id { get; set; }
         public string time { get; set; }
         public string value { get; set; }
-        public string humidity { get; set; }
         public string agent { get; set; }
     }
 }

@@ -35,7 +35,7 @@ const ActivityLog = () => {
     let [yValue2, setYValue2] = useState([])
 
     let [startDate, setStartDate] = useState(new Date("2022-03-14"))
-    let [endDate, setEndDate] = useState(new Date("2022-03-15"))
+    let [endDate, setEndDate] = useState(new Date("2022-04-10"))
     // let endDate = new Date("2022-03-14")
 
     const getData = async (typeDevice) => {
@@ -96,7 +96,7 @@ const ActivityLog = () => {
                 data2 = tempLog.map(data => data.agent)
                 break
             case 3:
-                tempLog = allData.filter(data => data.id === '4')
+                tempLog = allData.filter(data => data.id === '5')
                 tempDevice = 3
                 label = tempLog.map(data => {
                     return formatDate(data.time)
@@ -104,7 +104,7 @@ const ActivityLog = () => {
                 data1 = tempLog.map(data => data.value)
                 break
             case 4:
-                tempLog = allData.filter(data => data.id === '5')
+                tempLog = allData.filter(data => data.id === '4')
                 tempDevice = 4
                 label = tempLog.map(data => {
                     return formatDate(data.time)
@@ -112,7 +112,7 @@ const ActivityLog = () => {
                 data1 = tempLog.map(data => data.value)
                 break
             case 5:
-                tempLog = allData.filter(data => data.id === '6')
+                tempLog = allData.filter(data => data.id === '8')
                 tempDevice = 5
                 label = tempLog.map(data => {
                     return formatDate(data.time)
@@ -120,7 +120,7 @@ const ActivityLog = () => {
                 data1 = tempLog.map(data => data.value)
                 break
             default:
-                tempLog = allData.filter(data => data.id === '7')
+                tempLog = allData.filter(data => data.id === '6')
                 tempDevice = 6
                 label = tempLog.map(data => {
                     return formatDate(data.time)
@@ -139,7 +139,7 @@ const ActivityLog = () => {
         setAllData1(data1)
         setAllData2(data2)
         console.log(allLabel)
-        fillData(device, startDate, endDate, allLabel, allData1, allData2, setXValue, setYValue1, setYValue2)
+        fillData(device, startDate, endDate, label, data1, data2, setXValue, setYValue1, setYValue2)
     }, [startDate, endDate, device])
 
     // console.log(1)
@@ -197,7 +197,7 @@ const ActivityLog = () => {
                 <input type="date" className="date__select-box date__select" defaultValue="2022-03-14" onChange={(e) => { setStartDate(new Date(e.target.value)) }}></input>
                 <FontAwesomeIcon icon={faArrowRight} className="date__icon" />
 
-                <input type="date" className="date__select-box date__select" defaultValue="2022-03-14" onChange={(e) => { let date = new Date(e.target.value); date.setDate(date.getDate() + 1); setEndDate(date) }}></input>
+                <input type="date" className="date__select-box date__select" defaultValue={dateToString(endDate)} onChange={(e) => { let date = new Date(e.target.value); date.setDate(date.getDate() + 1); setEndDate(date) }}></input>
             </div>
         </div>
 

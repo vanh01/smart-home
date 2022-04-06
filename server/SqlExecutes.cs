@@ -11,8 +11,8 @@ namespace server
 
         public static SqlExecutes Instance => _instance;
 
-        // private readonly string connString = "Server=127.0.0.1; Database=test; port=3306; User Id=root; password=vietanh;";
-        private readonly string connString = "Server=127.0.0.1;port=3306;User Id=root;password=;Database=dadn;";
+        private readonly string connString = "Server=127.0.0.1; Database=test; port=3306; User Id=root; password=vietanh;";
+        // private readonly string connString = "Server=127.0.0.1;port=3306;User Id=root;password=;Database=dadn;";
         // private readonly string connString = "Server=127.0.0.1; Database=test; port=3306; User Id=root; password=kudo2311;";
 
         public DataTable ExcuteQuery(string query)
@@ -44,16 +44,17 @@ namespace server
             int numberOfRow = 0;
             using (MySqlConnection conn = new MySqlConnection(connString))
             {
-                 try
+                try
                 {
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        conn.Open();
+                        numberOfRow = cmd.ExecuteNonQuery();
+                    }
+                    conn.Close();
+                }
+                catch (Exception e)
                 {
-                    conn.Open();
-                    numberOfRow = cmd.ExecuteNonQuery();
-                }
-                conn.Close();
-                }
-                catch (Exception e){
                     Console.WriteLine(e);
                 }
             }

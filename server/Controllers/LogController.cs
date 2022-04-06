@@ -26,7 +26,7 @@ namespace server.Controllers
         [Route("{key}/last")]
         public List<Log> getLastLog([FromRoute] string key, [FromQuery] string apartmentName)
         {
-            string query = @$"select log.phonenumber, log.apartmentname, log.id, log.time, log.value, log.humidity, log.agent
+            string query = @$"select log.phonenumber, log.apartmentname, log.id, log.time, log.value, log.agent
                             from (
                                 select log.id, max(str_to_date(time, '%d-%m-%Y %k:%i:%s')) as time
                                 from account, log
@@ -55,7 +55,6 @@ namespace server.Controllers
         "time": "10-10-2111",
         "type": "off",
         "value": "3123123",
-        "humidity": "32241",
         "agent": "11"
         }
         */
@@ -66,7 +65,7 @@ namespace server.Controllers
             int dt = 0;
             string now_date = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
             {
-                string query = $"insert into log() value('{log.phonenumber}', '{log.apartmentname}', '{log.id}', '{now_date}', '{log.value}', '{log.humidity}', '{log.agent}');";
+                string query = $"insert into log() value('{log.phonenumber}', '{log.apartmentname}', '{log.id}', '{now_date}', '{log.value}', '{log.agent}');";
 
                 dt = SqlExecutes.Instance.ExcuteNonQuery(query);
             }
@@ -85,7 +84,7 @@ namespace server.Controllers
             List<Log> result = new List<Log>();
             DataTable dt = new DataTable();
             {
-                string query = $@"SELECT log.phonenumber, log.apartmentname, log.id, log.time, log.value, log.humidity, log.agent 
+                string query = $@"SELECT log.phonenumber, log.apartmentname, log.id, log.time, log.value, log.agent 
                                 FROM log, account
                                 WHERE (log.phonenumber = account.phonenumber) 
                                     and account.privatekey = '{key}' AND log.apartmentname = '{name}'";

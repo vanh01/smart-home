@@ -26,7 +26,16 @@ namespace server.Controllers
         [Route("{key}/last")]
         public List<Log> getLastLog([FromRoute] string key, [FromQuery] string apartmentName)
         {
-            string query = $"call get_last_data('{apartmentName}');";
+            string query = @$"select log.phonenumber, log.apartmentname, log.id, log.time, log.value, log.humidity, log.agent
+                            from (
+                                select log.id, max(str_to_date(time, '%d-%m-%Y %k:%i:%s')) as time
+                                from account, log
+                                where account.phonenumber = log.phonenumber and apartmentname = '{apartmentName}' and account.privatekey = '{key}'
+                                group by log.id
+                            ) r
+                            inner join log
+                            where r.id = log.id and r.time = str_to_date(log.time, '%d-%m-%Y %k:%i:%s')
+                            ;";
 
             List<Log> logs = new List<Log>();
 
@@ -62,7 +71,7 @@ namespace server.Controllers
                 dt = SqlExecutes.Instance.ExcuteNonQuery(query);
             }
             if (log.id == "1" || log.id == "2")
-                await _logHub.Clients.All.SendAsync("asaxkioiowe123as", new { id = log.id, value = log.value });
+                await _logHub.Clients.All.SendAsync("insertlog", new { id = log.id, value = log.value });
 
             return (dt > 0) ? true : false;
         }

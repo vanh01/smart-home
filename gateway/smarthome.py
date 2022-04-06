@@ -84,37 +84,37 @@ def message(client, feed_id, payload):
             myApi().updateDevice({
                 "active": lightActive,
                 "limited": lightLimit
-            }, key, "1", "5")
+            }, key, apartmentName, "5")
         elif feed_id == "bk-iot-sound-limit":
             soundLimit = int(payload)
             myApi().updateDevice({
                 "active": soundActive,
                 "limited": soundLimit
-            }, key, "1", "4")
+            }, key, apartmentName, "4")
         elif feed_id == "bk-iot-temp-limit":
             tempLimit = int(payload)
             myApi().updateDevice({
                 "active": tempActive,
                 "limited": tempLimit
-            }, key, "1", "6")
+            }, key, apartmentName, "6")
         elif feed_id == "bk-iot-light-active":
             lightActive = True if payload == "true" else False
             myApi().updateDevice({
                 "active": lightActive,
                 "limited": lightLimit
-            }, key, "1", "5")
+            }, key, apartmentName, "5")
         elif feed_id == "bk-iot-sound-active":
             soundActive = True if payload == "true" else False
             myApi().updateDevice({
                 "active": soundActive,
                 "limited": soundLimit
-            }, key, "1", "4")
+            }, key, apartmentName, "4")
         elif feed_id == "bk-iot-temp-active":
             tempActive = True if payload == "true" else False
             myApi().updateDevice({
                 "active": tempActive,
                 "limited": tempLimit
-            }, key, "1", "6")
+            }, key, apartmentName, "6")
 
 
 client = MQTTClient(AIO_USERNAME, AIO_KEY)

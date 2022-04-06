@@ -19,19 +19,19 @@ const Dashboard = () => {
     const getData = async () => {
         let device = await serverApi.getListDevice("asaxkioiowe123as", "1");
         let lastLog = await serverApi.getLastLog("asaxkioiowe123as", "1");
-        let sound = device.filter((d) => d.id === "3")[0];
-        let light = device.filter((d) => d.id === "4")[0];
-        let temp = device.filter((d) => d.id === "5")[0];
+        let led = lastLog.filter((l) => l.id === "1");
+        let air = lastLog.filter((l) => l.id === "2");
+        let sound = device.filter((d) => d.id === "4")[0];
+        let light = device.filter((d) => d.id === "5")[0];
+        let temp = device.filter((d) => d.id === "6")[0];
         setSoundActive(sound.active);
         setSoundLimit(sound.limited);
         setLightActive(light.active);
         setLightLimit(light.limited);
         setTempActive(temp.active);
         setTempLimit(temp.limited);
-        let led = lastLog.filter((l) => l.id === "1")[0];
-        let air = lastLog.filter((l) => l.id === "2")[0];
-        setLedOn(led.value === "led-on" ? true : false);
-        setAirConditionedOn(air.value === "air-on" ? true : false);
+        setLedOn(led[0].value === "led-on" ? true : false);
+        setAirConditionedOn(air[0].value === "air-on" ? true : false);
     };
     useEffect(() => {
         getData();
@@ -43,8 +43,8 @@ const Dashboard = () => {
             .start()
             .then((result) => {
                 console.log("Connected!");
-
-                hubConnection.on("asaxkioiowe123as", (message) => {
+                // hubConnection.invoke("insertlog", "asaxkioiowe123as");
+                hubConnection.on("insertlog", (message) => {
                     console.log(message);
                     if (message.id === "1") {
                         setLedOn(message.value === "led-on" ? true : false);

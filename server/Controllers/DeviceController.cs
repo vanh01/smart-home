@@ -27,7 +27,7 @@ namespace server
             string query = $@"SELECT device.phonenumber, device.apartmentname, device.id, device.devicename, device.active, device.limited
                             FROM `device`,`account`
                             WHERE (device.phonenumber = account.phonenumber) 
-                                and account.privatekey = '{key}' and device.apartmentname = '{apartmentName}'";
+                            and account.privatekey = '{key}' and device.apartmentname = '{apartmentName}'";
             var temp = SqlExecutes.Instance.ExcuteQuery(query);
             return temp.ToList<Device>();
         }

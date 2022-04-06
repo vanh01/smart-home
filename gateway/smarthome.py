@@ -20,7 +20,6 @@ gasLimit = 50
 led = "led-off"
 airCondition = "air-off"  # off: 2, on: 3
 speaker = "speaker-off"  # off: 4, on: 5
-oldAirCondition = airCondition
 
 lightActive = True
 soundActive = True
@@ -53,6 +52,8 @@ def disconnected(client):
 def message(client, feed_id, payload):
     print("Nhan du lieu: " + payload)
     if isMicrobitConnected:
+        global led
+        global airCondition
         global lightLimit
         global lightActive
         global soundActive
@@ -68,6 +69,7 @@ def message(client, feed_id, payload):
                 "humidity": "",
                 "agent": ""
             })
+            led = str(payload)
             ser.write((str(payload) + "#").encode())
         elif feed_id == "bk-iot-air-condition":
             myApi().insertLog(key, {
@@ -78,6 +80,7 @@ def message(client, feed_id, payload):
                 "humidity": "",
                 "agent": ""
             })
+            airCondition = str(payload)
             ser.write((str(payload) + "#").encode())
         elif feed_id == "bk-iot-light-limit":
             lightLimit = int(payload)
@@ -162,7 +165,6 @@ def processData(data):
     global soundLimit
     global lightLimit
     global tempLimit
-    global oldAirCondition
     try:
         key = splitData[1]
         value = int(splitData[2])
@@ -187,7 +189,7 @@ def processData(data):
             myApi().insertLog(key, {
                 "phonenumber": phoneNumber,
                 "apartmentname": apartmentName,
-                "id": "6",
+                "id": "7",
                 "value": "",
                 "humidity": str(value),
                 "agent": ""
@@ -229,7 +231,7 @@ def processData(data):
             myApi().insertLog(key, {
                 "phonenumber": phoneNumber,
                 "apartmentname": apartmentName,
-                "id": "7",
+                "id": "8",
                 "value": str(value),
                 "humidity": "",
                 "agent": ""
@@ -253,7 +255,7 @@ def processData(data):
             myApi().insertLog(key, {
                 "phonenumber": phoneNumber,
                 "apartmentname": apartmentName,
-                "id": "8",
+                "id": "9",
                 "value": str(value),
                 "humidity": "",
                 "agent": ""

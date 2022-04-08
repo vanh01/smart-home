@@ -53,7 +53,7 @@ var myAdafruitApi = (function () {
     function init() {
         return {
             switchLed: async (ledOn) => {
-                var value = ledOn ? "led-on" : "led-off";
+                var value = ledOn ? "led-on web" : "led-off web";
                 var data = JSON.stringify({
                     value: value,
                 });
@@ -61,7 +61,7 @@ var myAdafruitApi = (function () {
             },
 
             switchAir : async (airOn) => {
-                var value = airOn ? "air-on" : "air-off";
+                var value = airOn ? "air-on web" : "air-off web";
 
                 var data = JSON.stringify({
                     value: value,
@@ -78,7 +78,7 @@ var myAdafruitApi = (function () {
 
             getLed: async () => {
                 var value = await get("bk-iot-led");
-                return value === "led-on" ? true : false;
+                return value === "led-on web" ? true : false;
             },
 
             getAir : async () => {

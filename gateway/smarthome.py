@@ -63,27 +63,29 @@ def message(client, feed_id, payload):
         global tempActive
         global tempLimit
         if feed_id == "bk-iot-led":
+            leds = str(payload).split(' ')
             if firstTimes is False:
                 myApi().insertLog(key, {
                     "phonenumber": phoneNumber,
                     "apartmentname": apartmentName,
                     "id": "1",
-                    "value": str(payload),
-                    "agent": ""
+                    "value": leds[0],
+                    "agent": leds[1]
                 })
-            led = str(payload)
-            ser.write((str(payload) + "#").encode())
+            led = leds[0]
+            ser.write(str(led + "#").encode())
         elif feed_id == "bk-iot-air-condition":
+            airs = str(payload).split(' ')
             if firstTimes is False:
                 myApi().insertLog(key, {
                     "phonenumber": phoneNumber,
                     "apartmentname": apartmentName,
                     "id": "2",
-                    "value": str(payload),
-                    "agent": ""
+                    "value": airs[0],
+                    "agent": airs[1]
                 })
-            airCondition = str(payload)
-            ser.write((str(payload) + "#").encode())
+            airCondition = airs[0]
+            ser.write(str(airCondition + "#").encode())
         elif feed_id == "bk-iot-light-limit":
             lightLimit = int(payload)
             if firstTimes is False:
@@ -186,10 +188,10 @@ def processData(data):
             })
             if tempActive:
                 oldAirCondition = airCondition
-                if value > tempLimit:
-                    airCondition = "air-on"
-                else:
-                    airCondition = "air-off"
+                if value > tempLimit and -20 < value < 100:
+                    airCondition = "air-on temp"
+                elif -20 < value < 100:
+                    airCondition = "air-off temp"
                 if airCondition != oldAirCondition:
                     client.publish("bk-iot-air-condition", airCondition)
         elif key == "HUMID":
@@ -209,11 +211,11 @@ def processData(data):
                 "agent": ""
             })
             if soundActive:
-                if value > soundLimit:
-                    if led == "led-off":
-                        led = "led-on"
+                if value > soundLimit and 0 < value < 200:
+                    if "led-off" in led:
+                        led = "led-on sound"
                     else:
-                        led = "led-off"
+                        led = "led-off sound"
                     client.publish("bk-iot-led", led)
         elif key == "LIGHT":
             myApi().insertLog(key, {
@@ -225,10 +227,10 @@ def processData(data):
             })
             if lightActive:
                 oldLed = led
-                if value < lightLimit:
-                    led = "led-on"
+                if value < lightLimit and 0 < value < 1000:
+                    led = "led-on light"
                 else:
-                    led = "led-off"
+                    led = "led-off light"
                 if led != oldLed:
                     client.publish("bk-iot-led", led)
         elif key == "GAS":
@@ -252,7 +254,7 @@ def processData(data):
                     "value": speaker,
                     "agent": ""
                 })
-                se.write(str(speaker + "#").encode())
+                ser.write(str(speaker + "#").encode())
         elif key == "SWITCH":
             myApi().insertLog(key, {
                 "phonenumber": phoneNumber,
@@ -262,10 +264,10 @@ def processData(data):
                 "agent": ""
             })
             if value == 1:
-                if led == 'led-on':
-                    led = 'led-off'
+                if 'led-on' in led:
+                    led = 'led-off switch'
                 else:
-                    led = 'led-on'
+                    led = 'led-on switch'
                 client.publish("bk-iot-led", led)
     except:
         pass

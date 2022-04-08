@@ -5,7 +5,9 @@
 .activity-log {
     padding-top: 50px;
     overflow-y: scroll;
-    height: calc(100vh - 50px)
+    height: calc(100vh - 50px);
+    position: relative;
+    top: 50px;
 }
 
 .activity__button {

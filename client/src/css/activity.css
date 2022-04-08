@@ -1,25 +1,25 @@
-.test{
+.test {
     background-color: #aaa;
 }
-.activity-log{
+
+.activity-log {
     padding-top: 50px;
     overflow-y: scroll;
     height: calc(100vh - 50px)
 }
 
-.activity__button{
+.activity__button {
     display: flex;
     justify-content: flex-end;
-    margin-top:20px;
+    margin-top: 20px;
     align-items: center;
-    padding:10px 5%;
+    padding: 10px 5%;
 }
 
 
-.activity__device{
-} 
+.activity__device {}
 
-.device__select-box{
+.device__select-box {
     max-width: 120px;
     min-width: 150px;
     border-radius: 5px;
@@ -30,45 +30,43 @@
     /* z-index: 0; */
 }
 
-.device__select{
+.device__select {
     padding: 7px 2px;
     border-radius: 5px;
-    border: 1px solid #888; 
+    border: 1px solid #888;
 }
 
-.device__option-list{
+.device__option-list {
     position: absolute;
     box-shadow: 0 0 3px #aaa;
     width: 100%;
 }
 
-.device__option{
+.device__option {
     display: none;
     padding: 4px;
     background-color: #fff;
-    
-} 
 
-.device__option:hover{
+}
+
+.device__option:hover {
     color: #fff;
     background-color: #62baea;
 }
 
-.device__option--show{
+.device__option--show {
     display: block;
-} 
-
-.activity__date{
-
 }
 
-.date__icon{
-    padding:0 5px;
+.activity__date {}
+
+.date__icon {
+    padding: 0 5px;
     font-size: 15px;
-    
+
 }
 
-.device__select-box{
+.device__select-box {
     max-width: 120px;
     min-width: 150px;
     box-shadow: 0 0 3px #aaa;
@@ -76,49 +74,50 @@
     list-style: none;
 }
 
-.date__select{
+.date__select {
     padding: 6px;
     border-radius: 5px;
     border: 1px solid #888;
     outline: none;
 }
 
-.activity__chart{
+.activity__chart {
     /* padding: 20px; */
-    display:flex;
+    display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
 
-.activity__chart :nth-child(1){
-    max-width:49%;
-    max-height:500px;
-}
-.activity__chart :nth-child(2){
-    max-width:49%;
-    max-height:500px;
-
+.activity__chart :nth-child(1) {
+    max-width: 95%;
+    max-height: 500px;
 }
 
+.activity__chart :nth-child(2) {
+    max-width: 95%;
+    max-height: 500px;
 
-.activity__table{
-    width:90%;
+}
+
+
+.activity__table {
+    width: 90%;
     border: 1px solid rgb(122, 122, 122);
     margin: 20px 0 50px 5%;
 }
 
-.table__row{
+.table__row {
     /* border: 1px solid #ddd; */
 }
 
-.table_header{
+.table_header {
     padding: 5px 10px;
     background-color: #E8E6E6;
-    border:none ;
+    border: none;
 }
 
-.table_col{
+.table_col {
     padding: 5px 10px;
     border-top: 1px solid #ddd;
-    text-align:center;
+    text-align: center;
 }

@@ -23,19 +23,16 @@ Chart.register(Legend)
 
 
 const ActivityLog = () => {
-
-    let [allLabel, setAllLabel] = useState([]) //useState(["2022-03-14 7:00:00", "2022-03-14 7:01:00", "2022-03-15 7:02:00", "2022-03-15 7:03:00", "2022-03-16 7:04:00", "2022-03-17 7:05:00", "2022-03-18 7:06:00"])
-    let [allData1, setAllData1] = useState([])  //useState([0, 1, 0, 1, 0, 1, 0])
-    let [allData2, setAllData2] = useState([])  //useState([0, 1, 0, 1, 0, 1, 0])
     let [device, setDevice] = useState(0);
     let [allData, setAlllData] = useState([])
 
-    let [xValue, setXValue] = useState([])
+    let [xValue1, setxValue1] = useState([])
+    let [xValue2, setxValue2] = useState([])
     let [yValue1, setYValue1] = useState([])
     let [yValue2, setYValue2] = useState([])
 
-    let [startDate, setStartDate] = useState(new Date("2022-03-25"))
-    let [endDate, setEndDate] = useState(new Date("2022-04-10"))
+    let [startDate, setStartDate] = useState(new Date("2022-03-20"))
+    let [endDate, setEndDate] = useState(new Date("2022-03-21"))
     // let endDate = new Date("2022-03-14")
 
     const getData = async (typeDevice) => {
@@ -45,20 +42,21 @@ const ActivityLog = () => {
                 // console.log(json)
                 setAlllData(json)
             })
+        allData.sort((a, b) => (new Date(formatDate(a.time)) > new Date(formatDate(b.time)) ? 1 : -1))
+        console.log(allData)
         takeData(typeDevice)
     }
 
-    let tempLog = []
-    let label = []
+    let label1 = []
+    let label2 = []
     let data1 = []
     let data2 = []
-    let tempDevice = 0
     const takeData = (typeDevice) => {
+        let tempLog = []
         console.log("type:", typeDevice)
         switch (typeDevice) {
             case 0:
                 tempLog = allData.filter(data => data.id === '1')
-                tempDevice = 0
                 data1 = tempLog.map(data => {
                     if (data.value === 'led-on')
                         return 1
@@ -67,7 +65,6 @@ const ActivityLog = () => {
                 break
             case 1:
                 tempLog = allData.filter(data => data.id === '3')
-                tempDevice = 1
                 data1 = tempLog.map(data => {
                     if (data.value === 'gas-on')
                         return 1
@@ -76,7 +73,6 @@ const ActivityLog = () => {
                 break
             case 2:
                 tempLog = allData.filter(data => data.id === '2')
-                tempDevice = 2
                 data1 = tempLog.map(data => {
                     if (data.value === 'air-on')
                         return 1
@@ -85,48 +81,41 @@ const ActivityLog = () => {
                 break
             case 3:
                 tempLog = allData.filter(data => data.id === '5')
-                tempDevice = 3
                 data1 = tempLog.map(data => data.value)
                 break
             case 4:
                 tempLog = allData.filter(data => data.id === '4')
-                tempDevice = 4
                 data1 = tempLog.map(data => data.value)
                 break
             case 5:
                 tempLog = allData.filter(data => data.id === '8')
-                tempDevice = 5
                 data1 = tempLog.map(data => data.value)
                 break
 
             default:
                 tempLog = allData.filter(data => data.id === '6')
-                tempDevice = 6
-                label = tempLog.map(data => {
+                label1 = tempLog.map(data => {
                     return formatDate(data.time)
                 })
                 data1 = tempLog.map(data => data.value)
                 let tempLog2 = allData.filter(data => data.id === '7')
+                label2 = tempLog2.map(data => {
+                    return formatDate(data.time)
+                })
                 data2 = tempLog2.map(data => data.value)
                 break
         }
-        label = tempLog.map(data => {
+        label1 = tempLog.map(data => {
             return formatDate(data.time)
         })
     }
 
     useEffect(() => {
         getData(device)
-        setDevice(tempDevice)
-        setAllLabel(label)
-        setAllData1(data1)
-        setAllData2(data2)
-        console.log(data1)
-        // console.log(allLabel)
-        fillData(device, startDate, endDate, label, data1, data2, setXValue, setYValue1, setYValue2)
+        // setDevice(tempDevice)
+        fillData(device, startDate, endDate, label1, label2, data1, data2, setxValue1, setxValue2, setYValue1, setYValue2)
     }, [startDate, endDate, device])
 
-    // console.log(1)
     function showDevice(e) {
         let select = document.querySelectorAll('.device__option');
         select.forEach(element => {
@@ -178,16 +167,16 @@ const ActivityLog = () => {
                 </div>
             </ul>
             <div className="activity__date">
-                <input type="date" className="date__select-box date__select" defaultValue="2022-03-14" onChange={(e) => { setStartDate(new Date(e.target.value)) }}></input>
+                <input type="date" className="date__select-box date__select" defaultValue={dateToString(startDate)} onChange={(e) => { setStartDate(new Date(e.target.value)) }}></input>
                 <FontAwesomeIcon icon={faArrowRight} className="date__icon" />
 
                 <input type="date" className="date__select-box date__select" defaultValue={dateToString(endDate)} onChange={(e) => { let date = new Date(e.target.value); date.setDate(date.getDate() + 1); setEndDate(date) }}></input>
             </div>
         </div>
 
-        <ShowChart device={device} xValue={xValue} yValue1={yValue1} yValue2={yValue2} />
+        <ShowChart device={device} xValue1={xValue1} xValue2={xValue2} yValue1={yValue1} yValue2={yValue2} />
 
-        <ShowTable device={device} xValue={xValue} yValue1={yValue1} yValue2={yValue2} />
+        <ShowTable device={device} xValue1={xValue1} xValue2={xValue2} yValue1={yValue1} yValue2={yValue2} />
 
     </div>
 
@@ -202,7 +191,7 @@ function ShowChart(data) {
         return <div className="activity__chart">
             <Line
                 data={{
-                    labels: data.xValue,
+                    labels: data.xValue1,
                     datasets: [{
                         data: data.yValue1,
                         fill: false,
@@ -225,7 +214,7 @@ function ShowChart(data) {
             />
             <Line
                 data={{
-                    labels: data.xValue,
+                    labels: data.xValue2,
                     datasets: [{
                         data: data.yValue2,
                         fill: false,
@@ -274,7 +263,7 @@ function ShowChart(data) {
         return <div className="activity__chart">
             <Line
                 data={{
-                    labels: data.xValue,
+                    labels: data.xValue1,
                     datasets: [{
                         data: data.yValue1,
                         fill: false,
@@ -313,7 +302,7 @@ function ShowTable(data) {
                     <th className="table_header">Thời điểm</th>
                     <th className="table_header">Ngày</th>
                 </tr>
-                {data.xValue.map((x, index) => {
+                {data.xValue1.map((x, index) => {
                     return <tr key={x} className="table__row">
                         <td className="table_col">{stt++}</td>
                         <td className="table_col">{data.yValue1[index]}</td>
@@ -334,7 +323,7 @@ function ShowTable(data) {
                     <th className="table_header">Thời điểm</th>
                     <th className="table_header">Ngày</th>
                 </tr>
-                {data.xValue.map((x, index) => {
+                {data.xValue1.map((x, index) => {
                     return <tr key={x} className="table__row">
                         <td className="table_col">{stt++}</td>
                         <td className="table_col">{data.yValue1[index]}</td>
@@ -355,7 +344,7 @@ function ShowTable(data) {
                     <th className="table_header">Thời điểm</th>
                     <th className="table_header">Ngày</th>
                 </tr>
-                {data.xValue.map((x, index) => {
+                {data.xValue1.map((x, index) => {
                     return <tr key={x} className="table__row">
                         <td className="table_col">{stt++}</td>
                         <td className="table_col">{data.yValue1[index]}</td>
@@ -376,7 +365,7 @@ function ShowTable(data) {
                     <th className="table_header">Thời điểm</th>
                     <th className="table_header">Ngày</th>
                 </tr>
-                {data.xValue.map((x, index) => {
+                {data.xValue1.map((x, index) => {
                     return <tr key={x} className="table__row">
                         <td className="table_col">{stt++}</td>
                         <td className="table_col">{data.yValue1[index]}</td>
@@ -396,7 +385,7 @@ function ShowTable(data) {
                     <th className="table_header">Thời điểm</th>
                     <th className="table_header">Ngày</th>
                 </tr>
-                {data.xValue.map((x, index) => {
+                {data.xValue1.map((x, index) => {
                     return <tr key={x} className="table__row">
                         <td className="table_col">{stt++}</td>
                         <td className="table_col">{data.yValue1[index]}</td>
@@ -416,7 +405,7 @@ function ShowTable(data) {
                     <th className="table_header">Thời điểm</th>
                     <th className="table_header">Ngày</th>
                 </tr>
-                {data.xValue.map((x, index) => {
+                {data.xValue1.map((x, index) => {
                     return <tr key={x} className="table__row">
                         <td className="table_col">{stt++}</td>
                         <td className="table_col">{data.yValue1[index]}</td>
@@ -428,8 +417,8 @@ function ShowTable(data) {
         </table>
     }
     else {
-        return <div style={{ display: 'flex' }}>
-            <table className="activity__table">
+        return <div style={{ display: 'flex', alignItems: 'baseline' }}>
+            <table className="activity__table" >
                 <tbody>
                     <tr className="table__row">
                         <th className="table_header">Stt</th>
@@ -437,7 +426,7 @@ function ShowTable(data) {
                         <th className="table_header">Thời điểm</th>
                         <th className="table_header">Ngày</th>
                     </tr>
-                    {data.xValue.map((x, index) => {
+                    {data.xValue1.map((x, index) => {
                         return <tr key={x} className="table__row">
                             <td className="table_col">{stt++}</td>
                             <td className="table_col">{data.yValue1[index]}</td>
@@ -455,7 +444,7 @@ function ShowTable(data) {
                         <th className="table_header">Thời điểm</th>
                         <th className="table_header">Ngày</th>
                     </tr>
-                    {data.xValue.map((x, index) => {
+                    {data.xValue2.map((x, index) => {
                         return <tr key={x} className="table__row">
                             <td className="table_col">{stt2++}</td>
                             <td className="table_col">{data.yValue2[index]}</td>
@@ -469,16 +458,24 @@ function ShowTable(data) {
     }
 }
 
-function fillData(device, startDate, endDate, allLabel, allData1, allData2, setXValue, setYValue1, setYValue2) {
+function fillData(device, startDate, endDate, allLabel1, allLabel2, allData1, allData2, setxValue1, setxValue2, setYValue1, setYValue2) {
     let indexList = []
+    let indexList2 = []
     let x = []
+    let x2 = []
     let y1 = []
     let y2 = []
 
-    for (let i = 0; i < allLabel.length; i++) {
-        if (startDate <= new Date(allLabel[i]) && endDate >= new Date(allLabel[i])) {
+    for (let i = 0; i < allLabel1.length; i++) {
+        if (startDate <= new Date(allLabel1[i]) && endDate >= new Date(allLabel1[i])) {
             indexList = [...indexList, i]
-            x = [...x, allLabel[i]]
+            x = [...x, allLabel1[i]]
+        }
+    }
+    for (let i = 0; i < allLabel2.length; i++) {
+        if (startDate <= new Date(allLabel2[i]) && endDate >= new Date(allLabel2[i])) {
+            indexList2 = [...indexList2, i]
+            x2 = [...x2, allLabel1[i]]
         }
     }
     if (device === 0) {
@@ -521,12 +518,13 @@ function fillData(device, startDate, endDate, allLabel, allData1, allData2, setX
     if (device === 6) {
         // DHT
         y1 = allData1.filter((data, index) => (indexList.includes(index)))
-        y2 = allData2.filter((data, index) => (indexList.includes(index)))
+        y2 = allData2.filter((data, index) => (indexList2.includes(index)))
     }
 
     setYValue1(y1)
     setYValue2(y2)
-    setXValue(x)
+    setxValue1(x)
+    setxValue2(x2)
 }
 
 

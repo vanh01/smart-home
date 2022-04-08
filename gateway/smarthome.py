@@ -15,7 +15,7 @@ AIO_KEY = "aio_nlle75SnyUL2NO8OdkLwqJoqH6pF"
 lightLimit = 0
 soundLimit = 0
 tempLimit = 0
-gasLimit = 50
+gasLimit = 200
 
 led = "led-off"
 airCondition = "air-off"  # off: 2, on: 3
@@ -154,11 +154,11 @@ def getPort():
 
 isMicrobitConnected = False
 
-ser = serial.Serial(port="COM4", baudrate=115200)
-isMicrobitConnected = True
-# if getPort() != " None ":
-#     ser = serial . Serial(port=getPort(), baudrate=115200)
-#     isMicrobitConnected = True
+# ser = serial.Serial(port="COM4", baudrate=115200)
+# isMicrobitConnected = True
+if getPort() != " None ":
+    ser = serial . Serial(port=getPort(), baudrate=115200)
+    isMicrobitConnected = True
 
 # khi mà thiết bị input gửi dữ liệu thì gọi api lên server
 
@@ -194,7 +194,7 @@ def processData(data):
                     airCondition = "air-off temp"
                 if airCondition != oldAirCondition:
                     client.publish("bk-iot-air-condition", airCondition)
-        elif key == "HUMID":
+        elif key == "HUMI":
             myApi().insertLog(key, {
                 "phonenumber": phoneNumber,
                 "apartmentname": apartmentName,
@@ -244,7 +244,9 @@ def processData(data):
             oldSpeaker = speaker
             if value > gasLimit:
                 speaker = "speaker-on"
+                ser.write(str("speaker-on" + '#').encode())
             else:
+                ser.write(str("speaker-off" + '#').encode())
                 speaker = "speaker-off"
             if speaker != oldSpeaker:
                 myApi().insertLog(key, {

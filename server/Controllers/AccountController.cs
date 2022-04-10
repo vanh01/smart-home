@@ -20,7 +20,7 @@ namespace server.Controllers
         {
             _accountHub = accountHub;
         }
-        
+
         [HttpGet]
         [Route("key")]
         public string GetKey([FromQuery] string phonenumber, string password)
@@ -34,6 +34,27 @@ namespace server.Controllers
             string result = account.privatekey;
             return result;
 
-        }       
+        }
+        [HttpPut]
+        [Route("{key}/update")]
+        public int UpdateAccount([FromRoute] string key, [FromBody] Account account)
+        {
+            string query = @$"update account 
+                            set phonenumber = '{account.phonenumber}', password= '{account.password}', rules = '{account.rules}'
+                            WHERE privatekey = '{key}'";
+            int result = SqlExecutes.Instance.ExcuteNonQuery(query);
+            return result;
+        }
+
+        [HttpPut]
+        [Route("{key}/delete")]
+        public int DeleteAccount([FromRoute] string key, [FromBody] string adminKey)
+        {
+            string query = @$"update account 
+                            set rules = '0'
+                            WHERE '1' in (SELECT rules from account WHERE privatekey = '{adminKey}') and privatekey = '{key}'";
+            int result = SqlExecutes.Instance.ExcuteNonQuery(query);
+            return result;
+        }
     }
 }

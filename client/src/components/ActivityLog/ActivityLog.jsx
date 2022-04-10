@@ -23,25 +23,97 @@ Chart.register(Legend)
 
 
 const ActivityLog = () => {
-
-    let [allLabel, setAllLabel] = useState(["2022-03-14 7:00:00", "2022-03-14 7:01:00", "2022-03-15 7:02:00", "2022-03-15 7:03:00", "2022-03-16 7:04:00", "2022-03-17 7:05:00", "2022-03-18 7:06:00"])
-    let [allData1, setAllData1] = useState([0, 1, 0, 1, 0, 1, 0])
-    let [allData2, setAllData2] = useState([0, 1, 0, 1, 0, 1, 0])
     let [device, setDevice] = useState(0);
+    let allData = []
 
-    let [xValue, setXValue] = useState([])
+    let [xValue1, setxValue1] = useState([])
+    let [xValue2, setxValue2] = useState([])
     let [yValue1, setYValue1] = useState([])
     let [yValue2, setYValue2] = useState([])
 
-    let [startDate, setStartDate] = useState(new Date("2022-03-14"))
-    let [endDate, setEndDate] = useState(new Date("2022-03-15"))
+    let [startDate, setStartDate] = useState(new Date("2022-04-01"))
+    let [endDate, setEndDate] = useState(new Date("2022-04-20"))
     // let endDate = new Date("2022-03-14")
 
+    const getData = async (typeDevice) => {
+        await fetch("https://localhost:5001/api/log/asaxkioiowe123as/getAllLogs?name=1")
+            .then((res) => res.json())
+            .then((json) => {
+                allData = json
+                allData.sort((a, b) => (new Date(formatDate(a.time)) > new Date(formatDate(b.time)) ? 1 : -1))
+                takeData(typeDevice)
+                fillData(device, startDate, endDate, label1, label2, data1, data2, setxValue1, setxValue2, setYValue1, setYValue2)
+            })
+        console.log(allData)
+    }
+
+    let label1 = []
+    let label2 = []
+    let data1 = []
+    let data2 = []
+    const takeData = (typeDevice) => {
+        let tempLog = []
+        let tempLog2 = []
+        console.log("type:", typeDevice)
+        switch (typeDevice) {
+            case 0:
+                tempLog = allData.filter(data => data.id === '1')
+                data1 = tempLog.map(data => {
+                    if (data.value === 'led-on')
+                        return 1
+                    else return 0
+                })
+                data2 = tempLog.map(data => data.agent)
+                break
+            case 1:
+                tempLog = allData.filter(data => data.id === '3')
+                data1 = tempLog.map(data => {
+                    if (data.value === 'speaker-on')
+                        return 1
+                    else return 0
+                })
+                break
+            case 2:
+                tempLog = allData.filter(data => data.id === '2')
+                data1 = tempLog.map(data => {
+                    if (data.value === 'air-on')
+                        return 1
+                    else return 0
+                })
+                data2 = tempLog.map(data => data.agent)
+                break
+            case 3:
+                tempLog = allData.filter(data => data.id === '5')
+                data1 = tempLog.map(data => data.value)
+                break
+            case 4:
+                tempLog = allData.filter(data => data.id === '4')
+                data1 = tempLog.map(data => data.value)
+                break
+            case 5:
+                tempLog = allData.filter(data => data.id === '8')
+                data1 = tempLog.map(data => data.value)
+                break
+
+            default:
+                tempLog = allData.filter(data => data.id === '6')
+                data1 = tempLog.map(data => data.value)
+                tempLog2 = allData.filter(data => data.id === '7')
+                data2 = tempLog2.map(data => data.value)
+                break
+        }
+        label1 = tempLog.map(data => {
+            return formatDate(data.time)
+        })
+        label2 = tempLog2.map(data => {
+            return formatDate(data.time)
+        })
+    }
+
     useEffect(() => {
-        fillData(device, startDate, endDate, allLabel, allData1, allData2, setXValue, setYValue1, setYValue2)
+        getData(device)
     }, [startDate, endDate, device])
 
-    console.log(1)
     function showDevice(e) {
         let select = document.querySelectorAll('.device__option');
         select.forEach(element => {
@@ -93,16 +165,16 @@ const ActivityLog = () => {
                 </div>
             </ul>
             <div className="activity__date">
-                <input type="date" className="date__select-box date__select" defaultValue="2022-03-14" onChange={(e) => { setStartDate(new Date(e.target.value)) }}></input>
+                <input type="date" className="date__select-box date__select" defaultValue={dateToString(startDate)} onChange={(e) => { setStartDate(new Date(e.target.value)) }}></input>
                 <FontAwesomeIcon icon={faArrowRight} className="date__icon" />
 
-                <input type="date" className="date__select-box date__select" defaultValue="2022-03-14" onChange={(e) => { let date = new Date(e.target.value); date.setDate(date.getDate() + 1); setEndDate(date) }}></input>
+                <input type="date" className="date__select-box date__select" defaultValue={dateToString(endDate)} onChange={(e) => { let date = new Date(e.target.value); date.setDate(date.getDate() + 1); setEndDate(date) }}></input>
             </div>
         </div>
 
-        <ShowChart device={device} xValue={xValue} yValue1={yValue1} yValue2={yValue2} />
+        <ShowChart device={device} xValue1={xValue1} xValue2={xValue2} yValue1={yValue1} yValue2={yValue2} />
 
-        <ShowTable device={device} xValue={xValue} yValue1={yValue1} yValue2={yValue2} />
+        <ShowTable device={device} xValue1={xValue1} xValue2={xValue2} yValue1={yValue1} yValue2={yValue2} />
 
     </div>
 
@@ -117,7 +189,7 @@ function ShowChart(data) {
         return <div className="activity__chart">
             <Line
                 data={{
-                    labels: data.xValue,
+                    labels: data.xValue1,
                     datasets: [{
                         data: data.yValue1,
                         fill: false,
@@ -140,7 +212,7 @@ function ShowChart(data) {
             />
             <Line
                 data={{
-                    labels: data.xValue,
+                    labels: data.xValue2,
                     datasets: [{
                         data: data.yValue2,
                         fill: false,
@@ -189,7 +261,7 @@ function ShowChart(data) {
         return <div className="activity__chart">
             <Line
                 data={{
-                    labels: data.xValue,
+                    labels: data.xValue1,
                     datasets: [{
                         data: data.yValue1,
                         fill: false,
@@ -217,7 +289,8 @@ function ShowChart(data) {
 
 function ShowTable(data) {
     let stt = 1
-    if (data.device === 0) {
+    let stt2 = 1
+    if (data.device === 0 || data.device === 2) {
         return <table className="activity__table">
             <tbody>
                 <tr className="table__row">
@@ -227,7 +300,7 @@ function ShowTable(data) {
                     <th className="table_header">Thời điểm</th>
                     <th className="table_header">Ngày</th>
                 </tr>
-                {data.xValue.map((x, index) => {
+                {data.xValue1.map((x, index) => {
                     return <tr key={x} className="table__row">
                         <td className="table_col">{stt++}</td>
                         <td className="table_col">{data.yValue1[index]}</td>
@@ -239,123 +312,75 @@ function ShowTable(data) {
             </tbody>
         </table>
     }
-    else if (data.device === 1) {
-        return <table className="activity__table">
-            <tbody>
-                <tr className="table__row">
-                    <th className="table_header">Stt</th>
-                    <th className="table_header">Trạng thái</th>
-                    <th className="table_header">Thời điểm</th>
-                    <th className="table_header">Ngày</th>
-                </tr>
-                {data.xValue.map((x, index) => {
-                    return <tr key={x} className="table__row">
-                        <td className="table_col">{stt++}</td>
-                        <td className="table_col">{data.yValue1[index]}</td>
-                        <td className="table_col">{getTimeFromString(x)}</td>
-                        <td className="table_col">{getDateFromString(x)} </td>
+    else if (data.device === 6) {
+        return <div style={{ display: 'flex', alignItems: 'baseline' }}>
+            <table className="activity__table" style={{ marginLeft: '2%' }}>
+                <tbody>
+                    <tr className="table__row">
+                        <th className="table_header">Stt</th>
+                        <th className="table_header">Nhiệt độ</th>
+                        <th className="table_header">Thời điểm</th>
+                        <th className="table_header">Ngày</th>
                     </tr>
-                })}
-            </tbody>
-        </table>
-    }
-    else if (data.device === 2) {
-        return <table className="activity__table">
-            <tbody>
-                <tr className="table__row">
-                    <th className="table_header">Stt</th>
-                    <th className="table_header">Trạng thái</th>
-                    <th className="table_header">Tác nhân</th>
-                    <th className="table_header">Thời điểm</th>
-                    <th className="table_header">Ngày</th>
-                </tr>
-                {data.xValue.map((x, index) => {
-                    return <tr key={x} className="table__row">
-                        <td className="table_col">{stt++}</td>
-                        <td className="table_col">{data.yValue1[index]}</td>
-                        <td className="table_col">{data.yValue2[index]}</td>
-                        <td className="table_col">{getTimeFromString(x)}</td>
-                        <td className="table_col">{getDateFromString(x)} </td>
+                    {data.xValue1.map((x, index) => {
+                        return <tr key={x} className="table__row">
+                            <td className="table_col">{stt++}</td>
+                            <td className="table_col">{data.yValue1[index]}</td>
+                            <td className="table_col">{getTimeFromString(x)}</td>
+                            <td className="table_col">{getDateFromString(x)} </td>
+                        </tr>
+                    })}
+                </tbody>
+            </table>
+            <table className="activity__table" style={{ marginLeft: '2%' }}>
+                <tbody>
+                    <tr className="table__row">
+                        <th className="table_header">Stt</th>
+                        <th className="table_header">Độ ẩm</th>
+                        <th className="table_header">Thời điểm</th>
+                        <th className="table_header">Ngày</th>
                     </tr>
-                })}
-            </tbody>
-        </table>
-    }
-    else if (data.device === 3) {
-        return <table className="activity__table">
-            <tbody>
-                <tr className="table__row">
-                    <th className="table_header">Stt</th>
-                    <th className="table_header">Cường độ ánh sáng</th>
-                    <th className="table_header">Thời điểm</th>
-                    <th className="table_header">Ngày</th>
-                </tr>
-                {data.xValue.map((x, index) => {
-                    return <tr key={x} className="table__row">
-                        <td className="table_col">{stt++}</td>
-                        <td className="table_col">{data.yValue1[index]}</td>
-                        <td className="table_col">{getTimeFromString(x)}</td>
-                        <td className="table_col">{getDateFromString(x)} </td>
-                    </tr>
-                })}
-            </tbody>
-        </table>
-    }
-    else if (data.device === 4) {
-        return <table className="activity__table">
-            <tbody>
-                <tr className="table__row">
-                    <th className="table_header">Stt</th>
-                    <th className="table_header">Cường độ âm thanh</th>
-                    <th className="table_header">Thời điểm</th>
-                    <th className="table_header">Ngày</th>
-                </tr>
-                {data.xValue.map((x, index) => {
-                    return <tr key={x} className="table__row">
-                        <td className="table_col">{stt++}</td>
-                        <td className="table_col">{data.yValue1[index]}</td>
-                        <td className="table_col">{getTimeFromString(x)}</td>
-                        <td className="table_col">{getDateFromString(x)} </td>
-                    </tr>
-                })}
-            </tbody>
-        </table>
-    }
-    else if (data.device === 5) {
-        return <table className="activity__table">
-            <tbody>
-                <tr className="table__row">
-                    <th className="table_header">Stt</th>
-                    <th className="table_header">Nồng độ khí gas</th>
-                    <th className="table_header">Thời điểm</th>
-                    <th className="table_header">Ngày</th>
-                </tr>
-                {data.xValue.map((x, index) => {
-                    return <tr key={x} className="table__row">
-                        <td className="table_col">{stt++}</td>
-                        <td className="table_col">{data.yValue1[index]}</td>
-                        <td className="table_col">{getTimeFromString(x)}</td>
-                        <td className="table_col">{getDateFromString(x)} </td>
-                    </tr>
-                })}
-            </tbody>
-        </table>
+                    {data.xValue2.map((x, index) => {
+                        return <tr key={x} className="table__row">
+                            <td className="table_col">{stt2++}</td>
+                            <td className="table_col">{data.yValue2[index]}</td>
+                            <td className="table_col">{getTimeFromString(x)}</td>
+                            <td className="table_col">{getDateFromString(x)} </td>
+                        </tr>
+                    })}
+                </tbody>
+            </table>
+        </div>
     }
     else {
+        let name = ''
+        switch (data.device) {
+            case 1:
+                name = 'Trạng thái'
+                break
+            case 3:
+                name = 'Cường độ ánh sáng'
+                break
+            case 4:
+                name = 'Cường độ âm thanh'
+                break
+            case 5:
+                name = 'Nồng độ khí gas'
+                break
+            default: break
+        }
         return <table className="activity__table">
             <tbody>
                 <tr className="table__row">
                     <th className="table_header">Stt</th>
-                    <th className="table_header">Nhiệt độ</th>
-                    <th className="table_header">độ ẩm</th>
+                    <th className="table_header">{name}</th>
                     <th className="table_header">Thời điểm</th>
                     <th className="table_header">Ngày</th>
                 </tr>
-                {data.xValue.map((x, index) => {
+                {data.xValue1.map((x, index) => {
                     return <tr key={x} className="table__row">
                         <td className="table_col">{stt++}</td>
                         <td className="table_col">{data.yValue1[index]}</td>
-                        <td className="table_col">{data.yValue2[index]}</td>
                         <td className="table_col">{getTimeFromString(x)}</td>
                         <td className="table_col">{getDateFromString(x)} </td>
                     </tr>
@@ -363,71 +388,70 @@ function ShowTable(data) {
             </tbody>
         </table>
     }
+
 }
 
-function fillData(device, startDate, endDate, allLabel, allData1, allData2, setXValue, setYValue1, setYValue2) {
+function fillData(device, startDate, endDate, allLabel1, allLabel2, allData1, allData2, setxValue1, setxValue2, setYValue1, setYValue2) {
     let indexList = []
+    let indexList2 = []
     let x = []
+    let x2 = []
     let y1 = []
     let y2 = []
 
-    for (let i = 0; i < allLabel.length; i++) {
-        if (startDate <= new Date(allLabel[i]) && endDate >= new Date(allLabel[i])) {
+    for (let i = 0; i < allLabel1.length; i++) {
+        if (startDate <= new Date(allLabel1[i]) && endDate >= new Date(allLabel1[i])) {
             indexList = [...indexList, i]
-            x = [...x, allLabel[i]]
+            x = [...x, allLabel1[i]]
         }
     }
-    if (device === 0) {
+    for (let i = 0; i < allLabel2.length; i++) {
+        if (startDate <= new Date(allLabel2[i]) && endDate >= new Date(allLabel2[i])) {
+            indexList2 = [...indexList2, i]
+            x2 = [...x2, allLabel1[i]]
+        }
+    }
+
+    if (device === 0 || device === 2) {
         // đèn
         y1 = allData1.filter((data, index) => (indexList.includes(index)))
-        // y2 = allData2.filter((data, index) => (indexList.includes(index)))
-        // test
-        for (let i = 0; i < allData2.length; i++) {
-            if (indexList.includes(i)) {
-                y2 = [...y2, "Công tắc"]
-            }
-        }
+        y2 = allData2.filter((data, index) => (indexList.includes(index)))
     }
-    if (device === 1) {
+    if (device === 1 || device === 3 || device === 4 || device === 5) {
         // loa
-        y1 = allData1.filter((data, index) => (indexList.includes(index)))
-    }
-    if (device === 2) {
-        // điều hòa
-        y1 = allData1.filter((data, index) => (indexList.includes(index)))
-        // y2 = allData2.filter((data, index) => (indexList.includes(index)))
-        for (let i = 0; i < allData2.length; i++) {
-            if (indexList.includes(i)) {
-                y2 = [...y2, "Công tắc"]
-            }
-        }
-    }
-    if (device === 3) {
-        // ánh sáng
-        y1 = allData1.filter((data, index) => (indexList.includes(index)))
-    }
-    if (device === 4) {
-        // âm thanh
-        y1 = allData1.filter((data, index) => (indexList.includes(index)))
-    }
-    if (device === 5) {
-        // gass
         y1 = allData1.filter((data, index) => (indexList.includes(index)))
     }
     if (device === 6) {
         // DHT
         y1 = allData1.filter((data, index) => (indexList.includes(index)))
-        y2 = allData2.filter((data, index) => (indexList.includes(index)))
+        y2 = allData2.filter((data, index) => (indexList2.includes(index)))
     }
 
     setYValue1(y1)
     setYValue2(y2)
-    setXValue(x)
+    setxValue1(x)
+    setxValue2(x2)
 }
 
 
 function dateToString(date) {
-    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate())
+    let month = date.getMonth() + 1
+    let day = date.getDate()
+    if (month < 10) {
+        month = '0' + month
+    }
+    if (day < 10) {
+        day = '0' + day
+    }
+    return date.getFullYear() + '-' + month + '-' + day
+}
+
+function formatDate(date) {
+    let fulldate = date.split(' ')
+    let day = fulldate[0].split('-')[0]
+    let month = fulldate[0].split('-')[1]
+    let year = fulldate[0].split('-')[2]
+    return year + '-' + month + '-' + day + ' ' + fulldate[1]
 }
 
 function getDateFromString(date) {

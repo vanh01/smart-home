@@ -1,4 +1,3 @@
-using System.Security.AccessControl;
 using System.Data;
 using System;
 using System.Collections.Generic;
@@ -24,10 +23,19 @@ namespace server.Controllers
         }
 
         [HttpGet]
-        [Route("/{key}/last")]
-        public List<Log> getLastLog([FromRoute] string key, [FromQuery] string apartmentName, [FromQuery] string id)
+        [Route("{key}/last")]
+        public List<Log> getLastLog([FromRoute] string key, [FromQuery] string apartmentName)
         {
-            string query = $"call get_last_data('{apartmentName}', '{id}');";
+            string query = @$"select log.phonenumber, log.apartmentname, log.id, log.time, log.value, log.agent
+                            from (
+                                select log.id, max(str_to_date(time, '%d-%m-%Y %k:%i:%s')) as time
+                                from account, log
+                                where account.phonenumber = log.phonenumber and apartmentname = '{apartmentName}' and account.privatekey = '{key}'
+                                group by log.id
+                            ) r
+                            inner join log
+                            where r.id = log.id and r.time = str_to_date(log.time, '%d-%m-%Y %k:%i:%s')
+                            ;";
 
             List<Log> logs = new List<Log>();
 
@@ -47,37 +55,40 @@ namespace server.Controllers
         "time": "10-10-2111",
         "type": "off",
         "value": "3123123",
-        "humidity": "32241",
         "agent": "11"
         }
         */
         [HttpPost]
-        [Route("insertLog")]
-        public async Task<bool> insertLog([FromBody] Log log)
+        [Route("{key}/insertLog")]
+        public async Task<bool> insertLog([FromRoute] string key, [FromBody] Log log)
         {
-            int dt = 1;
-            // string now_date = DateTime.Now.ToString("MM/dd/yyyy");
-            // {
-            //     string query = $"insert into log() value('{log.phonenumber}', '{log.apartmentname}', '{log.id}', '{now_date}', '{log.type}', '{log.value}', '{log.humidity}', '{log.agent}');";
+            int dt = 0;
+            string now_date = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+            {
+                string query = $"insert into log() value('{log.phonenumber}', '{log.apartmentname}', '{log.id}', '{now_date}', '{log.value}', '{log.agent}');";
 
-            //     dt = SqlExecutes.Instance.ExcuteNonQuery(query);
-            // }
-
-            await _logHub.Clients.All.SendAsync("getlastlog", log);
+                dt = SqlExecutes.Instance.ExcuteNonQuery(query);
+            }
+            
+            await _logHub.Clients.All.SendAsync("insertlog", new { id = log.id, value = log.value });
 
             return (dt > 0) ? true : false;
         }
 
         // - Lấy được nhật ký của tất cả thiết bị: key, tên căn hộ -> list hoạt động (get)
-        // Ex: https://localhost:5001/api/log/getAllLogs?key=1&name=nct
+        // Ex: https://localhost:5001/api/log/getAllLogs?key=asaxkioiowe123as&name=nct
         [HttpGet]
-        [Route("getAllLogs")]
-        public IEnumerable<Log> GetAllLogs([FromQuery] string key, [FromQuery] string name)
+        [Route("{key}/getAllLogs")]
+        public IEnumerable<Log> GetAllLogs([FromRoute] string key, [FromQuery] string name)
         {
             List<Log> result = new List<Log>();
             DataTable dt = new DataTable();
             {
-                string query = $"SELECT * FROM test.log WHERE phonenumber = '{key}' AND apartmentname = '{name}'";
+                string query = $@"SELECT log.phonenumber, log.apartmentname, log.id, log.time, log.value, log.agent 
+                                FROM log, account
+                                WHERE (log.phonenumber = account.phonenumber) 
+                                    and account.privatekey = '{key}' AND log.apartmentname = '{name}'";
+
 
                 dt = SqlExecutes.Instance.ExcuteQuery(query);
                 result = dt.ToList<Log>();

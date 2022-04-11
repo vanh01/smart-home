@@ -116,7 +116,7 @@ export async function updateAccount(key, account, information) {
 		redirect: 'follow'
 	};
 
-	fetch("https://localhost:5001/api/account/" + key + "/update", requestOptions)
+	await fetch("https://localhost:5001/api/account/" + key + "/update", requestOptions)
 		.then(response => response.text())
 		.then(result => console.log(result))
 		.catch(error => console.log('error', error));
@@ -139,7 +139,7 @@ export async function updateAccount(key, account, information) {
 		redirect: 'follow'
 	};
 
-	fetch("https://localhost:5001/api/information/" + key + "/update", requestOptions)
+	await fetch("https://localhost:5001/api/information/" + key + "/update", requestOptions)
 		.then(response => response.text())
 		.then(result => console.log(result))
 		.catch(error => console.log('error', error));

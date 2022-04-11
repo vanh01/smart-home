@@ -34,7 +34,7 @@ namespace server.Controllers
             string result = account.privatekey;
             return result;
 
-        }       
+        }
 
         [HttpGet]
         [Route("{key}")]
@@ -47,9 +47,10 @@ namespace server.Controllers
             int rule = account.rules;
             // Console.WriteLine(temp.GetType());
             // Console.WriteLine(temp.ToList<Account>());
-            if(rule == 1){
+            if (rule == 1)
+            {
                 // string queryAll = $"SELECT * FROM account;";
-                string queryAll = $"SELECT account.phonenumber, account.password, account.rules, information.name, information.email, information.datecreated, information.dateupdated FROM account, information WHERE account.phonenumber = information.phonenumber;";
+                string queryAll = $"SELECT account.phonenumber, account.password, account.rules, account.privatekey, information.name, information.email, information.datecreated, information.dateupdated FROM account, information WHERE account.phonenumber = information.phonenumber and account.rules != 0;";
                 var tempAll = SqlExecutes.Instance.ExcuteQuery(queryAll);
                 List<AccountInfo> accountsAll = tempAll.ToList<AccountInfo>();
                 return accountsAll;
@@ -73,7 +74,7 @@ namespace server.Controllers
         //         string queryInfo = $"INSERT INTO information (phonenumber, email, name, datecreated, dateupdated) VALUES ('{info.phonenumber}', '{info.email}', '{info.name}', '{info.datecreated}', '{info.dateupdated}');";
         //         SqlExecutes.Instance.ExcuteNonQuery(queryInfo);
         //     }
-            
+
         //     // Console.WriteLine(temp.GetType());
         //     // Console.WriteLine(temp.ToList<Account>());
         //     // List<Account> accounts = temp.ToList<Account>();
@@ -90,11 +91,12 @@ namespace server.Controllers
             List<Account> accounts = temp.ToList<Account>();
             Account accountCheck = accounts[0];
             int rule = accountCheck.rules;
-            if(rule == 1){
+            if (rule == 1)
+            {
                 string queryAdd = $"INSERT INTO account (phonenumber, password, privatekey, rules) VALUES ('{account.phonenumber}', '{account.password}', '{account.privatekey}', '{account.rules}');";
                 SqlExecutes.Instance.ExcuteNonQuery(queryAdd);
             }
-            
+
             // Console.WriteLine(temp.GetType());
             // Console.WriteLine(temp.ToList<Account>());
             // List<Account> accounts = temp.ToList<Account>();
@@ -119,7 +121,7 @@ namespace server.Controllers
         //     // List<Account> accounts = temp.ToList<Account>();
         //     // return accounts;
         // }
-        
+
         [HttpPut]
         [Route("{key}/update")]
         public int UpdateAccount([FromRoute] string key, [FromBody] Account account)

@@ -22,6 +22,7 @@ const Manager = () => {
     let [showApartment, setShowApartment] = useState(false)
     let [showAdd, setShowAdd] = useState(false)
     let [showModify, setShowModify] = useState(false)
+    let [render, setRender] = useState(false)
 
 
     const getDataAccount = async () => {
@@ -35,7 +36,7 @@ const Manager = () => {
         await fetch("https://localhost:5001/api/account/asaxkioiowe123as", requestOptions)
             // .then(response => response.text())
             .then(response => response.json())
-            .then(result =>{
+            .then(result => {
                 console.log('first result', result);
                 listAccount = result;
                 SetListAccount(listAccount, accounts, setAccount, setAllAccount);
@@ -45,7 +46,7 @@ const Manager = () => {
     // getDataAccount();
     useEffect(() => {
         getDataAccount();
-    },[]);
+    }, [render]);
     // },[listAccount]);
 
     console.log(curIndex)
@@ -113,7 +114,7 @@ const Manager = () => {
                             setShowModify(false);
                         }
                     }}>
-                    <Modify setShowModify={setShowModify} setShowApartment={setShowApartment} curIndex={curIndex} accounts={accounts} setAccount={setAccount} />
+                    <Modify setShowModify={setShowModify} setShowApartment={setShowApartment} curIndex={curIndex} accounts={accounts} setAccount={setAccount} render={render} setRender={setRender} />
                     {/* <Modify setShowModify={setShowModify} setShowApartment={setShowApartment} curIndex={curIndex} accounts={listAccount} setAccount={setAccount} /> */}
                 </div> : ''}
             {showApartment ?

@@ -2,7 +2,45 @@ import React from "react";
 
 const Add = ({ setShowAdd, accounts, setAccount }) => {
 
-	// const postAccountInfo = async (accountAdd, infoAdd) => {
+	const postAccountInfo = async (accountAdd, infoAdd) => {
+		// const postAccount = async () => {
+		var myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/json");
+
+		// var raw = JSON.stringify({
+		// 	"phonenumber": "0984123456",
+		// 	"password": "abc12344",
+		// 	"privatekey": "key4",
+		// 	"rules": "1"
+		// });
+		var raw = JSON.stringify(accountAdd);
+
+		var requestOptions = {
+			method: 'POST',
+			headers: myHeaders,
+			body: raw,
+			redirect: 'follow'
+		};
+
+		await fetch("https://localhost:5001/api/account/add/asaxkioiowe123as", requestOptions)
+			.then(response => response.text())
+			.then(result => console.log(result))
+			.catch(error => console.log('error', error));
+		var rawInfo = JSON.stringify(infoAdd);
+		var requestInfoOptions = {
+			method: 'POST',
+			headers: myHeaders,
+			body: rawInfo,
+			redirect: 'follow'
+		};
+
+		await fetch("https://localhost:5001/api/information/add/asaxkioiowe123as", requestInfoOptions)
+			.then(response => response.text())
+			.then(result => console.log(result))
+			.catch(error => console.log('error', error));
+	}
+
+	// const postAccount = async (accountAdd) => {
 	// 	// const postAccount = async () => {
 	// 	var myHeaders = new Headers();
 	// 	myHeaders.append("Content-Type", "application/json");
@@ -28,57 +66,31 @@ const Add = ({ setShowAdd, accounts, setAccount }) => {
 	// 		.catch(error => console.log('error', error));
 	// }
 
-	const postAccount = async (accountAdd) => {
-		// const postAccount = async () => {
-		var myHeaders = new Headers();
-		myHeaders.append("Content-Type", "application/json");
+	// const postInfo = async (infoAdd) => {
+	// 	var myHeaders = new Headers();
+	// 	myHeaders.append("Content-Type", "application/json");
 
-		// var raw = JSON.stringify({
-		// 	"phonenumber": "0984123456",
-		// 	"password": "abc12344",
-		// 	"privatekey": "key4",
-		// 	"rules": "1"
-		// });
-		var raw = JSON.stringify(accountAdd);
+	// 	var raw = JSON.stringify(infoAdd);
+	// 	// var raw = JSON.stringify({
+	// 	// 	"phonenumber": "0985123457",
+	// 	// 	"name": "Nguyen Bon",
+	// 	// 	"email": "abon@gmail.com",
+	// 	// 	"datecreated": "2022-4-08",
+	// 	// 	"dateupdated": "2022-4-10"
+	// 	// });
 
-		var requestOptions = {
-			method: 'POST',
-			headers: myHeaders,
-			body: raw,
-			redirect: 'follow'
-		};
+	// 	var requestOptions = {
+	// 		method: 'POST',
+	// 		headers: myHeaders,
+	// 		body: raw,
+	// 		redirect: 'follow'
+	// 	};
 
-		await fetch("https://localhost:5001/api/account/add/abc1", requestOptions)
-			.then(response => response.text())
-			.then(result => console.log(result))
-			.catch(error => console.log('error', error));
-	}
-
-	const postInfo = async (infoAdd) => {
-		var myHeaders = new Headers();
-		myHeaders.append("Content-Type", "application/json");
-
-		var raw = JSON.stringify(infoAdd);
-		// var raw = JSON.stringify({
-		// 	"phonenumber": "0985123457",
-		// 	"name": "Nguyen Bon",
-		// 	"email": "abon@gmail.com",
-		// 	"datecreated": "2022-4-08",
-		// 	"dateupdated": "2022-4-10"
-		// });
-
-		var requestOptions = {
-			method: 'POST',
-			headers: myHeaders,
-			body: raw,
-			redirect: 'follow'
-		};
-
-		await fetch("https://localhost:5001/api/information/add/abc1", requestOptions)
-			.then(response => response.text())
-			.then(result => console.log(result))
-			.catch(error => console.log('error', error));
-	}
+	// 	await fetch("https://localhost:5001/api/information/add/abc1", requestOptions)
+	// 		.then(response => response.text())
+	// 		.then(result => console.log(result))
+	// 		.catch(error => console.log('error', error));
+	// }
 
 	return (
 		<>
@@ -98,8 +110,8 @@ const Add = ({ setShowAdd, accounts, setAccount }) => {
 					<div className="add__form1">
 						<label>Quyền truy cập:</label> <br />
 						<select className="access" name="role">
-							<option value="1">Người dùng</option>
-							<option value="2">Quản trị viên</option>
+							<option value="2">Người dùng</option>
+							<option value="1">Quản trị viên</option>
 						</select> <br />
 						<label>Email:</label> <br />
 						<input className="email" type="email" required />
@@ -155,9 +167,10 @@ const Add = ({ setShowAdd, accounts, setAccount }) => {
 								}
 								console.log(newData);
 								console.log(newInfo);
+								postAccountInfo(newAccount, newInfo);
 								setAccount([...accounts, newData]);
-								postAccount(newAccount);
-								postInfo(newInfo);
+								// postAccount(newAccount);
+								// postInfo(newInfo);
 								setShowAdd(false)
 							}
 

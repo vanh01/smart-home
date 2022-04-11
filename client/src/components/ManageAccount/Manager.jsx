@@ -48,7 +48,7 @@ const Manager = () => {
             redirect: 'follow'
         };
 
-        await fetch("https://localhost:5001/api/account/abc1", requestOptions)
+        await fetch("https://localhost:5001/api/account/asaxkioiowe123as", requestOptions)
             // .then(response => response.text())
             .then(response => response.json())
             .then(result =>{

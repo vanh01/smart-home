@@ -22,24 +22,8 @@ const Manager = () => {
     let [showApartment, setShowApartment] = useState(false)
     let [showAdd, setShowAdd] = useState(false)
     let [showModify, setShowModify] = useState(false)
+    let [render, setRender] = useState(false)
 
-    // const getDataAccount = async () => {
-
-    //     var requestOptions = {
-    //         method: 'GET',
-    //         redirect: 'follow'
-    //     };
-
-    //     await fetch("https://localhost:5001/api/account/abc1", requestOptions)
-    //         // .then(response => response.text())
-    //         .then(response => response.json())
-    //         .then(result =>{
-    //             console.log(result)
-    //             setAllAccount(result);
-    //             setAccount(allAccount);
-    //         })
-    //         .catch(error => console.log('error', error));
-    // }
 
     const getDataAccount = async () => {
 
@@ -48,29 +32,21 @@ const Manager = () => {
             redirect: 'follow'
         };
 
+        // await fetch("https://localhost:5001/api/account/abc1", requestOptions)
         await fetch("https://localhost:5001/api/account/asaxkioiowe123as", requestOptions)
             // .then(response => response.text())
             .then(response => response.json())
-            .then(result =>{
+            .then(result => {
                 console.log('first result', result);
                 listAccount = result;
                 SetListAccount(listAccount, accounts, setAccount, setAllAccount);
-                // listAccount = result;
-                // console.log('listAccount', listAccount);
-                // setAllAccount(listAccount);
-                // console.log('all accounts', allAccount);
-                // accounts = listAccount;
-                // console.log('accounts', accounts);
-                // console.log('result again:', result);
-                // setAccount(allAccount);
             })
             .catch(error => console.log('error', error));
-        // console.log('all accounts', allAccount);
     }
     // getDataAccount();
     useEffect(() => {
         getDataAccount();
-    },[]);
+    }, [render]);
     // },[listAccount]);
 
     console.log(curIndex)
@@ -138,7 +114,7 @@ const Manager = () => {
                             setShowModify(false);
                         }
                     }}>
-                    <Modify setShowModify={setShowModify} setShowApartment={setShowApartment} curIndex={curIndex} accounts={accounts} setAccount={setAccount} />
+                    <Modify setShowModify={setShowModify} setShowApartment={setShowApartment} curIndex={curIndex} accounts={accounts} setAccount={setAccount} render={render} setRender={setRender} />
                     {/* <Modify setShowModify={setShowModify} setShowApartment={setShowApartment} curIndex={curIndex} accounts={listAccount} setAccount={setAccount} /> */}
                 </div> : ''}
             {showApartment ?

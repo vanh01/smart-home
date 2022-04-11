@@ -1,7 +1,7 @@
 import React from "react";
-import { updateAccount } from "../../ServerApi"
+import { updateAccount, deleteAccount } from "../../ServerApi"
 
-const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccount }) => {
+const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccount, render, setRender }) => {
 	let temp = accounts
 	let account = {
 		"phonenumber": accounts[curIndex].phonenumber,
@@ -67,6 +67,7 @@ const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccoun
 				<div className="add__button">
 					<button type="button" class='button-manage' onClick={() => { setShowModify(false); setShowApartment(true) }}>Quản lý căn hộ</button>
 					<button type="button" class='button-cancel' onClick={() => {
+						deleteAccount(account["privatekey"], "asaxkioiowe123as")
 						setShowModify(false)
 					}}>Xóa</button>
 					<button type="submit" class='button-add' onClick={(e) => {
@@ -76,7 +77,8 @@ const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccoun
 						}
 						// console.log(temp)
 						// setAccount(temp)
-						// setShowModify(false)
+						setShowModify(false)
+						// setRender(!render)
 					}}>Lưu</button>
 				</div>
 			</div>

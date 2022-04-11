@@ -50,7 +50,7 @@ namespace server.Controllers
             if (rule == 1)
             {
                 // string queryAll = $"SELECT * FROM account;";
-                string queryAll = $"SELECT account.phonenumber, account.password, account.rules, information.name, information.email, information.datecreated, information.dateupdated FROM account, information WHERE account.phonenumber = information.phonenumber and account.rules != 0;";
+                string queryAll = $"SELECT account.phonenumber, account.password, account.rules, account.privatekey, information.name, information.email, information.datecreated, information.dateupdated FROM account, information WHERE account.phonenumber = information.phonenumber and account.rules != 0;";
                 var tempAll = SqlExecutes.Instance.ExcuteQuery(queryAll);
                 List<AccountInfo> accountsAll = tempAll.ToList<AccountInfo>();
                 return accountsAll;
@@ -68,7 +68,7 @@ namespace server.Controllers
         //     List<Account> accounts = temp.ToList<Account>();
         //     Account account = accounts[0];
         //     string rule = account.rules;
-        //     if(rule == 2){
+        //     if(rule == 1){
         //         string queryAdd = $"INSERT INTO account (phonenumber, password, privatekey, rules) VALUES ('{account.phonenumber}', '{account.password}', '{key}', '{account.rules}');";
         //         SqlExecutes.Instance.ExcuteNonQuery(queryAdd);
         //         string queryInfo = $"INSERT INTO information (phonenumber, email, name, datecreated, dateupdated) VALUES ('{info.phonenumber}', '{info.email}', '{info.name}', '{info.datecreated}', '{info.dateupdated}');";
@@ -91,7 +91,7 @@ namespace server.Controllers
             List<Account> accounts = temp.ToList<Account>();
             Account accountCheck = accounts[0];
             int rule = accountCheck.rules;
-            if (rule == 2)
+            if (rule == 1)
             {
                 string queryAdd = $"INSERT INTO account (phonenumber, password, privatekey, rules) VALUES ('{account.phonenumber}', '{account.password}', '{account.privatekey}', '{account.rules}');";
                 SqlExecutes.Instance.ExcuteNonQuery(queryAdd);
@@ -112,7 +112,7 @@ namespace server.Controllers
         //     List<Account> accounts = temp.ToList<Account>();
         //     Account accountCheck = accounts[0];
         //     int rule = accountCheck.rules;
-        //     if(rule == 2){
+        //     if(rule == 1){
         //         string queryInfo = $"INSERT INTO information (phonenumber, email, name, datecreated, dateupdated) VALUES ('{info.phonenumber}', '{info.email}', '{info.name}', '{info.datecreated}', '{info.dateupdated}');";
         //         SqlExecutes.Instance.ExcuteNonQuery(queryInfo);
         //     }
@@ -121,5 +121,27 @@ namespace server.Controllers
         //     // List<Account> accounts = temp.ToList<Account>();
         //     // return accounts;
         // }
+
+        [HttpPut]
+        [Route("{key}/update")]
+        public int UpdateAccount([FromRoute] string key, [FromBody] Account account)
+        {
+            string query = @$"update account 
+                            set phonenumber = '{account.phonenumber}', password= '{account.password}', rules = '{account.rules}'
+                            WHERE privatekey = '{key}'";
+            int result = SqlExecutes.Instance.ExcuteNonQuery(query);
+            return result;
+        }
+
+        [HttpPut]
+        [Route("{key}/delete")]
+        public int DeleteAccount([FromRoute] string key, [FromBody] string adminKey)
+        {
+            string query = @$"update account 
+                            set rules = '0'
+                            WHERE '1' in (SELECT rules from account WHERE privatekey = '{adminKey}') and privatekey = '{key}'";
+            int result = SqlExecutes.Instance.ExcuteNonQuery(query);
+            return result;
+        }
     }
 }

@@ -10,7 +10,7 @@ const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccoun
 				<form action="#" className="addForm">
 					<div className="add__form1">
 						<label>Số điện thoại:</label> <br />
-						<input type="number" defaultValue={temp[curIndex].phone} onChange={(e) => temp[curIndex].phone = e.target.value} /> <br />
+						<input type="number" defaultValue={temp[curIndex].phonenumber} onChange={(e) => temp[curIndex].phone = e.target.value} /> <br />
 						<label>Họ tên:</label> <br />
 						<input type="text" defaultValue={temp[curIndex].name} onChange={(e) => temp[curIndex].name = e.target.value} /> <br />
 						<label>Mật khẩu:</label> <br />

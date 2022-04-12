@@ -1,36 +1,90 @@
 import React, { useState } from "react";
 
-const ManageApartment = ({setShowApartment}) => {
+const ManageApartment = ({ setShowApartment }) => {
     const [apartments, setApartments] = useState([
-        { name: "Căn hộ 1" },
-        { name: "Căn hộ 2" },
-        { name: "Căn hộ 3" },
-        { name: "Căn hộ 4" },
+        {
+            name: "Căn hộ 1",
+            systems: [
+                { name: "Hệ thống khí gas", active: true },
+                { name: "Hệ thống đèn qua cảm biến âm thanh", active: true },
+                { name: "Hệ thống đèn qua cảm biến ánh sáng", active: false },
+                { name: "Hệ thống đèn qua công tắc", active: true },
+                { name: "Hệ thống điều hòa qua cảm biến", active: false },
+                { name: "Hệ thống điều hòa qua công tắc", active: true },
+                { name: "Màn hình LCD", active: true },
+            ],
+        },
+        {
+            name: "Căn hộ 2",
+            systems: [
+                { name: "Hệ thống khí gas", active: false },
+                { name: "Hệ thống đèn qua cảm biến âm thanh", active: true },
+                { name: "Hệ thống đèn qua cảm biến ánh sáng", active: true },
+                { name: "Hệ thống đèn qua công tắc", active: true },
+                { name: "Hệ thống điều hòa qua cảm biến", active: true },
+                { name: "Hệ thống điều hòa qua công tắc", active: true },
+                { name: "Màn hình LCD", active: true },
+            ],
+        },
+        {
+            name: "Căn hộ 3",
+            systems: [
+                { name: "Hệ thống khí gas", active: false },
+                { name: "Hệ thống đèn qua cảm biến âm thanh", active: false },
+                { name: "Hệ thống đèn qua cảm biến ánh sáng", active: false },
+                { name: "Hệ thống đèn qua công tắc", active: true },
+                { name: "Hệ thống điều hòa qua cảm biến", active: false },
+                { name: "Hệ thống điều hòa qua công tắc", active: false },
+                { name: "Màn hình LCD", active: false },
+            ],
+        },
+        {
+            name: "Căn hộ 4",
+            systems: [
+                { name: "Hệ thống khí gas", active: false },
+                { name: "Hệ thống đèn qua cảm biến âm thanh", active: true },
+                { name: "Hệ thống đèn qua cảm biến ánh sáng", active: false },
+                { name: "Hệ thống đèn qua công tắc", active: false },
+                { name: "Hệ thống điều hòa qua cảm biến", active: false },
+                { name: "Hệ thống điều hòa qua công tắc", active: true },
+                { name: "Màn hình LCD", active: true },
+            ],
+        },
     ]);
-    console.log(apartments);
 
-    let namedefault = apartments.length > 0 ? apartments[0].name : "";
-
-    const [apartmentCur, setApartmentCur] = useState(namedefault);
-    const [apartmentNew, setApartmentNew] = useState({ name: "" });
-
-    const [systems, setSystems] = useState([
-        { name: "Hệ thống khí gas", active: true },
-        { name: "Hệ thống đèn qua cảm biến âm thanh", active: true },
-        { name: "Hệ thống đèn qua cảm biến ánh sáng", active: false },
-        { name: "Hệ thống đèn qua công tắc", active: true },
-        { name: "Hệ thống điều hòa qua cảm biến", active: false },
-        { name: "Hệ thống điều hòa qua công tắc", active: true },
-        { name: "Màn hình LCD", active: true },
-    ]);
-
+    const [apartmentCur, setApartmentCur] = useState(
+        apartments.length > 0 ? apartments[0] : {}
+    );
+    const [apartmentNew, setApartmentNew] = useState({
+        name: "",
+        systems: [
+            { name: "Hệ thống khí gas", active: false },
+            { name: "Hệ thống đèn qua cảm biến âm thanh", active: false },
+            { name: "Hệ thống đèn qua cảm biến ánh sáng", active: false },
+            { name: "Hệ thống đèn qua công tắc", active: false },
+            { name: "Hệ thống điều hòa qua cảm biến", active: false },
+            { name: "Hệ thống điều hòa qua công tắc", active: false },
+            { name: "Màn hình LCD", active: false },
+        ],
+    });
+    console.log("manage");
+    console.log(apartmentCur);
     return (
         <div className="manage-apartment">
-            <button className="manage-apartment__exit" onClick= {()=>setShowApartment(false)}>x</button>
+            <button
+                className="manage-apartment__exit"
+                onClick={() => setShowApartment(false)}
+            >
+                x
+            </button>
             <div className="manage-apartment-header">
                 <select
                     onChange={(e) => {
-                        setApartmentCur(e.target.value);
+                        setApartmentCur(
+                            apartments.filter(
+                                (a) => a.name === e.target.value
+                            )[0]
+                        );
                     }}
                 >
                     {apartments.map((apartment, index) => (
@@ -58,10 +112,7 @@ const ManageApartment = ({setShowApartment}) => {
                                     (e) => e.name === apartmentNew.name
                                 )
                             ) {
-                                setApartments([
-                                    ...apartments,
-                                    apartmentNew,
-                                ]);
+                                setApartments([...apartments, apartmentNew]);
                             } else {
                                 alert("Vui lòng nhập tên căn hộ hợp lệ");
                             }
@@ -70,23 +121,21 @@ const ManageApartment = ({setShowApartment}) => {
                         +
                     </button>
                 </div>
-
             </div>
             <div className="manage-apartment-body">
                 <label>
                     <span>TÊN CĂN HỘ</span>
-                    <input type="text" defaultValue={apartmentCur} />
+                    <input type="text" defaultValue={apartmentCur.name} />
                 </label>
                 <div className="manage-apartment-system">
-                    {systems.map((system, index) => (
+                    {apartmentCur.systems.map((system, index) => (
                         <label key={index}>
                             {system.name}
                             <input
                                 type="checkbox"
-                                defaultChecked={system.active}
+                                checked={system.active}
                                 onChange={(e) => {
                                     system.active = e.target.checked;
-                                    console.log(system);
                                 }}
                             />
                         </label>
@@ -98,7 +147,6 @@ const ManageApartment = ({setShowApartment}) => {
                 <button className="save">Lưu</button>
             </div>
         </div>
-
     );
 };
 

@@ -13,17 +13,32 @@ namespace server
         [HttpGet]
         [Route("{key}")]
 
-        public List<Apartment> GetListApartment([FromRoute] string key) 
+        public List<Apartment> GetListApartment([FromRoute] string key)
         {
             string query = $"SELECT * FROM apartment, account WHERE apartment.phonenumber = account.phonenumber AND account.privatekey = '{key}';";
             // string query = $"SELECT * FROM apartment, account WHERE apartment.phonenumber = account.phonenumber;";
             // string query = $"SELECT * FROM apartment, account WHERE  phonenumber='{key}';";
-            var temp = SqlExecutes.Instance.ExcuteQuery(query); 
+            var temp = SqlExecutes.Instance.ExcuteQuery(query);
             // Console.WriteLine(temp.GetType());
             List<Apartment> apartments = temp.ToList<Apartment>();
             return apartments;
             // Apartment apartment = apartments[0];
             // return apartment;
+        }
+
+        [HttpDelete]
+        [Route("{key1}")]
+        public IActionResult DeleteApartment([FromRoute] string key, [FromBody] Apartment apartment)
+        {
+            string query = $"delete from apartment where apartment.phonenumber = '{apartment.phonenumber}' and apartment.apartmentname = '{apartment.apartmentname}';";
+            // string query = $"call remove_apartment('{key}', '{apartment.phonenumber}', '{apartment.apartmentname}');";
+
+            int result = SqlExecutes.Instance.ExcuteNonQuery(query);
+
+            if (result == 0)
+                return BadRequest("Error!");
+
+            return Ok("Success!");
         }
     }
 }

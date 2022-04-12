@@ -154,11 +154,11 @@ def getPort():
 
 isMicrobitConnected = False
 
-# ser = serial.Serial(port="COM4", baudrate=115200)
-# isMicrobitConnected = True
-if getPort() != " None ":
-    ser = serial . Serial(port=getPort(), baudrate=115200)
-    isMicrobitConnected = True
+ser = serial.Serial(port="COM4", baudrate=115200)
+isMicrobitConnected = True
+# if getPort() != " None ":
+#     ser = serial . Serial(port=getPort(), baudrate=115200)
+#     isMicrobitConnected = True
 
 # khi mà thiết bị input gửi dữ liệu thì gọi api lên server
 

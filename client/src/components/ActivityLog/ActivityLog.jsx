@@ -32,18 +32,20 @@ const ActivityLog = () => {
     let [yValue2, setYValue2] = useState([])
 
     let [startDate, setStartDate] = useState(new Date("2022-03-20"))
-    let [endDate, setEndDate] = useState(new Date("2022-03-21"))
+    let [endDate, setEndDate] = useState(new Date("2022-04-08"))
     // let endDate = new Date("2022-03-14")
 
     const getData = async (typeDevice) => {
-        fetch("https://localhost:5001/api/log/asaxkioiowe123as/getAllLogs?name=1")
+        let temp;
+        await fetch("https://localhost:5001/api/log/asaxkioiowe123as/getAllLogs?name=1")
             .then((res) => res.json())
             .then((json) => {
                 // console.log(json)
-                setAlllData(json)
+                temp = json;
             })
-        allData.sort((a, b) => (new Date(formatDate(a.time)) > new Date(formatDate(b.time)) ? 1 : -1))
-        console.log(allData)
+        temp.sort((a, b) => (new Date(formatDate(a.time)) > new Date(formatDate(b.time)) ? 1 : -1))
+        setAlllData(temp);
+        console.log(temp)
         takeData(typeDevice)
     }
 
@@ -114,7 +116,7 @@ const ActivityLog = () => {
         getData(device)
         // setDevice(tempDevice)
         fillData(device, startDate, endDate, label1, label2, data1, data2, setxValue1, setxValue2, setYValue1, setYValue2)
-    }, [startDate, endDate, device])
+    }, [])
 
     function showDevice(e) {
         let select = document.querySelectorAll('.device__option');

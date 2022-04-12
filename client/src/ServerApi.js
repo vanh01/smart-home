@@ -1,3 +1,5 @@
+
+let baseUrl = "https://localhost:5001";
 //- Đăng nhập: username, password -> key (get)
 // https://localhost:5001/api/account/key?phonenumber=1&password=1
 export async function accountGetKey(phonenumber, password) {
@@ -7,7 +9,7 @@ export async function accountGetKey(phonenumber, password) {
 		redirect: 'follow'
 	};
 
-	await fetch(`https://localhost:5001/api/account/key?phonenumber=${phonenumber}&password=${password}`, requestOptions)
+	await fetch(`${baseUrl}/api/account/key?phonenumber=${phonenumber}&password=${password}`, requestOptions)
 		.then(response => response.text())
 		.then(result => { accountKey = result; console.log(result) })
 		.catch(error => console.log('error', error));
@@ -23,7 +25,7 @@ export async function apartmentGetOne(key) {
 		redirect: 'follow'
 	};
 
-	await fetch(`https://localhost:5001/api/apartment/${key}`, requestOptions)
+	await fetch(`${baseUrl}/api/apartment/${key}`, requestOptions)
 		.then(response => response.json())
 		.then(result => { apartmentInfo = result; })
 		.catch(error => console.log('error', error));
@@ -39,7 +41,7 @@ export async function getListDevice(key, apartmentname) {
 		redirect: 'follow'
 	};
 
-	await fetch(`https://localhost:5001/api/device/${key}?apartmentname=${apartmentname}`, requestOptions)
+	await fetch(`${baseUrl}/api/device/${key}?apartmentname=${apartmentname}`, requestOptions)
 		.then(response => response.json())
 		.then(result => { listDevice = result; })
 		.catch(error => console.log('error', error));
@@ -55,7 +57,7 @@ export async function getAllLogs(key, name) {
 		redirect: 'follow'
 	};
 
-	await fetch(`https://localhost:5001/api/log/getAllLogs?key=${key}&name=${name}`, requestOptions)
+	await fetch(`${baseUrl}/api/log/getAllLogs?key=${key}&name=${name}`, requestOptions)
 		.then(response => response.json())
 		.then(result => { allLog = result; })
 		.catch(error => console.log('error', error));
@@ -71,7 +73,7 @@ export async function getLastLog(key, apartmentName) {
 		redirect: 'follow'
 	};
 
-	await fetch(`https://localhost:5001/api/log/${key}/last?apartmentName=${apartmentName}`, requestOptions)
+	await fetch(`${baseUrl}/api/log/${key}/last?apartmentName=${apartmentName}`, requestOptions)
 		.then(response => response.json())
 		.then(result => { lastLog = result; })
 		.catch(error => console.log('error', error));

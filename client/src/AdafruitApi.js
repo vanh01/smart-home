@@ -2,6 +2,7 @@ var myAdafruitApi = (function () {
     var instance;
     var userName = "vanh01"; // username
     var xAioKey = "aio_nlle75SnyUL2NO8OdkLwqJoqH6pF"; // active key
+    var baseUrl = "https://io.adafruit.com";
 
     const get = async (feedKey) => {
         var myHeaders = new Headers();
@@ -15,7 +16,7 @@ var myAdafruitApi = (function () {
         var value;
 
         await fetch(
-            `https://io.adafruit.com/api/v2/${userName}/feeds/${feedKey}/data/last`,
+            `${baseUrl}/api/v2/${userName}/feeds/${feedKey}/data/last`,
             requestOptions
         )
             .then((response) => response.json())
@@ -43,7 +44,7 @@ var myAdafruitApi = (function () {
         };
 
         await fetch(
-            `https://io.adafruit.com/api/v2/${userName}/feeds/${feedKey}/data`,
+            `${baseUrl}/api/v2/${userName}/feeds/${feedKey}/data`,
             requestOptions
         )
             .then((response) => response.text())

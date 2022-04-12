@@ -15,7 +15,7 @@ const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccoun
 	}
 	let change = false
 	let curPassword = ""
-	let confirmPassword = "."
+	let confirmPassword = ""
 	// console.log(temp[curIndex])
 	return (
 		<>
@@ -36,7 +36,7 @@ const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccoun
 						<label>Mật khẩu:</label> <br />
 						<input type="password" defaultValue={temp[curIndex].password} onChange={(e) => curPassword = e.target.value} /> <br />
 						<label>Nhập lại mật khẩu:</label> <br />
-						<input type="password" required onChange={(e) => {
+						<input type="password" defaultValue={temp[curIndex].password} required onChange={(e) => {
 							confirmPassword = e.target.value
 							if (curPassword === confirmPassword) {
 								account['password'] = confirmPassword
@@ -67,17 +67,35 @@ const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccoun
 				<div className="add__button">
 					<button type="button" class='button-manage' onClick={() => { setShowModify(false); setShowApartment(true) }}>Quản lý căn hộ</button>
 					<button type="button" class='button-cancel' onClick={() => {
-						deleteAccount(account["privatekey"], "asaxkioiowe123as")
+						let adminKey = "asaxkioiowe123as"
+						deleteAccount(account["privatekey"], adminKey)
+						if (temp.find(ele => ele.privatekey === adminKey).rules === 1) {
+							temp.splice(curIndex, 1)
+							console.log(temp)
+							setAccount(temp)
+						}
+
 						setShowModify(false)
 					}}>Xóa</button>
 					<button type="submit" class='button-add' onClick={(e) => {
-						if (change) {
-							console.log("update")
-							updateAccount(account["privatekey"], account, information)
+						if (curPassword === confirmPassword) {
+							if (change) {
+								console.log("update")
+								updateAccount(account["privatekey"], account, information)
+							}
+							setShowModify(false)
 						}
+						else
+							alert("Xác thực lại mật khẩu")
+
 						// console.log(temp)
-						// setAccount(temp)
-						setShowModify(false)
+						temp[curIndex].phonenumber = account["phonenumber"]
+						temp[curIndex].password = account["password"]
+						temp[curIndex].rules = account["rules"]
+						temp[curIndex].name = information["name"]
+						temp[curIndex].email = information["email"]
+						setAccount(temp)
+
 						// setRender(!render)
 					}}>Lưu</button>
 				</div>

@@ -23,18 +23,37 @@ namespace server.Controllers
 
         [HttpGet]
         [Route("key")]
-        public string GetKey([FromQuery] string phonenumber, string password)
+        public IActionResult GetKey([FromQuery] string phonenumber, string password)
         {
             string query = $"SELECT * FROM account WHERE phonenumber='{phonenumber}' AND password='{password}';";
             var temp = SqlExecutes.Instance.ExcuteQuery(query);
             // Console.WriteLine(temp.GetType());
             // Console.WriteLine(temp.ToList<Account>());
             List<Account> accounts = temp.ToList<Account>();
-            Account account = accounts[0];
-            string result = account.privatekey;
-            return result;
+            string result = "";
+            if (accounts.Count == 1)
+                result = accounts[0].privatekey;
+            else
+                return BadRequest("Error!");
+            return Ok(result);
 
         }
+
+        [HttpGet]
+        [Route("password")]
+        public IActionResult getPassword([FromQuery] string phonenumber)
+        {
+            string query = $"select * from account where phonenumber = '{phonenumber}'";
+
+            var temp = SqlExecutes.Instance.ExcuteQuery(query).ToList<Account>();
+            var result = "";
+            if (temp.Count == 1)
+                result = temp[0].password;
+            else
+                return BadRequest("Error!");
+            return Ok(result);
+        }
+
 
         [HttpGet]
         [Route("{key}")]

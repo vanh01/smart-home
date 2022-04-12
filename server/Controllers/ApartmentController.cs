@@ -56,6 +56,5 @@ namespace server
 
             return "Success!";
         }
-
     }
 }

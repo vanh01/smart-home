@@ -65,6 +65,28 @@ namespace server
             return temp;
         }
 
+
+        //Example
+        /*
+        POST: https://localhost:5001/api/device/asaxkioiowe123as/add
+        [{
+            "phonenumber": "1",
+            "apartmentname": "1",
+            "id": "18",
+            "devicename": "Loane",
+            "active": true,
+            "limited": 100
+        },
+        {
+            "phonenumber": "1",
+            "apartmentname": "1",
+            "id": "19",
+            "devicename": "Loaneee",
+            "active": false,
+            "limited": 100
+        }
+        ]
+        */
         [HttpPost]
         [Route("{key}/add")]
         public string PostDevice([FromRoute] string key, [FromBody] List<Device> devices)
@@ -73,6 +95,58 @@ namespace server
             foreach (var device in devices)
             {
                 SqlExecutes.Instance.ExcuteNonQuery($"insert into device() value ('{device.phonenumber}', '{device.apartmentname}', '{device.id}', '{device.devicename}', {device.active}, {device.limited});");
+            }
+            return "";
+        }
+
+        //Edit thiết bị trong căn hộ
+        /* POST: https://localhost:5001/api/device/asaxkioiowe123as/edit
+        [{
+            "phonenumber": "1",
+            "apartmentname": "1",
+            "id": "2",
+            "devicename": "Dieuhoane",
+            "active": false,
+            "limited": 200
+        }]
+        */
+        /*
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify([
+            {
+                "phonenumber": "1",
+                "apartmentname": "1",
+                "id": "3",
+                "devicename": "Dieuhoeeane",
+                "active": true,
+                "limited": 200
+            }
+            ]);
+
+            var requestOptions = {
+            method: 'PUT',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+            };
+
+            fetch("https://localhost:5001/api/device/asaxkioioaawe123as/edit", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+        */
+        [HttpPut]
+        [Route("{key}/edit")]
+        public string EditDevice([FromRoute] string key, [FromBody] List<Device> devices)
+        {
+
+            foreach (var device in devices)
+            {
+                SqlExecutes.Instance.ExcuteNonQuery($@"UPDATE device
+                                                    SET `devicename` = '{device.devicename}', `active` = {device.active}, `limited` = {device.limited} 
+                                                    WHERE `phonenumber` = '{device.phonenumber}' AND `apartmentname` = '{device.apartmentname}' AND `id` = '{device.id}';");
             }
             return "";
         }

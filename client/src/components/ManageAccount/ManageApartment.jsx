@@ -27,20 +27,96 @@ const ManageApartment = ({ setShowApartment }) => {
     };
 
     const addDevices = (systems) => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
         let temp = [];
+        temp += [{
+            id: "1",
+            apartmentname: apartmentNew.name,
+            phonenumber: "1", //########################### Need to edit value for
+            devicename:"LED don 2 mau", 
+            active: 1,
+            limited: 100
+        }]; //device
+        temp += [{
+            id: "3",
+            apartmentname: apartmentNew.name,
+            phonenumber: "1", //########################### Need to edit value for
+            devicename:"Loa Buzzer", 
+            active: 1,
+            limited: 100
+        }]; //device
         systems.forEach((system) => {
             if (system.name === "Hệ thống khí gas") {
                 temp += [{
-                    id: "1",
+                    id: "23",
                     apartmentname: apartmentNew.name,
-                    
+                    phonenumber: "1", //########################### Need to edit value for
+                    devicename:"Cam bien khi gas", 
+                    active: 1,
+                    limited: 100
                 }]; //device
             } else if (system.name === "Hệ thống đèn qua cảm biến âm thanh") {
-
+                temp += [{
+                    id: "12",
+                    apartmentname: apartmentNew.name,
+                    phonenumber: "1", //########################### Need to edit value for
+                    devicename:"Cam bien am thanh", 
+                    active: 1,
+                    limited: 100
+                }]; //device
+            } else if (system.name === "Hệ thống đèn qua cảm biến ánh sáng") {
+                temp += [{
+                    id: "13",
+                    apartmentname: apartmentNew.name,
+                    phonenumber: "1", //########################### Need to edit value for
+                    devicename:"Cam bien anh sang", 
+                    active: 1,
+                    limited: 100
+                }]; //device
+            } else if (system.name === "Hệ thống đèn qua công tác") {
+                temp += [{
+                    id: "8",
+                    apartmentname: apartmentNew.name,
+                    phonenumber: "1", //########################### Need to edit value for
+                    devicename:"Nut nhan tu", 
+                    active: 1,
+                    limited: 100
+                }]; //device
+            } else if (system.name === "Hệ thống điều hòa qua cảm biến") {
+                temp += [{
+                    id: "7",
+                    apartmentname: apartmentNew.name,
+                    phonenumber: "1", //########################### Need to edit value for
+                    devicename:"DHT11", 
+                    active: 1,
+                    limited: 100
+                }]; //device
+            } else if (system.name === "Hệ thống điều hòa qua công tác") { //Lặp lại với đèn??
+                temp += [{
+                    id: "8",
+                    apartmentname: apartmentNew.name,
+                    phonenumber: "1", //########################### Need to edit value for
+                    devicename:"Nut nhan tu", 
+                    active: 1,
+                    limited: 100
+                }]; //device
             }
         });
 
         let raw = JSON.stringify(temp);
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+          };
+          
+          fetch("https://localhost:5001/api/device/asaxkioiowe123as/add", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
     };
 
     const [apartments, setApartments] = useState([
@@ -168,6 +244,7 @@ const ManageApartment = ({ setShowApartment }) => {
                             ) {
                                 setApartments([...apartments, apartmentNew]);
                                 addApartment(apartmentNew);
+                                addDevices(setApartmentNew);
                             } else {
                                 alert("Vui lòng nhập tên căn hộ hợp lệ");
                             }

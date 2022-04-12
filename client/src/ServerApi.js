@@ -79,3 +79,70 @@ export async function getLastLog(key, apartmentName) {
 		.catch(error => console.log('error', error));
 	return lastLog;
 }
+
+export async function deleteAccount(key, adminKey) {
+	var myHeaders = new Headers();
+	myHeaders.append("Content-Type", "application/json");
+
+	var raw = JSON.stringify(adminKey);
+
+	var requestOptions = {
+		method: 'PUT',
+		headers: myHeaders,
+		body: raw,
+		redirect: 'follow'
+	};
+
+	fetch("https://localhost:5001/api/account/" + key + "/delete", requestOptions)
+		.then(response => response.text())
+		.then(result => console.log(result))
+		.catch(error => console.log('error', error));
+}
+
+
+export async function updateAccount(key, account, information) {
+	var myHeaders = new Headers();
+	myHeaders.append("Content-Type", "application/json");
+
+	var raw = JSON.stringify({
+		"phonenumber": account.phonenumber,
+		"password": account.password,
+		"rules": account.rules,
+		"privatekey": ""
+	});
+
+	var requestOptions = {
+		method: 'PUT',
+		headers: myHeaders,
+		body: raw,
+		redirect: 'follow'
+	};
+
+	await fetch("https://localhost:5001/api/account/" + key + "/update", requestOptions)
+		.then(response => response.text())
+		.then(result => console.log(result))
+		.catch(error => console.log('error', error));
+
+	myHeaders = new Headers();
+	myHeaders.append("Content-Type", "application/json");
+
+	raw = JSON.stringify({
+		"phonenumber": "",
+		"email": information.email,
+		"name": information.name,
+		"datecreated": "",
+		"dateupdated": ""
+	});
+
+	requestOptions = {
+		method: 'PUT',
+		headers: myHeaders,
+		body: raw,
+		redirect: 'follow'
+	};
+
+	await fetch("https://localhost:5001/api/information/" + key + "/update", requestOptions)
+		.then(response => response.text())
+		.then(result => console.log(result))
+		.catch(error => console.log('error', error));
+}

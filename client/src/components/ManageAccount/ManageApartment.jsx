@@ -1,6 +1,48 @@
 import React, { useState } from "react";
 
 const ManageApartment = ({ setShowApartment }) => {
+    const addApartment = (apartment) => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            phonenumber: "1",
+            apartmentname: apartment.name,
+        });
+
+        var requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow",
+        };
+
+        fetch(
+            "https://localhost:5001/api/apartment/hkajdsfn/add",
+            requestOptions
+        )
+            .then((response) => response.text())
+            .then((result) => console.log(result))
+            .catch((error) => console.log("error", error));
+    };
+
+    const addDevices = (systems) => {
+        let temp = [];
+        systems.forEach((system) => {
+            if (system.name === "Hệ thống khí gas") {
+                temp += [{
+                    id: "1",
+                    apartmentname: apartmentNew.name,
+                    
+                }]; //device
+            } else if (system.name === "Hệ thống đèn qua cảm biến âm thanh") {
+
+            }
+        });
+
+        let raw = JSON.stringify(temp);
+    };
+
     const [apartments, setApartments] = useState([
         {
             name: "Căn hộ 1",
@@ -56,12 +98,12 @@ const ManageApartment = ({ setShowApartment }) => {
         apartments.length > 0
             ? apartments[0].systems
             : [
-                  { name: "Hệ thống khí gas", active: false },
-                  { name: "Hệ thống đèn qua cảm biến âm thanh", active: false },
-                  { name: "Hệ thống đèn qua cảm biến ánh sáng", active: false },
-                  { name: "Hệ thống đèn qua công tắc", active: false },
-                  { name: "Hệ thống điều hòa qua cảm biến", active: false },
-                  { name: "Hệ thống điều hòa qua công tắc", active: false },
+                  { name: "Hệ thống khí gas", active: false }, // có loa và cảm biến khí gas
+                  { name: "Hệ thống đèn qua cảm biến âm thanh", active: false }, // cảm biến âm thanh
+                  { name: "Hệ thống đèn qua cảm biến ánh sáng", active: false }, // cảm biến as
+                  { name: "Hệ thống đèn qua công tắc", active: false }, // có công tắc
+                  { name: "Hệ thống điều hòa qua cảm biến", active: false }, // temp, humid
+                  { name: "Hệ thống điều hòa qua công tắc", active: false }, // công
                   { name: "Màn hình LCD", active: false },
               ]
     );
@@ -125,6 +167,7 @@ const ManageApartment = ({ setShowApartment }) => {
                                 )
                             ) {
                                 setApartments([...apartments, apartmentNew]);
+                                addApartment(apartmentNew);
                             } else {
                                 alert("Vui lòng nhập tên căn hộ hợp lệ");
                             }

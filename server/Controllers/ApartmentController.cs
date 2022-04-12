@@ -40,5 +40,22 @@ namespace server
 
             return Ok("Success!");
         }
+
+        //localhost:5000/api/apartment/kjadsfk/add
+        // {  }
+        [HttpPost]
+        [Route("{key}/add")]
+        public string AddApartment([FromRoute] string key, [FromBody] Apartment apartment)
+        {
+            string query = $"insert into apartment() value ('{apartment.phonenumber}', '{apartment.apartmentname}');";
+            int num = 0;
+
+            num = SqlExecutes.Instance.ExcuteNonQuery(query);
+            if (num == 0)
+                return "Fail!";
+
+            return "Success!";
+        }
+
     }
 }

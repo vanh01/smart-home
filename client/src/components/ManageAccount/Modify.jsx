@@ -3,6 +3,7 @@ import { updateAccount, deleteAccount } from "../../ServerApi"
 
 const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccount, render, setRender }) => {
 	let temp = accounts
+	console.log(temp[curIndex])
 	let account = {
 		"phonenumber": accounts[curIndex].phonenumber,
 		"password": accounts[curIndex].password,
@@ -11,7 +12,8 @@ const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccoun
 	}
 	let information = {
 		"email": accounts[curIndex].email,
-		"name": accounts[curIndex].name
+		"name": accounts[curIndex].name,
+		"dateupdated": "" + (new Date().getYear() + 1900) + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate()
 	}
 	let change = false
 	let curPassword = ""
@@ -46,13 +48,13 @@ const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccoun
 					</div>
 					<div className="add__form1">
 						<label>Quyền truy cập:</label> <br />
-						<select name="role" defaultValue={temp[curIndex].access === "Người dùng" ? "user" : "admin"} onChange={(e) => {
+						<select name="role" defaultValue={temp[curIndex].rules == 1 ? "Quản trị viên" : "Khách hàng"} onChange={(e) => {
 							let curRole = e.target.value === "admin" ? 1 : 2
 							if (account["rules"] !== curRole) {
 								account["rules"] = curRole
 								change = true
 							}
-							return e.target.value === "admin" ? temp[curIndex].access = "Quản trị viên" : "Người dùng"
+							// return e.target.value === "admin" ? temp[curIndex].access = "Quản trị viên" : "Khách hàng"
 						}}>
 							<option value="user">Người dùng</option>
 							<option value="admin">Quản trị viên</option>
@@ -94,6 +96,8 @@ const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccoun
 						temp[curIndex].rules = account["rules"]
 						temp[curIndex].name = information["name"]
 						temp[curIndex].email = information["email"]
+						temp[curIndex].dateupdated = information["dateupdated"]
+						console.log(information["dateupdated"])
 						setAccount(temp)
 
 						// setRender(!render)

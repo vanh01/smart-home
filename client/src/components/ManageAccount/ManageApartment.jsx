@@ -52,22 +52,8 @@ const ManageApartment = ({ setShowApartment }) => {
         },
     ]);
 
-    const [systemsCur, setSystemsCur] = useState(
-        apartments.length > 0
-            ? apartments[0].systems
-            : [
-                  { name: "Hệ thống khí gas", active: false },
-                  { name: "Hệ thống đèn qua cảm biến âm thanh", active: false },
-                  { name: "Hệ thống đèn qua cảm biến ánh sáng", active: false },
-                  { name: "Hệ thống đèn qua công tắc", active: false },
-                  { name: "Hệ thống điều hòa qua cảm biến", active: false },
-                  { name: "Hệ thống điều hòa qua công tắc", active: false },
-                  { name: "Màn hình LCD", active: false },
-              ]
-    );
-
     const [apartmentCur, setApartmentCur] = useState(
-        apartments.length > 0 ? apartments[0].name : {}
+        apartments.length > 0 ? apartments[0] : {}
     );
     const [apartmentNew, setApartmentNew] = useState({
         name: "",
@@ -81,6 +67,8 @@ const ManageApartment = ({ setShowApartment }) => {
             { name: "Màn hình LCD", active: false },
         ],
     });
+    console.log("manage");
+    console.log(apartmentCur);
     return (
         <div className="manage-apartment">
             <button
@@ -92,11 +80,11 @@ const ManageApartment = ({ setShowApartment }) => {
             <div className="manage-apartment-header">
                 <select
                     onChange={(e) => {
-                        let temp = apartments.filter(
-                            (a) => a.name === e.target.value
-                        )[0];
-                        setApartmentCur(temp.name);
-                        setSystemsCur(temp.systems);
+                        setApartmentCur(
+                            apartments.filter(
+                                (a) => a.name === e.target.value
+                            )[0]
+                        );
                     }}
                 >
                     {apartments.map((apartment, index) => (
@@ -137,10 +125,10 @@ const ManageApartment = ({ setShowApartment }) => {
             <div className="manage-apartment-body">
                 <label>
                     <span>TÊN CĂN HỘ</span>
-                    <input type="text" value={apartmentCur} readOnly />
+                    <input type="text" defaultValue={apartmentCur.name} />
                 </label>
                 <div className="manage-apartment-system">
-                    {systemsCur.map((system, index) => (
+                    {apartmentCur.systems.map((system, index) => (
                         <label key={index}>
                             {system.name}
                             <input

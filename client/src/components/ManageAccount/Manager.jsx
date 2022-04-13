@@ -175,7 +175,7 @@ function ShowTable({ showApartment, setShowApartment, showModify, setShowModify,
                             <td>{account.password}</td>
                             <td>{account.email}</td>
                             {/* <td>{if account.rules == 1}</td> */}
-                            <td>{account.rules}</td>
+                            <td>{account.rules === 1 ? "Quản trị viên" : "Khách hàng"}</td>
                             <td>{account.datecreated}</td>
                             <td>{account.dateupdated}</td>
                             <td className="manager-icon">

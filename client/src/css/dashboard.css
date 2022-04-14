@@ -10,7 +10,8 @@
 
 .dashboard-container {
     display: flex;
-    margin-top: 20px;
+    margin-top: 40px;
+    justify-content: space-around;
 }
 
 .dashboard-light {
@@ -18,7 +19,7 @@
     height: fit-content;
     border-radius: 10px;
     /* border: 1px solid black; */
-    margin-left: 4%;
+    /* margin-left: 4%; */
     margin-bottom: 50px;
     padding: 20px 0;
     background-color: #eaeaea;

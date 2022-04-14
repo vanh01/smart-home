@@ -17,10 +17,11 @@
     width: 44%;
     height: fit-content;
     border-radius: 10px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     margin-left: 4%;
     margin-bottom: 50px;
     padding: 20px 0;
+    background-color: #eaeaea;
 }
 
 .dashboard-light h1 {
@@ -28,33 +29,35 @@
     margin-left: 5%;
 }
 
-.dashboard-light > div {
+.dashboard-light>div {
     width: 90%;
     position: relative;
     left: 5%;
-    padding: 0 20px 20px 20px;
+    padding: 10px 20px 20px 20px;
     margin-top: 20px;
     border-radius: 10px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     box-sizing: border-box;
+    background-color: rgb(245, 255, 208);
+    box-shadow: 0px 5px 5px #aaa;
 }
 
-.dashboard-light > div > div {
+.dashboard-light>div>div {
     margin-top: 20px;
 }
 
-.dashboard-light > div > div > span {
+.dashboard-light>div>div>span {
     font-size: 1.5rem;
 }
 
-.dashboard-light > div > div > label {
+.dashboard-light>div>div>label {
     position: absolute;
     right: 5%;
     font-size: 1.5rem;
     width: 50px;
 }
 
-.dashboard-light > div > div > input[type="text"] {
+.dashboard-light>div>div>input[type="text"] {
     position: absolute;
     right: 5%;
     font-size: 1.05rem;
@@ -74,4 +77,16 @@
     border: 1px solid black;
     margin-left: 4%;
     margin-bottom: 50px;
+}
+
+.dashboard__data {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 100% !important;
+    background-color: #bbfff3;
+    border: none !important;
+    color: #3f3f3f;
+    min-width: 40px !important;
+    font-weight: 600;
+    outline: none;
 }

@@ -159,7 +159,7 @@ const ManageApartment = ({ setShowApartment }) => {
             <div className="manage-apartment-body">
                 <label>
                     <span>TÊN CĂN HỘ</span>
-                    <input type="text" value={apartmentCur} readOnly />
+                    <input type="text" defaultValue={apartmentCur.name} />
                 </label>
                 <div className="manage-apartment-system">
                     {systemsCur.map((system, index) => (

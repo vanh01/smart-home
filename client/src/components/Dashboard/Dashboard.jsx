@@ -220,6 +220,7 @@ const Dashboard = ({ account }) => {
                             <div>
                                 <span>Cường độ âm thanh</span>
                                 <input
+                                    className="dashboard__data"
                                     type="text"
                                     readOnly
                                     value={soundValue}
@@ -251,6 +252,7 @@ const Dashboard = ({ account }) => {
                             <div>
                                 <span>Cường độ ánh sáng</span>
                                 <input
+                                    className="dashboard__data"
                                     type="text"
                                     readOnly
                                     value={lightValue}
@@ -291,6 +293,7 @@ const Dashboard = ({ account }) => {
                             <div>
                                 <span>Ngưỡng nhiệt độ</span>
                                 <input
+
                                     type="text"
                                     defaultValue={temp.limited}
                                     onBlur={changeTempLimited}
@@ -298,11 +301,11 @@ const Dashboard = ({ account }) => {
                             </div>
                             <div>
                                 <span>Nhiệt độ</span>
-                                <input type="text" readOnly value={tempValue} />
+                                <input className="dashboard__data" type="text" readOnly value={tempValue} />
                             </div>
                             <div>
                                 <span>Độ ẩm</span>
-                                <input type="text" readOnly value={humiValue} />
+                                <input className="dashboard__data" type="text" readOnly value={humiValue} />
                             </div>
                         </div>
                         <div>

@@ -1,11 +1,11 @@
-.manager-container{
+.manager-container {
     margin: 0 5%;
 }
 
 
 .space-60 {
     padding-top: 60px;
-    
+
 }
 
 button.add-account {
@@ -16,7 +16,7 @@ button.add-account {
 
 button.add-account:hover {
     cursor: pointer;
-} 
+}
 
 button.add-account i {
     font-size: 40px;
@@ -31,7 +31,8 @@ button.add-account i:hover {
     display: flow-root;
     padding: 20px;
 }
-.float-end{
+
+.float-end {
     float: right;
 }
 
@@ -49,12 +50,22 @@ button.add-account i:hover {
 }
 
 .search-account-btn {
-    padding: 0 5px;
+    padding: 7px 10px;
     margin: 0 5px;
-    height: 20px
+    background-color: #8ce1d2;
+    border: none;
+    border-radius: 5px;
+    height: 100%;
+    line-height: 16px;
+    color: #fff;
 }
 
-.float-none{
+.search-account-btn:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.float-none {
     float: none;
 }
 
@@ -74,9 +85,10 @@ button.add-account i:hover {
 .manager-card-body {
     flex: 1 1 auto;
     padding: 1rem 1rem;
+    background-color: #efefef;
 }
 
-.manager-card-body table{
+.manager-card-body table {
     margin: 0;
 }
 
@@ -85,12 +97,20 @@ table.manager-table,
 .manager-table td {
     border: 1px solid #aaa;
     border-collapse: collapse;
-  }
+}
+
+table.manager-table{
+    border: 1px solid #aaa;
+    border-collapse: collapse;
+    background-color: #ffffef;
+    box-shadow: 0 5px 7px #bbb;
+}
 
 .manager-table th,
 .manager-table td {
     padding: 5px;
 }
+
 .manager-table {
     width: 100%;
     margin-bottom: 1rem;
@@ -100,7 +120,7 @@ table.manager-table,
     border-collapse: collapse;
 }
 
-.manager-table  {
+.manager-table {
     text-align: center;
 }
 
@@ -127,9 +147,8 @@ table.manager-table,
     display: flex;
     justify-content: center;
     align-items: center
-
 }
+
 .display-none {
     display: none;
 }
-

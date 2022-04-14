@@ -9,60 +9,60 @@ import { useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
-
-const Manager = () => {
-    // let [allAccount, setAllAccount] = useState([
-    //     { name: "Trần Văn A", phone: "0987123456", password: "abc123456", email: "abc@gmail.com", access: "Quản trị viên", createDate: "2022-3-09", updateDate: "2022-3-14" },
-    //     { name: "Trần Văn B", phone: "0987123123", password: "abc123456", email: "acb@gmail.com", access: "Người dùng", createDate: "2022-3-10", updateDate: "2022-3-14" },
-    //     { name: "Trần Văn C", phone: "0987123111", password: "abc123456", email: "cab@gmail.com", access: "Người dùng", createDate: "2022-3-11", updateDate: "2022-3-14" },
-    // ]);
+const Manager = ({ account }) => {
     let listAccount = [];
     let [allAccount, setAllAccount] = useState(listAccount);
-    let [accounts, setAccount] = useState(allAccount)
-    let [curIndex, setCurIndex] = useState(0)
-    let [showApartment, setShowApartment] = useState(false)
-    let [showAdd, setShowAdd] = useState(false)
-    let [showModify, setShowModify] = useState(false)
-    let [render, setRender] = useState(false)
-
+    let [accounts, setAccount] = useState(allAccount);
+    let [curIndex, setCurIndex] = useState(0);
+    let [showApartment, setShowApartment] = useState(false);
+    let [showAdd, setShowAdd] = useState(false);
+    let [showModify, setShowModify] = useState(false);
+    let [render, setRender] = useState(false);
 
     const getDataAccount = async () => {
-
         var requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
+            method: "GET",
+            redirect: "follow",
         };
 
-        // await fetch("https://localhost:5001/api/account/abc1", requestOptions)
-        await fetch("https://localhost:5001/api/account/asaxkioiowe123as", requestOptions)
+        await fetch(
+            `https://localhost:5001/api/account/${account.privatekey}`,
+            requestOptions
+        )
             // .then(response => response.text())
-            .then(response => response.json())
-            .then(result => {
-                console.log('first result', result);
+            .then((response) => response.json())
+            .then((result) => {
+                console.log("first result", result);
                 listAccount = result;
-                SetListAccount(listAccount, accounts, setAccount, setAllAccount);
+                SetListAccount(
+                    listAccount,
+                    accounts,
+                    setAccount,
+                    setAllAccount
+                );
             })
-            .catch(error => console.log('error', error));
-    }
+            .catch((error) => console.log("error", error));
+    };
     // getDataAccount();
     useEffect(() => {
         getDataAccount();
     }, [render]);
     // },[listAccount]);
 
-    console.log(curIndex)
+    console.log(curIndex);
     return (
         <>
             <div className="manager-container">
                 <div className="space-60"></div>
                 <div className="head-manager prefix">
                     <button
-                        onClick={
-                            () => {
-                                setShowAdd(!showAdd);
-                            }
-                        }
-                        title="Thêm tài khoản" type="button" className="add-account">
+                        onClick={() => {
+                            setShowAdd(!showAdd);
+                        }}
+                        title="Thêm tài khoản"
+                        type="button"
+                        className="add-account"
+                    >
                         <i className="fa fa-plus-circle" aria-hidden="true"></i>
                     </button>
 
@@ -71,20 +71,25 @@ const Manager = () => {
                             type="text"
                             placeholder="Tìm kiếm"
                             className="search-account-input"
-                            onChange={
-                                (e) => {
-                                    setAccount(FindAccounts(allAccount, e.target.value))
-                                }
-                            }
+                            onChange={(e) => {
+                                setAccount(
+                                    FindAccounts(allAccount, e.target.value)
+                                );
+                            }}
                         ></input>
                         {/* <i className="fa-regular fa-arrow-right"></i> */}
                         {/* <i className="fa fa-arrow-right" aria-hidden="true"></i> */}
                         <button
-                            onClick={
-                                () => {
-                                    setAccount(FindAccounts(allAccount, document.querySelector('.search-account-input').value))
-                                }
-                            }
+                            onClick={() => {
+                                setAccount(
+                                    FindAccounts(
+                                        allAccount,
+                                        document.querySelector(
+                                            ".search-account-input"
+                                        ).value
+                                    )
+                                );
+                            }}
                             className="search-account-btn"
                             type="button"
                         ><FontAwesomeIcon icon={faSearch} /></button>
@@ -93,50 +98,84 @@ const Manager = () => {
                 </div>
                 <div className="manager-card">
                     <div className="manager-card-body">
-                        <ShowTable showApartment={showApartment} setShowApartment={setShowApartment} showModify={showModify} setShowModify={setShowModify} accounts={accounts} setCurIndex={setCurIndex} />
+                        <ShowTable
+                            showApartment={showApartment}
+                            setShowApartment={setShowApartment}
+                            showModify={showModify}
+                            setShowModify={setShowModify}
+                            accounts={accounts}
+                            setCurIndex={setCurIndex}
+                        />
                         {/* <ShowTable showApartment={showApartment} setShowApartment={setShowApartment} showModify={showModify} setShowModify={setShowModify} accounts={listAccount} setCurIndex={setCurIndex} /> */}
                     </div>
                 </div>
             </div>
-            {showAdd ?
-                <div className="manager-bg" onClick={
-                    (e) => {
-                        if (e.target === document.querySelector('.manager-bg'))
+            {showAdd ? (
+                <div
+                    className="manager-bg"
+                    onClick={(e) => {
+                        if (e.target === document.querySelector(".manager-bg"))
                             setShowAdd(false);
-
-                    }}>
-                    <Add setShowAdd={setShowAdd} accounts={accounts} setAccount={setAccount} />
+                    }}
+                >
+                    <Add
+                        setShowAdd={setShowAdd}
+                        accounts={accounts}
+                        setAccount={setAccount}
+                    />
                     {/* <Add setShowAdd={setShowAdd} accounts={listAccount} setAccount={setAccount} /> */}
                 </div>
-                : ''}
-            {showModify ?
-                <div className="manager-bg" onClick={
-                    (e) => {
-                        if (e.target === document.querySelector('.manager-bg')) {
+            ) : (
+                ""
+            )}
+            {showModify ? (
+                <div
+                    className="manager-bg"
+                    onClick={(e) => {
+                        if (
+                            e.target === document.querySelector(".manager-bg")
+                        ) {
                             setShowModify(false);
                         }
-                    }}>
-                    <Modify setShowModify={setShowModify} setShowApartment={setShowApartment} curIndex={curIndex} accounts={accounts} setAccount={setAccount} render={render} setRender={setRender} />
+                    }}
+                >
+                    <Modify
+                        setShowModify={setShowModify}
+                        setShowApartment={setShowApartment}
+                        curIndex={curIndex}
+                        accounts={accounts}
+                        setAccount={setAccount}
+                        render={render}
+                        setRender={setRender}
+                    />
                     {/* <Modify setShowModify={setShowModify} setShowApartment={setShowApartment} curIndex={curIndex} accounts={listAccount} setAccount={setAccount} /> */}
-                </div> : ''}
-            {showApartment ?
-                <div className="manager-bg" onClick={
-                    (e) => {
-                        if (e.target === document.querySelector('.manager-bg'))
+                </div>
+            ) : (
+                ""
+            )}
+            {showApartment ? (
+                <div
+                    className="manager-bg"
+                    onClick={(e) => {
+                        if (e.target === document.querySelector(".manager-bg"))
                             setShowApartment(false);
-                    }}>
+                    }}
+                >
                     <ManageApartment setShowApartment={setShowApartment} />
-                </div> : ""}
+                </div>
+            ) : (
+                ""
+            )}
         </>
     );
 };
 export default Manager;
 
 function SetListAccount(listAccount, accounts, setAccount, setAllAccount) {
-    console.log('set account', listAccount);
+    console.log("set account", listAccount);
     setAllAccount(listAccount);
     setAccount(listAccount);
-    console.log('account accounts', accounts);
+    console.log("account accounts", accounts);
     // return listAccount;
 }
 
@@ -148,11 +187,17 @@ function FindAccounts(accounts, name) {
         }
     }
     return result;
-};
+}
 
-
-function ShowTable({ showApartment, setShowApartment, showModify, setShowModify, accounts, setCurIndex }) {
-    console.log('accounts show', accounts);
+function ShowTable({
+    showApartment,
+    setShowApartment,
+    showModify,
+    setShowModify,
+    accounts,
+    setCurIndex,
+}) {
+    console.log("accounts show", accounts);
     return (
         <table id="example1" className="manager-table">
             <thead>
@@ -187,17 +232,18 @@ function ShowTable({ showApartment, setShowApartment, showModify, setShowModify,
                                     setShowModify(!showModify)
 
                                 }}
-                                    className="fa fa-pencil-square"
-                                    aria-hidden="true"
-                                ></i>
-                                <i onClick={() => setShowApartment(!showApartment)} className="fa fa-home" aria-hidden="true"></i>
-                            </td>
-                        </tr>
-                    ))
-                }
-
+                                className="fa fa-pencil-square"
+                                aria-hidden="true"
+                            ></i>
+                            <i
+                                onClick={() => setShowApartment(!showApartment)}
+                                className="fa fa-home"
+                                aria-hidden="true"
+                            ></i>
+                        </td>
+                    </tr>
+                ))}
             </tbody>
         </table>
     );
 }
-

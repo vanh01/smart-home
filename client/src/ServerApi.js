@@ -93,7 +93,7 @@ export async function deleteAccount(key, adminKey) {
 		redirect: 'follow'
 	};
 
-	fetch("https://localhost:5001/api/account/" + key + "/delete", requestOptions)
+	await fetch(baseUrl +  "/api/account/" + key + "/delete", requestOptions)
 		.then(response => response.text())
 		.then(result => console.log(result))
 		.catch(error => console.log('error', error));
@@ -118,7 +118,7 @@ export async function updateAccount(key, account, information) {
 		redirect: 'follow'
 	};
 
-	await fetch("https://localhost:5001/api/account/" + key + "/update", requestOptions)
+	await fetch(baseUrl + "/api/account/" + key + "/update", requestOptions)
 		.then(response => response.text())
 		.then(result => console.log(result))
 		.catch(error => console.log('error', error));
@@ -141,8 +141,205 @@ export async function updateAccount(key, account, information) {
 		redirect: 'follow'
 	};
 
-	await fetch("https://localhost:5001/api/information/" + key + "/update", requestOptions)
+	await fetch(baseUrl + "/api/information/" + key + "/update", requestOptions)
 		.then(response => response.text())
 		.then(result => console.log(result))
 		.catch(error => console.log('error', error));
+}
+
+export async function addApartment(key, phonenumber, apartment) {
+    var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            phonenumber: phonenumber,
+            apartmentname: apartment.name,
+        });
+
+        var requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow",
+        };
+
+        await fetch(
+            `${baseUrl}/api/apartment/${key}/add`,
+            requestOptions
+        )
+            .then((response) => response.text())
+            .then((result) => console.log(result))
+            .catch((error) => console.log("error", error));
+};
+
+export async function addDevices (key, systems, apartmentname) {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        let temp = [];
+        temp.push({
+            id: "1",
+            apartmentname: apartmentname,
+            phonenumber: "1",
+            devicename: "led",
+            active: true,
+            limited: 100,
+        });
+        temp.push({
+            id: "3",
+            apartmentname: apartmentname,
+            phonenumber: "1",
+            devicename: "speaker",
+            active: true,
+            limited: 100,
+        });
+        temp.push({
+            id: "2",
+            apartmentname: apartmentname,
+            phonenumber: "1",
+            devicename: "air-condition",
+            active: true,
+            limited: 100,
+        });
+        systems.forEach((system) => {
+            if (system.name === "Hệ thống khí gas") {
+                temp.push({
+                    id: "8",
+                    apartmentname: apartmentname,
+                    phonenumber: "1",
+                    devicename: "gas",
+                    active: system.active,
+                    limited: 100,
+                });
+            } else if (system.name === "Hệ thống đèn qua cảm biến âm thanh") {
+                temp.push({
+                    id: "4",
+                    apartmentname: apartmentname,
+                    phonenumber: "1",
+                    devicename: "sound",
+                    active: system.active,
+                    limited: 100,
+                });
+            } else if (system.name === "Hệ thống đèn qua cảm biến ánh sáng") {
+                temp.push({
+                    id: "5",
+                    apartmentname: apartmentname,
+                    phonenumber: "1",
+                    devicename: "light",
+                    active: system.active,
+                    limited: 100,
+                });
+            } else if (system.name === "Hệ thống đèn qua công tắc") {
+                temp.push({
+                    id: "9",
+                    apartmentname: apartmentname,
+                    phonenumber: "1",
+                    devicename: "switch-led",
+                    active: system.active,
+                    limited: 100,
+                });
+            } else if (system.name === "Hệ thống điều hòa qua cảm biến") {
+                temp.push({
+                    id: "6",
+                    apartmentname: apartmentname,
+                    phonenumber: "1",
+                    devicename: "temp",
+                    active: system.active,
+                    limited: 100,
+                });
+                temp.push({
+                    id: "7",
+                    apartmentname: apartmentname,
+                    phonenumber: "1",
+                    devicename: "humid",
+                    active: system.active,
+                    limited: 100,
+                });
+            } else if (system.name === "Hệ thống điều hòa qua công tắc") {
+                temp.push({
+                    id: "10",
+                    apartmentname: apartmentname,
+                    phonenumber: "1",
+                    devicename: "switch-air-condition",
+                    active: system.active,
+                    limited: 100,
+                });
+            }
+        });
+
+        let raw = JSON.stringify(temp);
+        var requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow",
+        };
+
+        await fetch(
+            `${baseUrl}/api/device/${key}/add`,
+            requestOptions
+        )
+            .then((response) => response.text())
+            .then((result) => console.log(result))
+            .catch((error) => console.log("error", error));
+};
+
+
+export async function deleteApartment(key, apartment) {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+        apartmentname: apartment.apartmentname,
+        phonenumber: apartment.phonenumber
+    });
+
+    var requestOptions = {
+    method: 'DELETE',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+    };
+
+    await fetch(`${baseUrl}/api/apartment/${key}`, requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+}
+
+export async function getAccount(phonenumber, password) {
+    var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+    };
+    let temp;
+    await fetch(`${baseUrl}/api/account/account?phonenumber=${phonenumber}&password=${password}`, requestOptions)
+        .then(response => {
+            if (response.status === 200)
+                return response.json();
+            else
+                return {};
+        })
+    .then(result => temp = result)
+    .catch(error => console.log('error', error));
+    return temp;
+}
+
+export async function forgotPassword(phonenumber) {
+    var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+    };
+    
+    let temp;
+    await fetch(`${baseUrl}/api/account/account/forgot?phonenumber=${phonenumber}`, requestOptions)
+    .then(response => {
+        if (response.status === 200)
+            return response.json();
+        else
+            return {};
+    })
+    .then(result => temp = result)
+    .catch(error => console.log('error', error));
+    return temp;
 }

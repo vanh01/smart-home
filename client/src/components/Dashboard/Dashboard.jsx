@@ -3,9 +3,8 @@ import myAdafruitApi from "../../AdafruitApi";
 import * as signalR from "@microsoft/signalr";
 import * as serverApi from "../../ServerApi";
 
-const Dashboard = () => {
+const Dashboard = ({ account }) => {
     document.title = "Điều khiển";
-    // console.log("dieu khien");
     const [ledOn, setLedOn] = useState(false);
     const [airConditionedOn, setAirConditionedOn] = useState(false);
 
@@ -19,8 +18,8 @@ const Dashboard = () => {
 
     // console.log(sound);
     const getData = async () => {
-        let device = await serverApi.getListDevice("asaxkioiowe123as", "1");
-        let lastLog = await serverApi.getLastLog("asaxkioiowe123as", "1");
+        let device = await serverApi.getListDevice(account.privatekey, "1");
+        let lastLog = await serverApi.getLastLog(account.privatekey, "1");
         let ledLog = lastLog.filter((l) => l.id === "1");
         let airLog = lastLog.filter((l) => l.id === "2");
         let soundLog = lastLog.filter((l) => l.id === "4");

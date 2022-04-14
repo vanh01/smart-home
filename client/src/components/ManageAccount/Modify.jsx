@@ -3,6 +3,7 @@ import { updateAccount, deleteAccount } from "../../ServerApi"
 
 const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccount, render, setRender }) => {
 	let temp = accounts
+	console.log(temp[curIndex].rules)
 	let account = {
 		"phonenumber": accounts[curIndex].phonenumber,
 		"password": accounts[curIndex].password,
@@ -11,7 +12,8 @@ const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccoun
 	}
 	let information = {
 		"email": accounts[curIndex].email,
-		"name": accounts[curIndex].name
+		"name": accounts[curIndex].name,
+		"dateupdated": "" + (new Date().getYear() + 1900) + ((new Date().getMonth() + 1 < 10) ? '-0' : '-') + (new Date().getMonth() + 1) + ((new Date().getDate() < 10) ? '-0' : '-') + new Date().getDate()
 	}
 	let change = false
 	let curPassword = ""
@@ -46,17 +48,18 @@ const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccoun
 					</div>
 					<div className="add__form1">
 						<label>Quyền truy cập:</label> <br />
-						<select name="role" defaultValue={temp[curIndex].access === "Người dùng" ? "user" : "admin"} onChange={(e) => {
+						<select name="role" defaultValue={temp[curIndex].rules === 1 ? "admin" : "user"} onChange={(e) => {
+							console.log(e.target.value)
 							let curRole = e.target.value === "admin" ? 1 : 2
 							if (account["rules"] !== curRole) {
 								account["rules"] = curRole
 								change = true
 							}
-							return e.target.value === "admin" ? temp[curIndex].access = "Quản trị viên" : "Người dùng"
 						}}>
-							<option value="user">Người dùng</option>
-							<option value="admin">Quản trị viên</option>
-						</select> <br />
+							<option value="user"  >Người dùng</option>
+							<option value="admin" >Quản trị viên</option>
+						</select>
+						<br />
 						<label>Email:</label> <br />
 						<input type="email" defaultValue={temp[curIndex].email} onChange={(e) => {
 							information["email"] = e.target.value
@@ -65,8 +68,8 @@ const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccoun
 					</div>
 				</form>
 				<div className="add__button">
-					<button type="button" class='button-manage' onClick={() => { setShowModify(false); setShowApartment(true) }}>Quản lý căn hộ</button>
-					<button type="button" class='button-cancel' onClick={() => {
+					<button type="button" className='button-manage' onClick={() => { setShowModify(false); setShowApartment(true) }}>Quản lý căn hộ</button>
+					<button type="button" className='button-cancel' onClick={() => {
 						let adminKey = "asaxkioiowe123as"
 						deleteAccount(account["privatekey"], adminKey)
 						if (temp.find(ele => ele.privatekey === adminKey).rules === 1) {
@@ -77,7 +80,7 @@ const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccoun
 
 						setShowModify(false)
 					}}>Xóa</button>
-					<button type="submit" class='button-add' onClick={(e) => {
+					<button type="submit" className='button-add' onClick={(e) => {
 						if (curPassword === confirmPassword) {
 							if (change) {
 								console.log("update")
@@ -94,6 +97,8 @@ const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccoun
 						temp[curIndex].rules = account["rules"]
 						temp[curIndex].name = information["name"]
 						temp[curIndex].email = information["email"]
+						temp[curIndex].dateupdated = information["dateupdated"]
+						console.log(information["dateupdated"])
 						setAccount(temp)
 
 						// setRender(!render)

@@ -41,7 +41,7 @@
 
 .navbar__select-curve{
     position: absolute;
-    top: 92%;
+    top: 90%;
     left: -10%;
     width: 120%;
     height: 20%;
@@ -57,7 +57,7 @@
     width:10%;
     bottom:0;
     border-radius: 0 0 10px 0;
-    border-bottom: 1px solid wheat;
+    /* border-bottom: 1px solid wheat; */
 }
 
 .navbar__select-curve:after{
@@ -69,6 +69,6 @@
     width:10%;
     bottom:0;
     border-radius: 0 0 0 10px;
-    border-bottom: 1px solid wheat;
+    /* border-bottom: 1px solid wheat; */
 
 }

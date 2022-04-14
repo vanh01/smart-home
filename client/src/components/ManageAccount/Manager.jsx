@@ -1,5 +1,4 @@
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import "bootstrap/dist/js/bootstrap.bundle.min";
+
 import "font-awesome/css/font-awesome.min.css";
 import React from "react";
 import ManageApartment from "./ManageApartment";
@@ -7,6 +6,8 @@ import Add from "./Add";
 import Modify from "./Modify";
 import { useState } from "react";
 import { useEffect } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 
 const Manager = () => {
@@ -68,6 +69,7 @@ const Manager = () => {
                     <div className="search-account float-end">
                         <input
                             type="text"
+                            placeholder="Tìm kiếm"
                             className="search-account-input"
                             onChange={
                                 (e) => {
@@ -85,7 +87,7 @@ const Manager = () => {
                             }
                             className="search-account-btn"
                             type="button"
-                        >Tìm kiếm</button>
+                        ><FontAwesomeIcon icon={faSearch} /></button>
                     </div>
                     <div className="float-none"></div>
                 </div>
@@ -175,7 +177,7 @@ function ShowTable({ showApartment, setShowApartment, showModify, setShowModify,
                             <td>{account.password}</td>
                             <td>{account.email}</td>
                             {/* <td>{if account.rules == 1}</td> */}
-                            <td>{account.rules}</td>
+                            <td>{account.rules === 1 ? "Quản trị viên" : "Khách hàng"}</td>
                             <td>{account.datecreated}</td>
                             <td>{account.dateupdated}</td>
                             <td className="manager-icon">

@@ -15,7 +15,7 @@ AIO_KEY = "aio_nlle75SnyUL2NO8OdkLwqJoqH6pF"
 lightLimit = 0
 soundLimit = 0
 tempLimit = 0
-gasLimit = 200
+gasLimit = 300
 
 led = "led-off"
 airCondition = "air-off"  # off: 2, on: 3
@@ -154,11 +154,11 @@ def getPort():
 
 isMicrobitConnected = False
 
-ser = serial.Serial(port="COM4", baudrate=115200)
-isMicrobitConnected = True
-# if getPort() != " None ":
-#     ser = serial . Serial(port=getPort(), baudrate=115200)
-#     isMicrobitConnected = True
+# ser = serial.Serial(port="COM4", baudrate=115200)
+# isMicrobitConnected = True
+if getPort() != " None ":
+    ser = serial . Serial(port=getPort(), baudrate=115200)
+    isMicrobitConnected = True
 
 # khi mà thiết bị input gửi dữ liệu thì gọi api lên server
 

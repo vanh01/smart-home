@@ -15,6 +15,7 @@ const Dashboard = ({ account }) => {
     const [lightValue, setLightValue] = useState(0);
     const [tempValue, setTempValue] = useState(0);
     const [humiValue, setHumiValue] = useState(0);
+    const [gasValue, setGasValue] = useState(0);
 
     // console.log(sound);
     const getData = async () => {
@@ -26,6 +27,7 @@ const Dashboard = ({ account }) => {
         let lightLog = lastLog.filter((l) => l.id === "5");
         let tempLog = lastLog.filter((l) => l.id === "6");
         let humiLog = lastLog.filter((l) => l.id === "7");
+        let gasLog = lastLog.filter((l) => l.id === "8");
         let soundDevice = device.filter((d) => d.id === "4")[0];
         let lightDevice = device.filter((d) => d.id === "5")[0];
         let tempDevice = device.filter((d) => d.id === "6")[0];
@@ -48,6 +50,7 @@ const Dashboard = ({ account }) => {
         setLightValue(lightLog[0].value);
         setTempValue(tempLog[0].value);
         setHumiValue(humiLog[0].value);
+        setGasValue(gasLog[0].value);
         setLedOn(ledLog[0].value.includes("led-on") ? true : false);
         setAirConditionedOn(airLog[0].value.includes("air-on") ? true : false);
     };
@@ -78,6 +81,7 @@ const Dashboard = ({ account }) => {
                             setTempValue(message.value);
                         else if (message.id === "7")
                             setHumiValue(message.value);
+                        else if (message.id === "8") setGasValue(message.value);
                     });
                 })
                 .catch((e) => console.log("Connection failed: ", e));
@@ -275,52 +279,83 @@ const Dashboard = ({ account }) => {
                             </div>
                         </div>
                     </div>
-                    <div className="dashboard-light">
-                        <h1>Hệ thống điều hòa</h1>
-                        <div>
+                    <div style={{ width: "44%" }}>
+                        <div
+                            className="dashboard-light"
+                            style={{ width: "100%" }}
+                        >
+                            <h1>Hệ thống điều hòa</h1>
                             <div>
-                                <span>Bật tắt qua cảm biến nhiệt độ</span>
-                                <label className="toggle">
+                                <div>
+                                    <span>Bật tắt qua cảm biến nhiệt độ</span>
+                                    <label className="toggle">
+                                        <input
+                                            className="toggle__input"
+                                            type="checkbox"
+                                            checked={temp.active}
+                                            onChange={changeTempActive}
+                                        />
+                                        <div className="toggle__fill"></div>
+                                    </label>
+                                </div>
+                                <div>
+                                    <span>Ngưỡng nhiệt độ</span>
                                     <input
-                                        className="toggle__input"
-                                        type="checkbox"
-                                        checked={temp.active}
-                                        onChange={changeTempActive}
+                                        type="text"
+                                        defaultValue={temp.limited}
+                                        onBlur={changeTempLimited}
                                     />
-                                    <div className="toggle__fill"></div>
-                                </label>
+                                </div>
+                                <div>
+                                    <span>Nhiệt độ</span>
+                                    <input
+                                        className="dashboard__data"
+                                        type="text"
+                                        readOnly
+                                        value={tempValue}
+                                    />
+                                </div>
+                                <div>
+                                    <span>Độ ẩm</span>
+                                    <input
+                                        className="dashboard__data"
+                                        type="text"
+                                        readOnly
+                                        value={humiValue}
+                                    />
+                                </div>
                             </div>
                             <div>
-                                <span>Ngưỡng nhiệt độ</span>
-                                <input
-
-                                    type="text"
-                                    defaultValue={temp.limited}
-                                    onBlur={changeTempLimited}
-                                />
-                            </div>
-                            <div>
-                                <span>Nhiệt độ</span>
-                                <input className="dashboard__data" type="text" readOnly value={tempValue} />
-                            </div>
-                            <div>
-                                <span>Độ ẩm</span>
-                                <input className="dashboard__data" type="text" readOnly value={humiValue} />
+                                <div>
+                                    <span>Bật điều hòa</span>
+                                    <label className="toggle">
+                                        <input
+                                            className="toggle__input"
+                                            name=""
+                                            type="checkbox"
+                                            checked={airConditionedOn}
+                                            onChange={changeAirOn}
+                                        />
+                                        <div className="toggle__fill"></div>
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                        <div>
+                        <div
+                            className="dashboard-light"
+                            style={{ width: "100%" }}
+                        >
+                            <h1>Hệ thống khí gas</h1>
                             <div>
-                                <span>Bật điều hòa</span>
-                                <label className="toggle">
+                                <div>
+                                    <span>Nồng độ khí gas</span>
                                     <input
-                                        className="toggle__input"
-                                        name=""
-                                        type="checkbox"
-                                        checked={airConditionedOn}
-                                        onChange={changeAirOn}
+                                        className="dashboard__data"
+                                        type="text"
+                                        readOnly
+                                        value={gasValue}
                                     />
-                                    <div className="toggle__fill"></div>
-                                </label>
+                                </div>
                             </div>
                         </div>
                     </div>

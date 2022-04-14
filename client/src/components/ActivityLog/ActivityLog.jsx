@@ -74,13 +74,27 @@ const ActivityLog = ({ account }) => {
         console.log("type:", typeDevice);
         switch (typeDevice) {
             case 0:
-                tempLog = allData.filter((data) => data.id === "1");
-                data1 = tempLog.map((data) => {
-                    if (data.value === "led-on") return 1;
-                    else return 0;
-                });
-                data2 = tempLog.map((data) => data.agent);
-                break;
+                tempLog = allData.filter(data => data.id === '1')
+                data1 = tempLog.map(data => {
+                    if (data.value === 'led-on')
+                        return 1
+                    else return 0
+                })
+                data2 = tempLog.map(data => {
+                    switch (data.agent) {
+                        case "light":
+                            return "Cảm biến ánh sáng"
+                        case "sound":
+                            return "Cảm biến âm thanh"
+                        case "switch":
+                            return "Công tắc"
+                        case "web":
+                            return "Trang web"
+                        default:
+                    }
+                    return ""
+                })
+                break
             case 1:
                 tempLog = allData.filter((data) => data.id === "3");
                 data1 = tempLog.map((data) => {
@@ -89,13 +103,25 @@ const ActivityLog = ({ account }) => {
                 });
                 break;
             case 2:
-                tempLog = allData.filter((data) => data.id === "2");
-                data1 = tempLog.map((data) => {
-                    if (data.value === "air-on") return 1;
-                    else return 0;
-                });
-                data2 = tempLog.map((data) => data.agent);
-                break;
+                tempLog = allData.filter(data => data.id === '2')
+                data1 = tempLog.map(data => {
+                    if (data.value === 'air-on')
+                        return 1
+                    else return 0
+                })
+                data2 = tempLog.map(data => {
+                    switch (data.agent) {
+                        case "temp":
+                            return "Cảm biến nhiệt độ"
+                        case "switch":
+                            return "Công tắc"
+                        case "web":
+                            return "Trang web"
+                        default:
+                    }
+                    return ""
+                })
+                break
             case 3:
                 tempLog = allData.filter((data) => data.id === "5");
                 data1 = tempLog.map((data) => data.value);

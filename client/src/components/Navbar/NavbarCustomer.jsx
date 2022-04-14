@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faList, faHome } from '@fortawesome/free-solid-svg-icons'
 
-const NavbarCustomer = ({diarySelected = false}) => {
+const NavbarCustomer = ({diarySelected = false, setAccount}) => {
     const [apartment, setApartment] = useState("");
 
     function show(e) {
@@ -39,7 +39,12 @@ const NavbarCustomer = ({diarySelected = false}) => {
                 </ul>
             </div>
             <div className="navbar">
-                <Link to="/">
+                <Link to="/signin" onClick={() => {
+                    setAccount({});
+                    localStorage.setItem("phonenumber", "");
+                    localStorage.setItem("password", "");
+                    localStorage.setItem("rules", "");
+                }} >
                     <input type="button" value="Đăng xuất" />
                 </Link>
                 <Link to="/activitylog" id="navbar__activity-log" className={diarySelected ? "navbar__select" : ""}>

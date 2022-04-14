@@ -27,12 +27,42 @@ namespace server.Controllers
         {
             string query = $"SELECT * FROM account WHERE phonenumber='{phonenumber}' AND password='{password}';";
             var temp = SqlExecutes.Instance.ExcuteQuery(query);
-            // Console.WriteLine(temp.GetType());
-            // Console.WriteLine(temp.ToList<Account>());
             List<Account> accounts = temp.ToList<Account>();
             string result = "";
             if (accounts.Count == 1)
                 result = accounts[0].privatekey;
+            else
+                return BadRequest("Error!");
+            return Ok(result);
+
+        }
+
+        [HttpGet]
+        [Route("account")]
+        public IActionResult GetAcount([FromQuery] string phonenumber, [FromQuery] string password)
+        {
+            string query = $"SELECT * FROM account WHERE phonenumber='{phonenumber}' AND password='{password}';";
+            var temp = SqlExecutes.Instance.ExcuteQuery(query);
+            List<Account> accounts = temp.ToList<Account>();
+            Account result = new Account();
+            if (accounts.Count == 1)
+                result = accounts[0];
+            else
+                return BadRequest("Error!");
+            return Ok(result);
+
+        }
+
+        [HttpGet]
+        [Route("account/forgot")]
+        public IActionResult ForgotAcount([FromQuery] string phonenumber)
+        {
+            string query = $"SELECT * FROM account WHERE phonenumber='{phonenumber}';";
+            var temp = SqlExecutes.Instance.ExcuteQuery(query);
+            List<Account> accounts = temp.ToList<Account>();
+            Account result = new Account();
+            if (accounts.Count == 1)
+                result = accounts[0];
             else
                 return BadRequest("Error!");
             return Ok(result);
@@ -64,8 +94,6 @@ namespace server.Controllers
             List<Account> accounts = temp.ToList<Account>();
             Account account = accounts[0];
             int rule = account.rules;
-            // Console.WriteLine(temp.GetType());
-            // Console.WriteLine(temp.ToList<Account>());
             if (rule == 1)
             {
                 // string queryAll = $"SELECT * FROM account;";
@@ -77,7 +105,6 @@ namespace server.Controllers
             List<AccountInfo> accountInfos = new List<AccountInfo>();
             return accountInfos;
         }
-
 
         [HttpPost]
         [Route("add/{key}")]
@@ -93,11 +120,6 @@ namespace server.Controllers
                 string queryAdd = $"INSERT INTO account (phonenumber, password, privatekey, rules) VALUES ('{account.phonenumber}', '{account.password}', '{account.privatekey}', '{account.rules}');";
                 SqlExecutes.Instance.ExcuteNonQuery(queryAdd);
             }
-
-            // Console.WriteLine(temp.GetType());
-            // Console.WriteLine(temp.ToList<Account>());
-            // List<Account> accounts = temp.ToList<Account>();
-            // return accounts;
         }
 
         [HttpPut]

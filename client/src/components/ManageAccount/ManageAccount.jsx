@@ -1,11 +1,11 @@
 import React from "react";
 import Manager from "./Manager";
-import '../../css/manager.css'
+import "../../css/manager.css";
 
-const ManageAccount = () => {
+const ManageAccount = ({ account }) => {
     return (
         <>
-            <Manager />
+            <Manager account={account} />
         </>
     );
 };

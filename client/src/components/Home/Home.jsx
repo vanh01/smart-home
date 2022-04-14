@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import background from "../../assets/background.webm";
 import { useNavigate } from "react-router";
 

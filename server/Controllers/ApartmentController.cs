@@ -30,7 +30,7 @@ namespace server
         [Route("{key1}")]
         public IActionResult DeleteApartment([FromRoute] string key, [FromBody] Apartment apartment)
         {
-            string query = $"delete from apartment where apartment.phonenumber = '{apartment.phonenumber}' and apartment.apartmentname = '{apartment.apartmentname}';";
+            string query = $"delete from test.device where device.apartmentname = '${apartment.apartmentname}' and device.phonenumber = '${apartment.phonenumber}'; delete from apartment where apartment.phonenumber = '{apartment.phonenumber}' and apartment.apartmentname = '{apartment.apartmentname}';";
             // string query = $"call remove_apartment('{key}', '{apartment.phonenumber}', '{apartment.apartmentname}');";
 
             int result = SqlExecutes.Instance.ExcuteNonQuery(query);

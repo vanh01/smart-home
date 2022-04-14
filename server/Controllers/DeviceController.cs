@@ -91,7 +91,6 @@ namespace server
         [Route("{key}/add")]
         public string PostDevice([FromRoute] string key, [FromBody] List<Device> devices)
         {
-
             foreach (var device in devices)
             {
                 SqlExecutes.Instance.ExcuteNonQuery($"insert into device() value ('{device.phonenumber}', '{device.apartmentname}', '{device.id}', '{device.devicename}', {device.active}, {device.limited});");
@@ -141,7 +140,6 @@ namespace server
         [Route("{key}/edit")]
         public string EditDevice([FromRoute] string key, [FromBody] List<Device> devices)
         {
-
             foreach (var device in devices)
             {
                 SqlExecutes.Instance.ExcuteNonQuery($@"UPDATE device

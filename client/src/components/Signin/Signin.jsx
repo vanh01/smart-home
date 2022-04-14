@@ -1,26 +1,35 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import * as myServerApi from "../../ServerApi";
 
-const Signin = () => {
+const Signin = ({ setAccount }) => {
     const [formData, setFormData] = useState({
         username: "",
         password: "",
     });
     let navigate = useNavigate();
-    console.log("1");
-    const SignIn = (e) => {
+    const SignIn = async (e) => {
         e.preventDefault();
 
-        if (formData.username.length < 6 || formData.password.length < 6) {
-            alert("nhap dung thong tin tai khoan");
-            return;
+        // if (formData.username.length < 6 || formData.password.length < 6) {
+        //     alert("nhap dung thong tin tai khoan");
+        //     return;
+        // }
+        let account = await myServerApi.getAccount(
+            formData.username,
+            formData.password
+        );
+        setAccount(account);
+        console.log(account);
+        if (account.rules === 1) navigate("/manageaccount");
+        else if (account.rules === 2) navigate("/dashboard");
+        else {
+            alert("Vui lòng nhập đúng thông tin tài khoản và mật khẩu");
         }
-
-        if (formData.username === "admin" && formData.password === "admin")
-            navigate("/manageaccount");
-        else navigate("/dashboard");
-        console.log("test");
+        localStorage.setItem("phonenumber", account.phonenumber);
+        localStorage.setItem("password", account.password);
+        localStorage.setItem("rules", account.rules);
     };
 
     const onChange = (e) =>

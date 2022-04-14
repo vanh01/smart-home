@@ -2,11 +2,11 @@ import React from "react";
 import ManageAccount from "../components/ManageAccount/ManageAccount";
 import NavbarAdmin from "../components/Navbar/NavbarAdmin";
 
-const ManageAccountPage = () => {
+const ManageAccountPage = ({ account, setAccount }) => {
     return (
         <>
-            <NavbarAdmin />
-            <ManageAccount />
+            <NavbarAdmin setAccount={setAccount} />
+            <ManageAccount account={account} />
         </>
     );
 };

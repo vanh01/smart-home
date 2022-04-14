@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "G:\\data\\212\\DATH\\Code\\web\\smart-home\\server\\server.csproj": {}
+    "D:\\212\\dadn\\smart-home\\server\\server.csproj": {}
   },
   "projects": {
-    "G:\\data\\212\\DATH\\Code\\web\\smart-home\\server\\server.csproj": {
+    "D:\\212\\dadn\\smart-home\\server\\server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\data\\212\\DATH\\Code\\web\\smart-home\\server\\server.csproj",
+        "projectUniqueName": "D:\\212\\dadn\\smart-home\\server\\server.csproj",
         "projectName": "server",
-        "projectPath": "G:\\data\\212\\DATH\\Code\\web\\smart-home\\server\\server.csproj",
-        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-        "outputPath": "G:\\data\\212\\DATH\\Code\\web\\smart-home\\server\\obj\\",
+        "projectPath": "D:\\212\\dadn\\smart-home\\server\\server.csproj",
+        "packagesPath": "C:\\Users\\Viet Anh\\.nuget\\packages\\",
+        "outputPath": "D:\\212\\dadn\\smart-home\\server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Viet Anh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -71,16 +71,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[5.0.0, 5.0.0]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[5.0.0, 5.0.0]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -89,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

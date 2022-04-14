@@ -63,7 +63,20 @@ const ActivityLog = () => {
                         return 1
                     else return 0
                 })
-                data2 = tempLog.map(data => data.agent)
+                data2 = tempLog.map(data => {
+                    switch (data.agent) {
+                        case "light":
+                            return "Cảm biến ánh sáng"
+                        case "sound":
+                            return "Cảm biến âm thanh"
+                        case "switch":
+                            return "Công tắc"
+                        case "web":
+                            return "Trang web"
+                        default:
+                    }
+                    return ""
+                })
                 break
             case 1:
                 tempLog = allData.filter(data => data.id === '3')
@@ -80,7 +93,18 @@ const ActivityLog = () => {
                         return 1
                     else return 0
                 })
-                data2 = tempLog.map(data => data.agent)
+                data2 = tempLog.map(data => {
+                    switch (data.agent) {
+                        case "temp":
+                            return "Cảm biến nhiệt độ"
+                        case "switch":
+                            return "Công tắc"
+                        case "web":
+                            return "Trang web"
+                        default:
+                    }
+                    return ""
+                })
                 break
             case 3:
                 tempLog = allData.filter(data => data.id === '5')

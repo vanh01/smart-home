@@ -78,28 +78,6 @@ namespace server.Controllers
             return accountInfos;
         }
 
-        // [HttpPost]
-        // [Route("{key}")]
-        // public void PostAccount([FromRoute] string key, [FromBody] Account account, [FromBody] Information info)
-        // {
-        //     string query = $"SELECT * FROM account WHERE privatekey='{key}';";
-        //     var temp = SqlExecutes.Instance.ExcuteQuery(query);
-        //     List<Account> accounts = temp.ToList<Account>();
-        //     Account account = accounts[0];
-        //     string rule = account.rules;
-        //     if(rule == 1){
-        //         string queryAdd = $"INSERT INTO account (phonenumber, password, privatekey, rules) VALUES ('{account.phonenumber}', '{account.password}', '{key}', '{account.rules}');";
-        //         SqlExecutes.Instance.ExcuteNonQuery(queryAdd);
-        //         string queryInfo = $"INSERT INTO information (phonenumber, email, name, datecreated, dateupdated) VALUES ('{info.phonenumber}', '{info.email}', '{info.name}', '{info.datecreated}', '{info.dateupdated}');";
-        //         SqlExecutes.Instance.ExcuteNonQuery(queryInfo);
-        //     }
-
-        //     // Console.WriteLine(temp.GetType());
-        //     // Console.WriteLine(temp.ToList<Account>());
-        //     // List<Account> accounts = temp.ToList<Account>();
-        //     // return accounts;
-        // }
-
 
         [HttpPost]
         [Route("add/{key}")]
@@ -121,25 +99,6 @@ namespace server.Controllers
             // List<Account> accounts = temp.ToList<Account>();
             // return accounts;
         }
-
-        // [HttpPost]
-        // [Route("add/{key}")]
-        // public void PostInfo([FromRoute] string key, [FromBody] Information info)
-        // {
-        //     string query = $"SELECT * FROM account WHERE privatekey='{key}';";
-        //     var temp = SqlExecutes.Instance.ExcuteQuery(query);
-        //     List<Account> accounts = temp.ToList<Account>();
-        //     Account accountCheck = accounts[0];
-        //     int rule = accountCheck.rules;
-        //     if(rule == 1){
-        //         string queryInfo = $"INSERT INTO information (phonenumber, email, name, datecreated, dateupdated) VALUES ('{info.phonenumber}', '{info.email}', '{info.name}', '{info.datecreated}', '{info.dateupdated}');";
-        //         SqlExecutes.Instance.ExcuteNonQuery(queryInfo);
-        //     }
-        //     // Console.WriteLine(temp.GetType());
-        //     // Console.WriteLine(temp.ToList<Account>());
-        //     // List<Account> accounts = temp.ToList<Account>();
-        //     // return accounts;
-        // }
 
         [HttpPut]
         [Route("{key}/update")]

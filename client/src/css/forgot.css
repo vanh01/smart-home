@@ -75,6 +75,7 @@
     width: fit-content;
     height: 30px;
     margin: auto;
+    color: #9ffaf8;
 }
 
 .forgot-form input[type="submit"] {

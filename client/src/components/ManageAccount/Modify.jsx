@@ -1,7 +1,7 @@
 import React from "react";
 import { updateAccount, deleteAccount } from "../../ServerApi"
 
-const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccount, render, setRender }) => {
+const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccount, accountKey}) => {
 	let temp = accounts
 	console.log(temp[curIndex].rules)
 	let account = {
@@ -70,9 +70,8 @@ const Modify = ({ setShowApartment, setShowModify, curIndex, accounts, setAccoun
 				<div className="add__button">
 					<button type="button" className='button-manage' onClick={() => { setShowModify(false); setShowApartment(true) }}>Quản lý căn hộ</button>
 					<button type="button" className='button-cancel' onClick={() => {
-						let adminKey = "asaxkioiowe123as"
-						deleteAccount(account["privatekey"], adminKey)
-						if (temp.find(ele => ele.privatekey === adminKey).rules === 1) {
+						deleteAccount(account["privatekey"], accountKey)
+						if (temp.find(ele => ele.privatekey === accountKey).rules === 1) {
 							temp.splice(curIndex, 1)
 							console.log(temp)
 							setAccount(temp)

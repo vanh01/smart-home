@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as myServerApi from "../../ServerApi";
 
-const ManageApartment = ({ setShowApartment }) => {
+const ManageApartment = ({ setShowApartment, accounts, curIndex }) => {
     let initSystem = [
         { name: "Hệ thống khí gas", active: false },
         { name: "Hệ thống đèn qua cảm biến âm thanh", active: false },
@@ -15,12 +15,15 @@ const ManageApartment = ({ setShowApartment }) => {
     const [apartments, setApartments] = useState([]);
 
     const [apartmentCur, setApartmentCur] = useState("");
-    const [systemsCur, setSystemsCur] = useState(initSystem);
+    let [systemsCur, setSystemsCur] = useState(initSystem);
 
     const [apartmentNew, setApartmentNew] = useState({
         name: "",
         initSystem,
     });
+
+    const [render, setRender] = useState(false);
+    const [render2, setRender2] = useState(false);
 
     const convertDevicesToSystems = (devices) => {
         let temp = [];
@@ -63,7 +66,7 @@ const ManageApartment = ({ setShowApartment }) => {
 
     const getData = async () => {
         let apartmentNames = await myServerApi.apartmentGetOne(
-            "asaxkioiowe123as"
+            accounts[curIndex].privatekey
         );
         let temp = [];
         apartmentNames.forEach((a) => {
@@ -72,7 +75,7 @@ const ManageApartment = ({ setShowApartment }) => {
 
         let apartmentTemp = [];
         for (const t of temp) {
-            let tempp = await getDevices("asaxkioiowe123as", t);
+            let tempp = await getDevices(accounts[curIndex].privatekey, t);
             apartmentTemp.push({
                 name: t,
                 systems: tempp,
@@ -92,7 +95,7 @@ const ManageApartment = ({ setShowApartment }) => {
 
     useEffect(() => {
         getData();
-    }, []);
+    }, [render]);
     return (
         <div className="manage-apartment">
             <button
@@ -139,14 +142,16 @@ const ManageApartment = ({ setShowApartment }) => {
                                 setApartments([...apartments, apartmentNew]);
                                 await myServerApi.addApartment(
                                     "as",
-                                    "1",
+                                    accounts[curIndex].phonenumber,
                                     apartmentNew
                                 );
                                 await myServerApi.addDevices(
                                     "as",
                                     initSystem,
-                                    apartmentNew.name
+                                    apartmentNew.name,
+                                    accounts[curIndex].phonenumber
                                 );
+                                setRender(!render)
                             } else {
                                 alert("Vui lòng nhập tên căn hộ hợp lệ");
                             }
@@ -162,25 +167,31 @@ const ManageApartment = ({ setShowApartment }) => {
                     <input type="text" defaultValue={apartmentCur.name} />
                 </label>
                 <div className="manage-apartment-system">
-                    {systemsCur.map((system, index) => (
-                        <label key={system.name}>
+                    {systemsCur.map((system, index) => {
+                        return <label key={system.name}>
                             {system.name}
                             <input
                                 type="checkbox"
                                 checked={system.active}
                                 onChange={(e) => {
                                     system.active = e.target.checked;
+                                    setRender2(!render2)
                                 }}
                             />
                         </label>
-                    ))}
+                    })}
                 </div>
             </div>
             <div className="manage-apartment__button">
-                <button className="delete">Xóa</button>
-                <button className="save">Lưu</button>
+                <button className="delete" onClick={() => {
+
+                }}>Xóa</button>
+                <button className="save" onClick={() => {
+                    myServerApi.updateDevice(accounts[curIndex].privatekey, accounts[curIndex].phonenumber, apartmentCur, systemsCur)
+                    setShowApartment(false);
+                }}>Lưu</button>
             </div>
-        </div>
+        </div >
     );
 };
 

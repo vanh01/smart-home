@@ -1,6 +1,6 @@
 import React from "react";
 
-const Add = ({ setShowAdd, accounts, setAccount }) => {
+const Add = ({ setShowAdd, accounts, setAccount, accountKey }) => {
 
 	const postAccountInfo = async (accountAdd, infoAdd) => {
 		// const postAccount = async () => {
@@ -22,7 +22,7 @@ const Add = ({ setShowAdd, accounts, setAccount }) => {
 			redirect: 'follow'
 		};
 
-		await fetch("https://localhost:5001/api/account/add/asaxkioiowe123as", requestOptions)
+		await fetch(`https://localhost:5001/api/account/add/${accountKey}`, requestOptions)
 			.then(response => response.text())
 			.then(result => console.log(result))
 			.catch(error => console.log('error', error));
@@ -34,63 +34,12 @@ const Add = ({ setShowAdd, accounts, setAccount }) => {
 			redirect: 'follow'
 		};
 
-		await fetch("https://localhost:5001/api/information/add/asaxkioiowe123as", requestInfoOptions)
+		await fetch(`https://localhost:5001/api/information/add/${accountKey}`, requestInfoOptions)
 			.then(response => response.text())
 			.then(result => console.log(result))
 			.catch(error => console.log('error', error));
 	}
 
-	// const postAccount = async (accountAdd) => {
-	// 	// const postAccount = async () => {
-	// 	var myHeaders = new Headers();
-	// 	myHeaders.append("Content-Type", "application/json");
-
-	// 	// var raw = JSON.stringify({
-	// 	// 	"phonenumber": "0984123456",
-	// 	// 	"password": "abc12344",
-	// 	// 	"privatekey": "key4",
-	// 	// 	"rules": "1"
-	// 	// });
-	// 	var raw = JSON.stringify(accountAdd);
-
-	// 	var requestOptions = {
-	// 		method: 'POST',
-	// 		headers: myHeaders,
-	// 		body: raw,
-	// 		redirect: 'follow'
-	// 	};
-
-	// 	await fetch("https://localhost:5001/api/account/add/abc1", requestOptions)
-	// 		.then(response => response.text())
-	// 		.then(result => console.log(result))
-	// 		.catch(error => console.log('error', error));
-	// }
-
-	// const postInfo = async (infoAdd) => {
-	// 	var myHeaders = new Headers();
-	// 	myHeaders.append("Content-Type", "application/json");
-
-	// 	var raw = JSON.stringify(infoAdd);
-	// 	// var raw = JSON.stringify({
-	// 	// 	"phonenumber": "0985123457",
-	// 	// 	"name": "Nguyen Bon",
-	// 	// 	"email": "abon@gmail.com",
-	// 	// 	"datecreated": "2022-4-08",
-	// 	// 	"dateupdated": "2022-4-10"
-	// 	// });
-
-	// 	var requestOptions = {
-	// 		method: 'POST',
-	// 		headers: myHeaders,
-	// 		body: raw,
-	// 		redirect: 'follow'
-	// 	};
-
-	// 	await fetch("https://localhost:5001/api/information/add/abc1", requestOptions)
-	// 		.then(response => response.text())
-	// 		.then(result => console.log(result))
-	// 		.catch(error => console.log('error', error));
-	// }
 
 	return (
 		<>

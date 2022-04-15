@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as myServerApi from "../../ServerApi";
 
-const ManageApartment = ({ setShowApartment, accounts, curIndex }) => {
+const ManageApartment = ({ setShowApartment, accounts, curIndex, account }) => {
     let initSystem = [
         { name: "Hệ thống khí gas", active: false },
         { name: "Hệ thống đèn qua cảm biến âm thanh", active: false },
@@ -83,9 +83,10 @@ const ManageApartment = ({ setShowApartment, accounts, curIndex }) => {
         }
         setApartments(apartmentTemp);
         console.log(apartmentTemp);
-
-        setApartmentCur(apartmentTemp[0].name);
-        setSystemsCur(apartmentTemp[0].systems);
+        if (apartmentTemp.length > 0) {
+            setApartmentCur(apartmentTemp[0].name);
+            setSystemsCur(apartmentTemp[0].systems);
+        }
     };
 
     const getDevices = async (key, apartmentname) => {
@@ -140,18 +141,19 @@ const ManageApartment = ({ setShowApartment, accounts, curIndex }) => {
                                 )
                             ) {
                                 setApartments([...apartments, apartmentNew]);
+                                console.log(apartmentNew);
                                 await myServerApi.addApartment(
-                                    "as",
+                                    account.privatekey,
                                     accounts[curIndex].phonenumber,
                                     apartmentNew
                                 );
                                 await myServerApi.addDevices(
-                                    "as",
+                                    account.privatekey,
                                     initSystem,
                                     apartmentNew.name,
                                     accounts[curIndex].phonenumber
                                 );
-                                setRender(!render)
+                                setRender(!render);
                             } else {
                                 alert("Vui lòng nhập tên căn hộ hợp lệ");
                             }
@@ -164,34 +166,71 @@ const ManageApartment = ({ setShowApartment, accounts, curIndex }) => {
             <div className="manage-apartment-body">
                 <label>
                     <span>TÊN CĂN HỘ</span>
-                    <input type="text" defaultValue={apartmentCur.name} />
+                    <input
+                        type="text"
+                        defaultValue={apartmentCur}
+                        onChange={(e) => {
+                            setApartmentCur(e.target.value);
+                        }}
+                        readOnly
+                    />
                 </label>
                 <div className="manage-apartment-system">
                     {systemsCur.map((system, index) => {
-                        return <label key={system.name}>
-                            {system.name}
-                            <input
-                                type="checkbox"
-                                checked={system.active}
-                                onChange={(e) => {
-                                    system.active = e.target.checked;
-                                    setRender2(!render2)
-                                }}
-                            />
-                        </label>
+                        return (
+                            <label key={system.name}>
+                                {system.name}
+                                <input
+                                    type="checkbox"
+                                    checked={system.active}
+                                    onChange={(e) => {
+                                        system.active = e.target.checked;
+                                        setRender2(!render2);
+                                    }}
+                                />
+                            </label>
+                        );
                     })}
                 </div>
             </div>
             <div className="manage-apartment__button">
-                <button className="delete" onClick={() => {
+                <button
+                    className="delete"
+                    onClick={async () => {
+                        await myServerApi.deleteApartment(account.privatekey, {
+                            apartmentname: apartmentCur,
+                            phonenumber: accounts[curIndex].phonenumber,
+                        });
+                        // let temp = apartments;
+                        // let index = temp.findIndex(t => t.name === apartmentCur);
+                        // temp.splice(index, 1);
+                        // setApartments(temp);
+                        setShowApartment(false);
+                    }}
+                >
+                    Xóa
+                </button>
+                <button
+                    className="save"
+                    onClick={async () => {
+                        // await myServerApi.updateApartment(account.privatekey, {
+                        //     apartmentname: apartmentCur,
+                        //     phonenumber: accounts[curIndex].phonenumber,
+                        // });
 
-                }}>Xóa</button>
-                <button className="save" onClick={() => {
-                    myServerApi.updateDevice(accounts[curIndex].privatekey, accounts[curIndex].phonenumber, apartmentCur, systemsCur)
-                    setShowApartment(false);
-                }}>Lưu</button>
+                        await myServerApi.updateDevice(
+                            account.privatekey,
+                            accounts[curIndex].phonenumber,
+                            apartmentCur,
+                            systemsCur
+                        );
+                        setShowApartment(false);
+                    }}
+                >
+                    Lưu
+                </button>
             </div>
-        </div >
+        </div>
     );
 };
 

@@ -21,6 +21,16 @@ namespace server.Controllers
             _accountHub = accountHub;
         }
 
+        private int getRules(string key)
+        {
+            string query = $"SELECT * FROM account WHERE privatekey='{key}';";
+            var temp = SqlExecutes.Instance.ExcuteQuery(query);
+            List<Account> accounts = temp.ToList<Account>();
+            if (accounts.Count > 0)
+                return accounts[0].rules;
+            return 0;
+        }
+
         [HttpGet]
         [Route("key")]
         public IActionResult GetKey([FromQuery] string phonenumber, string password)
@@ -89,12 +99,7 @@ namespace server.Controllers
         [Route("{key}")]
         public List<AccountInfo> GetListAccount([FromRoute] string key)
         {
-            string query = $"SELECT * FROM account WHERE privatekey='{key}';";
-            var temp = SqlExecutes.Instance.ExcuteQuery(query);
-            List<Account> accounts = temp.ToList<Account>();
-            Account account = accounts[0];
-            int rule = account.rules;
-            if (rule == 1)
+            if (getRules(key) == 1)
             {
                 // string queryAll = $"SELECT * FROM account;";
                 string queryAll = $"SELECT account.phonenumber, account.password, account.rules, account.privatekey, information.name, information.email, information.datecreated, information.dateupdated FROM account, information WHERE account.phonenumber = information.phonenumber and account.rules != 0;";
@@ -110,12 +115,7 @@ namespace server.Controllers
         [Route("add/{key}")]
         public void PostAccount([FromRoute] string key, [FromBody] Account account)
         {
-            string query = $"SELECT * FROM account WHERE privatekey='{key}';";
-            var temp = SqlExecutes.Instance.ExcuteQuery(query);
-            List<Account> accounts = temp.ToList<Account>();
-            Account accountCheck = accounts[0];
-            int rule = accountCheck.rules;
-            if (rule == 1)
+            if (getRules(key) == 1)
             {
                 string queryAdd = $"INSERT INTO account (phonenumber, password, privatekey, rules) VALUES ('{account.phonenumber}', '{account.password}', '{account.privatekey}', '{account.rules}');";
                 SqlExecutes.Instance.ExcuteNonQuery(queryAdd);
@@ -126,22 +126,30 @@ namespace server.Controllers
         [Route("{key}/update")]
         public int UpdateAccount([FromRoute] string key, [FromBody] Account account)
         {
-            string query = @$"update account 
+            if (getRules(key) == 1)
+            {
+                string query = @$"update account
                             set phonenumber = '{account.phonenumber}', password= '{account.password}', rules = '{account.rules}'
-                            WHERE privatekey = '{key}'";
-            int result = SqlExecutes.Instance.ExcuteNonQuery(query);
-            return result;
+                            WHERE privatekey = '{account.privatekey}'";
+                int result = SqlExecutes.Instance.ExcuteNonQuery(query);
+                return result;
+            }
+            return 0;
         }
 
         [HttpPut]
-        [Route("{key}/delete")]
-        public int DeleteAccount([FromRoute] string key, [FromBody] string adminKey)
+        [Route("{adminKey}/delete")]
+        public int DeleteAccount([FromRoute] string adminKey, [FromBody] string key)
         {
-            string query = @$"update account 
-                            set rules = '0'
-                            WHERE '1' in (SELECT rules from account WHERE privatekey = '{adminKey}') and privatekey = '{key}'";
-            int result = SqlExecutes.Instance.ExcuteNonQuery(query);
-            return result;
+            if (getRules(adminKey) == 1)
+            {
+                string query = @$"update account 
+                            set rules = false
+                            WHERE privatekey = '{key}'";
+                int result = SqlExecutes.Instance.ExcuteNonQuery(query);
+                return result;
+            }
+            return 0;
         }
     }
 }

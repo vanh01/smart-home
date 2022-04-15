@@ -20,6 +20,16 @@ namespace server
             _logDevice = logDevice;
         }
 
+        private int getRules(string key)
+        {
+            string query = $"SELECT * FROM account WHERE privatekey='{key}';";
+            var temp = SqlExecutes.Instance.ExcuteQuery(query);
+            List<Account> accounts = temp.ToList<Account>();
+            if (accounts.Count > 0)
+                return accounts[0].rules;
+            return 0;
+        }
+
         [HttpGet]
         [Route("{key}")]
         public List<Device> getDevice([FromRoute] string key, [FromQuery] string apartmentName)
@@ -36,17 +46,21 @@ namespace server
         [Route("update/{key}")]
         public async Task<int> updateDevice([FromRoute] string key, [FromQuery] string apartmentName, [FromQuery] string id, [FromBody] dynamic obj)
         {
-            int temp = -10;
-            dynamic data = JObject.Parse(obj.ToString());
-            string query = $@"update device
+            if (getRules(key) == 1)
+            {
+                int temp = 0;
+                dynamic data = JObject.Parse(obj.ToString());
+                string query = $@"update device
                             set active = {data.active},
                                 limited = {data.limited}
                             WHERE apartmentname = '{apartmentName}' and id = '{id}';";
 
 
-            temp = SqlExecutes.Instance.ExcuteNonQuery(query);
-            await _logDevice.Clients.All.SendAsync("asaxkioiowe123as", new { id = id, active = data.active, limited = data.limited });
-            return temp;
+                temp = SqlExecutes.Instance.ExcuteNonQuery(query);
+                await _logDevice.Clients.All.SendAsync("asaxkioiowe123as", new { id = id, active = data.active, limited = data.limited });
+                return temp;
+            }
+            return 0;
         }
 
 
@@ -54,11 +68,16 @@ namespace server
         [Route("{key}/add")]
         public string PostDevice([FromRoute] string key, [FromBody] List<Device> devices)
         {
-            foreach (var device in devices)
+            if (getRules(key) == 1)
             {
-                SqlExecutes.Instance.ExcuteNonQuery($"insert into device() value ('{device.phonenumber}', '{device.apartmentname}', '{device.id}', '{device.devicename}', {device.active}, {device.limited});");
+                int num = 0;
+                foreach (var device in devices)
+                {
+                    num = SqlExecutes.Instance.ExcuteNonQuery($"insert into device() value ('{device.phonenumber}', '{device.apartmentname}', '{device.id}', '{device.devicename}', {device.active}, {device.limited});");
+                }
+                return num > 0 ? "Success!" : "Fail!";
             }
-            return "";
+            return "Fail!";
         }
 
 
@@ -66,13 +85,17 @@ namespace server
         [Route("{key}/edit")]
         public string EditDevice([FromRoute] string key, [FromBody] List<Device> devices)
         {
-            foreach (var device in devices)
+            if (getRules(key) == 1)
             {
-                SqlExecutes.Instance.ExcuteNonQuery($@"UPDATE device
+                foreach (var device in devices)
+                {
+                    SqlExecutes.Instance.ExcuteNonQuery($@"UPDATE device
                                                     SET `devicename` = '{device.devicename}', `active` = {device.active}, `limited` = {device.limited} 
                                                     WHERE `phonenumber` = '{device.phonenumber}' AND `apartmentname` = '{device.apartmentname}' AND `id` = '{device.id}';");
+                }
+                return "Success!";
             }
-            return "";
+            return "Fail!";
         }
     }
 }

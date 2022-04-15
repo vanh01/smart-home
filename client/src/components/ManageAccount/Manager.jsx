@@ -149,6 +149,7 @@ const Manager = ({ account }) => {
                         render={render}
                         setRender={setRender}
                         accountKey={account.privatekey}
+                        accountAdmin={account}
                     />
                     {/* <Modify setShowModify={setShowModify} setShowApartment={setShowApartment} curIndex={curIndex} accounts={listAccount} setAccount={setAccount} /> */}
                 </div>
@@ -163,7 +164,7 @@ const Manager = ({ account }) => {
                             setShowApartment(false);
                     }}
                 >
-                    <ManageApartment setShowApartment={setShowApartment} accounts={accounts} curIndex={curIndex} />
+                    <ManageApartment setShowApartment={setShowApartment} accounts={accounts} curIndex={curIndex} account={account} />
                 </div>
             ) : (
                 ""
@@ -217,7 +218,7 @@ function ShowTable({
             <tbody>
 
                 {
-                    accounts.map((account) => (
+                    accounts.map((account, index) => (
                         <tr key={account.phonenumber}>
                             <td>{account.name}</td>
                             <td>{account.phonenumber}</td>
@@ -229,18 +230,15 @@ function ShowTable({
                             <td>{account.dateupdated}</td>
                             <td className="manager-icon">
                                 <i onClick={(e) => {
-                                    let curPhone = e.target.parentNode.parentNode.querySelectorAll('td')[1].innerText
-                                    setCurIndex(accounts.findIndex((account) => { return account.phonenumber.indexOf(curPhone) !== -1 }))
+                                    setCurIndex(index);
                                     setShowModify(!showModify)
-
                                 }}
                                     className="fa fa-pencil-square"
                                     aria-hidden="true"
                                 ></i>
                                 <i
                                     onClick={(e) => {
-                                        let curPhone = e.target.parentNode.parentNode.querySelectorAll('td')[1].innerText
-                                        setCurIndex(accounts.findIndex((account) => { return account.phonenumber.indexOf(curPhone) !== -1 }))
+                                        setCurIndex(index);
                                         setShowApartment(!showApartment)
                                     }}
                                     className="fa fa-home"

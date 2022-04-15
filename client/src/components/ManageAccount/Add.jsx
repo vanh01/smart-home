@@ -20,7 +20,7 @@ const Add = ({ setShowAdd, accounts, setAccount, accountKey }) => {
 			headers: myHeaders,
 			body: raw,
 			redirect: 'follow'
-		};
+        }; 
 
 		await fetch(`https://localhost:5001/api/account/add/${accountKey}`, requestOptions)
 			.then(response => response.text())
@@ -67,8 +67,8 @@ const Add = ({ setShowAdd, accounts, setAccount, accountKey }) => {
 					</div>
 				</form>
 				<div className="add__button">
-					<button type="button" class='button-cancel' onClick={() => setShowAdd(false)}>Hủy</button>
-					<button type="submit" class='button-add'
+					<button type="button" className='button-cancel' onClick={() => setShowAdd(false)}>Hủy</button>
+					<button type="submit" className='button-add'
 						onClick={() => {
 							var phone = document.querySelector('.phone').value;
 							var name = document.querySelector('.name').value;

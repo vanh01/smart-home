@@ -84,7 +84,7 @@ export async function deleteAccount(key, adminKey) {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    var raw = JSON.stringify(adminKey);
+    var raw = JSON.stringify(key);
 
     var requestOptions = {
         method: 'PUT',
@@ -93,7 +93,7 @@ export async function deleteAccount(key, adminKey) {
         redirect: 'follow'
     };
 
-    await fetch(baseUrl + "/api/account/" + key + "/delete", requestOptions)
+    await fetch(baseUrl + "/api/account/" + adminKey + "/delete", requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
@@ -108,7 +108,7 @@ export async function updateAccount(key, account, information) {
         "phonenumber": account.phonenumber,
         "password": account.password,
         "rules": account.rules,
-        "privatekey": ""
+        "privatekey": account.privatekey
     });
 
     var requestOptions = {
@@ -127,7 +127,7 @@ export async function updateAccount(key, account, information) {
     myHeaders.append("Content-Type", "application/json");
 
     raw = JSON.stringify({
-        "phonenumber": "",
+        "phonenumber": account.phonenumber,
         "email": information.email,
         "name": information.name,
         "datecreated": "",
@@ -295,13 +295,35 @@ export async function deleteApartment(key, apartment) {
     });
 
     var requestOptions = {
-        method: 'DELETE',
+        method: 'PUT',
         headers: myHeaders,
         body: raw,
         redirect: 'follow'
     };
 
     await fetch(`${baseUrl}/api/apartment/${key}`, requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+}
+
+export async function updateApartment(key, apartment) {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+        apartmentname: apartment.apartmentname,
+        phonenumber: apartment.phonenumber
+    });
+
+    var requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+    await fetch(`${baseUrl}/api/apartment/${key}/update`, requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));

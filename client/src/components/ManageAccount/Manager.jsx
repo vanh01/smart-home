@@ -122,6 +122,7 @@ const Manager = ({ account }) => {
                         setShowAdd={setShowAdd}
                         accounts={accounts}
                         setAccount={setAccount}
+                        accountKey={account.privatekey}
                     />
                     {/* <Add setShowAdd={setShowAdd} accounts={listAccount} setAccount={setAccount} /> */}
                 </div>
@@ -147,6 +148,7 @@ const Manager = ({ account }) => {
                         setAccount={setAccount}
                         render={render}
                         setRender={setRender}
+                        accountKey={account.privatekey}
                     />
                     {/* <Modify setShowModify={setShowModify} setShowApartment={setShowApartment} curIndex={curIndex} accounts={listAccount} setAccount={setAccount} /> */}
                 </div>
@@ -161,7 +163,7 @@ const Manager = ({ account }) => {
                             setShowApartment(false);
                     }}
                 >
-                    <ManageApartment setShowApartment={setShowApartment} />
+                    <ManageApartment setShowApartment={setShowApartment} accounts={accounts} curIndex={curIndex} />
                 </div>
             ) : (
                 ""
@@ -232,17 +234,22 @@ function ShowTable({
                                     setShowModify(!showModify)
 
                                 }}
-                                className="fa fa-pencil-square"
-                                aria-hidden="true"
-                            ></i>
-                            <i
-                                onClick={() => setShowApartment(!showApartment)}
-                                className="fa fa-home"
-                                aria-hidden="true"
-                            ></i>
-                        </td>
-                    </tr>
-                ))}
+                                    className="fa fa-pencil-square"
+                                    aria-hidden="true"
+                                ></i>
+                                <i
+                                    onClick={(e) => {
+                                        let curPhone = e.target.parentNode.parentNode.querySelectorAll('td')[1].innerText
+                                        setCurIndex(accounts.findIndex((account) => { return account.phonenumber.indexOf(curPhone) !== -1 }))
+                                        setShowApartment(!showApartment)
+                                    }}
+                                    className="fa fa-home"
+                                    aria-hidden="true"
+
+                                ></i>
+                            </td>
+                        </tr>
+                    ))}
             </tbody>
         </table>
     );

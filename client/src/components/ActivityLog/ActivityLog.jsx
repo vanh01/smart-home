@@ -551,7 +551,7 @@ function fillData(
             endDate >= new Date(allLabel2[i])
         ) {
             indexList2 = [...indexList2, i];
-            x2 = [...x2, allLabel1[i]];
+            x2 = [...x2, allLabel2[i]];
         }
     }
 

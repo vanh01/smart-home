@@ -42,23 +42,7 @@ namespace server
                             set active = {data.active},
                                 limited = {data.limited}
                             WHERE apartmentname = '{apartmentName}' and id = '{id}';";
-            // string query = $@"select @phoneNum := account.phonenumber
-            //                 from device,account
-            //                 WHERE device.phonenumber = account.phonenumber and account.privatekey = '{key}';
-            //                 update device
-            //                 set active = {data.active},
-            //                     limited = {data.limited}
-            //                 WHERE phonenumber = @phoneNum and apartmentname = '{apartmentName}' and id = '{id}';";
 
-            //             @$"select @phoneNum := account.phonenumber
-            //     from device,account
-            //     WHERE device.phonenumber = account.phonenumber and account.privatekey = 'asaxkioiowe123as'
-            // ;
-
-            // update device
-            // set active = 100,
-            // 	limited = 50
-            // WHERE phonenumber = @phoneNum and apartmentname = '1' and id = '1';"
 
             temp = SqlExecutes.Instance.ExcuteNonQuery(query);
             await _logDevice.Clients.All.SendAsync("asaxkioiowe123as", new { id = id, active = data.active, limited = data.limited });
@@ -66,27 +50,6 @@ namespace server
         }
 
 
-        //Example
-        /*
-        POST: https://localhost:5001/api/device/asaxkioiowe123as/add
-        [{
-            "phonenumber": "1",
-            "apartmentname": "1",
-            "id": "18",
-            "devicename": "Loane",
-            "active": true,
-            "limited": 100
-        },
-        {
-            "phonenumber": "1",
-            "apartmentname": "1",
-            "id": "19",
-            "devicename": "Loaneee",
-            "active": false,
-            "limited": 100
-        }
-        ]
-        */
         [HttpPost]
         [Route("{key}/add")]
         public string PostDevice([FromRoute] string key, [FromBody] List<Device> devices)
@@ -98,44 +61,7 @@ namespace server
             return "";
         }
 
-        //Edit thiết bị trong căn hộ
-        /* POST: https://localhost:5001/api/device/asaxkioiowe123as/edit
-        [{
-            "phonenumber": "1",
-            "apartmentname": "1",
-            "id": "2",
-            "devicename": "Dieuhoane",
-            "active": false,
-            "limited": 200
-        }]
-        */
-        /*
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
 
-            var raw = JSON.stringify([
-            {
-                "phonenumber": "1",
-                "apartmentname": "1",
-                "id": "3",
-                "devicename": "Dieuhoeeane",
-                "active": true,
-                "limited": 200
-            }
-            ]);
-
-            var requestOptions = {
-            method: 'PUT',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-            };
-
-            fetch("https://localhost:5001/api/device/asaxkioioaawe123as/edit", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
-        */
         [HttpPut]
         [Route("{key}/edit")]
         public string EditDevice([FromRoute] string key, [FromBody] List<Device> devices)

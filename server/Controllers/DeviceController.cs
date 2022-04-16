@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 using server.Hubs;
 
-namespace server
+namespace server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

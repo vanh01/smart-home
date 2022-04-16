@@ -57,69 +57,12 @@
     z-index: 10;
 }
 
-.dropdown.active::before {
-    top: 15px;
-    transform: rotate(135deg);
+.dropdown select{
+    height: 35px;
+    width: 175px;
+    padding-left: 10px;
 }
 
-.dropdown::before {
-    content: "";
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    border: 2px solid black;
-    z-index: 10;
-    width: 6px;
-    height: 6px;
-    border-top: 2px solid #fff;
-    border-right: 2px solid #fff;
-    transform: rotate(-45deg);
-    transition: 0.5s;
-    pointer-events: none;
-}
-
-.dropdown-text {
-    width: var(--width);
-    height: var(--height);
-    border-radius: 5px;
-    cursor: pointer;
-    background: #fff;
-    border: none;
-    outline: none;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-    padding: 0 12px;
-    box-sizing: border-box;
-    font-size: 0.9rem;
-    user-select: none;
-}
-
-.dropdown .option {
-    margin-top: 20px;
-    width: 100%;
-    box-sizing: border-box;
-    font-size: 0.9rem;
-    background: #fff;
-    background-color: #fff;
-    border-radius: 5px;
-    overflow: hidden;
-    box-shadow: 0 30px 30px rgba(0, 0, 0, 0.05);
-    transition: ease-in-out 0.2s;
-    display: none;
-}
-
-.dropdown.active .option {
-    display: block;
-}
-
-.dropdown .option li {
-    height: var(--height);
-    padding: 8px 12px;
-    cursor: pointer;
-    box-sizing: border-box;
-    background-color: #fff;
-}
-
-.dropdown .option li:hover {
-    background: #62baea;
-    color: #fff;
+.dropdown select option{
+    margin-left: 15px;
 }

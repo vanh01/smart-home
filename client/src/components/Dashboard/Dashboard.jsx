@@ -3,7 +3,7 @@ import myAdafruitApi from "../../AdafruitApi";
 import * as signalR from "@microsoft/signalr";
 import * as serverApi from "../../ServerApi";
 
-const Dashboard = ({ account }) => {
+const Dashboard = ({ account, apartmentCur }) => {
     document.title = "Điều khiển";
     const [ledOn, setLedOn] = useState(false);
     const [airConditionedOn, setAirConditionedOn] = useState(false);
@@ -17,43 +17,79 @@ const Dashboard = ({ account }) => {
     const [humiValue, setHumiValue] = useState(0);
     const [gasValue, setGasValue] = useState(0);
 
-    // console.log(sound);
     const getData = async () => {
-        let device = await serverApi.getListDevice(account.privatekey, "1");
-        let lastLog = await serverApi.getLastLog(account.privatekey, "1");
-        let ledLog = lastLog.filter((l) => l.id === "1");
-        let airLog = lastLog.filter((l) => l.id === "2");
-        let soundLog = lastLog.filter((l) => l.id === "4");
-        let lightLog = lastLog.filter((l) => l.id === "5");
-        let tempLog = lastLog.filter((l) => l.id === "6");
-        let humiLog = lastLog.filter((l) => l.id === "7");
-        let gasLog = lastLog.filter((l) => l.id === "8");
-        let soundDevice = device.filter((d) => d.id === "4")[0];
-        let lightDevice = device.filter((d) => d.id === "5")[0];
-        let tempDevice = device.filter((d) => d.id === "6")[0];
-        setSound({
-            ...sound,
-            active: soundDevice.active,
-            limited: soundDevice.limited,
-        });
-        setLight({
-            ...light,
-            active: lightDevice.active,
-            limited: lightDevice.limited,
-        });
-        setTemp({
-            ...temp,
-            active: tempDevice.active,
-            limited: tempDevice.limited,
-        });
-        setSoundValue(soundLog[0].value);
-        setLightValue(lightLog[0].value);
-        setTempValue(tempLog[0].value);
-        setHumiValue(humiLog[0].value);
-        setGasValue(gasLog[0].value);
-        setLedOn(ledLog[0].value.includes("led-on") ? true : false);
-        setAirConditionedOn(airLog[0].value.includes("air-on") ? true : false);
+        console.log(apartmentCur);
+        let device = await serverApi.getListDevice(
+            account.privatekey,
+            apartmentCur
+        );
+        let lastLog = await serverApi.getLastLog(
+            account.privatekey,
+            apartmentCur
+        );
+        if (lastLog.length > 0 && device.length > 0) {
+            let ledLog = lastLog.filter((l) => l.id === "1");
+            let airLog = lastLog.filter((l) => l.id === "2");
+            let soundLog = lastLog.filter((l) => l.id === "4");
+            let lightLog = lastLog.filter((l) => l.id === "5");
+            let tempLog = lastLog.filter((l) => l.id === "6");
+            let humiLog = lastLog.filter((l) => l.id === "7");
+            let gasLog = lastLog.filter((l) => l.id === "8");
+            let soundDevice = device.filter((d) => d.id === "4")[0];
+            let lightDevice = device.filter((d) => d.id === "5")[0];
+            let tempDevice = device.filter((d) => d.id === "6")[0];
+            setSound({
+                ...sound,
+                active: soundDevice.active,
+                limited: soundDevice.limited,
+            });
+            setLight({
+                ...light,
+                active: lightDevice.active,
+                limited: lightDevice.limited,
+            });
+            setTemp({
+                ...temp,
+                active: tempDevice.active,
+                limited: tempDevice.limited,
+            });
+            setSoundValue(soundLog[0].value);
+            setLightValue(lightLog[0].value);
+            setTempValue(tempLog[0].value);
+            setHumiValue(humiLog[0].value);
+            setGasValue(gasLog[0].value);
+            setLedOn(ledLog[0].value.includes("led-on") ? true : false);
+            setAirConditionedOn(
+                airLog[0].value.includes("air-on") ? true : false
+            );
+        } else {
+            setSound({
+                ...sound,
+                active: false,
+                limited: "0",
+            });
+            setLight({
+                ...light,
+                active: false,
+                limited: "0",
+            });
+            setTemp({
+                ...temp,
+                active: false,
+                limited: "0",
+            });
+            setSoundValue(0);
+            setLightValue(0);
+            setTempValue(0);
+            setHumiValue(0);
+            setGasValue(0);
+            setLedOn(false);
+            setAirConditionedOn(false);
+        }
     };
+
+    useEffect(() => {}, []);
+
     useEffect(() => {
         async function hi() {
             await getData();
@@ -87,7 +123,7 @@ const Dashboard = ({ account }) => {
                 .catch((e) => console.log("Connection failed: ", e));
         }
         hi();
-    }, []);
+    }, [apartmentCur]);
 
     const changeSoundActive = (e) => {
         if (e.target.checked === true && light.active === true) {

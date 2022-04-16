@@ -1,8 +1,7 @@
 import SigninPage from "./pages/SigninPage"
-import DashboardPage from "./pages/DashboardPage"
-import ActivitylogPage from "./pages/ActivityLogPage"
 import ManageAccountPage from "./pages/ManageAccountPage";
 import ForgotPassword from "./components/Signin/ForgotPassword";
+import CustomerPage from "./pages/CustomerPage";
 import Home from "./components/Home/Home";
 import { Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -20,11 +19,7 @@ import './css/modify.css'
 import './css/manager.css'
 function App() {
     const [account, setAccount] = useState({});
-    let user = <Routes>
-                <Route path="/dashboard" exact element={<DashboardPage account={account} setAccount={setAccount} />} />
-                <Route path="/activitylog" exact element={<ActivitylogPage account={account} setAccount={setAccount} />} />
-                {/* <Route path="*" element={() => <h1>404 not found</h1>} /> */}
-            </Routes>;
+    let user = <CustomerPage account={account} setAccount={setAccount} />;
     
     let admin = <Routes>
                 <Route path="/manageaccount" exact element={<ManageAccountPage account={account} setAccount={setAccount} />} />

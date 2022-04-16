@@ -21,7 +21,7 @@ Chart.register(Title);
 Chart.register(Tooltip);
 Chart.register(Legend);
 
-const ActivityLog = ({ account }) => {
+const ActivityLog = ({ account, apartmentCur }) => {
     let [device, setDevice] = useState(0);
     let allData = [];
 
@@ -36,7 +36,7 @@ const ActivityLog = ({ account }) => {
 
     const getData = async (typeDevice) => {
         await fetch(
-            `https://localhost:5001/api/log/${account.privatekey}/getAllLogs?name=1`
+            `https://localhost:5001/api/log/${account.privatekey}/getAllLogs?name=${apartmentCur}`
         )
             .then((res) => res.json())
             .then((json) => {
@@ -152,7 +152,7 @@ const ActivityLog = ({ account }) => {
 
     useEffect(() => {
         getData(device);
-    }, [startDate, endDate, device]);
+    }, [startDate, endDate, device, apartmentCur]);
 
     function showDevice(e) {
         let select = document.querySelectorAll(".device__option");

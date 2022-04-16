@@ -101,8 +101,10 @@ namespace server.Controllers
         {
             if (getRules(key) == 1)
             {
-                // string queryAll = $"SELECT * FROM account;";
-                string queryAll = $"SELECT account.phonenumber, account.password, account.rules, account.privatekey, information.name, information.email, information.datecreated, information.dateupdated FROM account, information WHERE account.phonenumber = information.phonenumber and account.rules != 0;";
+                string queryAll = @$"SELECT account.phonenumber, account.password, account.rules, account.privatekey, information.name,
+                                    information.email, information.datecreated, information.dateupdated 
+                                    FROM account, information
+                                    WHERE account.phonenumber = information.phonenumber and account.rules != 0;";
                 var tempAll = SqlExecutes.Instance.ExcuteQuery(queryAll);
                 List<AccountInfo> accountsAll = tempAll.ToList<AccountInfo>();
                 return accountsAll;

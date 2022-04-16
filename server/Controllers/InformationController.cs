@@ -7,7 +7,7 @@ using server.Models;
 using server.Hubs;
 using System.Threading.Tasks;
 
-namespace server
+namespace server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

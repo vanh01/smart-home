@@ -68,6 +68,7 @@ const ManageApartment = ({ setShowApartment, accounts, curIndex, account }) => {
         let apartmentNames = await myServerApi.apartmentGetOne(
             accounts[curIndex].privatekey
         );
+        console.log(accounts[curIndex])
         let temp = [];
         apartmentNames.forEach((a) => {
             temp.push(a.apartmentname);

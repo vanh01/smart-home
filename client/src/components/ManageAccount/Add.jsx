@@ -20,7 +20,7 @@ const Add = ({ setShowAdd, accounts, setAccount, accountKey }) => {
 			headers: myHeaders,
 			body: raw,
 			redirect: 'follow'
-        }; 
+		};
 
 		await fetch(`https://localhost:5001/api/account/add/${accountKey}`, requestOptions)
 			.then(response => response.text())
@@ -91,12 +91,14 @@ const Add = ({ setShowAdd, accounts, setAccount, accountKey }) => {
 								alert('Vui lòng nhập email');
 							}
 							else {
+								let newKey = MakeId(10)
 								var today = new Date();
 								var newData = {
 									name: name,
 									phonenumber: phone,
 									password: password,
 									email: email,
+									privatekey: newKey,
 									rules: document.querySelector('.access').value,
 									datecreated: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
 									dateupdated: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
@@ -104,7 +106,7 @@ const Add = ({ setShowAdd, accounts, setAccount, accountKey }) => {
 								var newAccount = {
 									phonenumber: phone,
 									password: password,
-									privatekey: MakeId(10),
+									privatekey: newKey,
 									rules: document.querySelector('.access').value
 								}
 								var newInfo = {
